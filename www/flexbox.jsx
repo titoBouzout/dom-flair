@@ -115,6 +115,15 @@ function props_to_style(props) {
 				_props.style.alignItems = 'center'
 				break
 
+			case 'crop':
+				// flex-shrink: 1;
+				_props.style.textOverflow = 'ellipsis'
+				_props.style.whiteSpace = 'nowrap'
+				_props.style.overflow = 'hidden'
+				_props.style.minWidth = '0'
+				_props.style.minHeight = '0'
+				break
+
 			// already copied at the top of the function
 			case 'style':
 			case 'className':
