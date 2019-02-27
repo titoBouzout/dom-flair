@@ -36,20 +36,22 @@ function random_color() {
 		}, 50)
 	}
 	setInterval(function() {
-		for (let file of files) {
-			var xhttp = new XMLHttpRequest()
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					if (!cache[file]) {
-						cache[file] = this.responseText
-					} else if (cache[file] != this.responseText) {
-						cache[file] = this.responseText
-						reload()
+		if (typeof files != 'undefined') {
+			for (let file of files) {
+				var xhttp = new XMLHttpRequest()
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						if (!cache[file]) {
+							cache[file] = this.responseText
+						} else if (cache[file] != this.responseText) {
+							cache[file] = this.responseText
+							reload()
+						}
 					}
 				}
+				xhttp.open('GET', file)
+				xhttp.send()
 			}
-			xhttp.open('GET', file)
-			xhttp.send()
 		}
 	}, 500)
 })()

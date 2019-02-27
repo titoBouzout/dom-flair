@@ -1,5 +1,5 @@
 // so we track changes and autoreload
-var files = ['flexbox.jsx', 'flexbox.html', 'base.css']
+var files = ['flexbox.jsx', 'flexbox.html', 'flexbox.css']
 
 var sheet = document.createElement('style')
 sheet.appendChild(document.createTextNode(''))
@@ -21,19 +21,33 @@ function props_to_style(props) {
 	var style = ''
 	var style_children = ''
 	var style_after = ''
+	var style_after_children = ''
 
 	for (var id in props) {
+		if (id.indexOf('test') != -1) {
+			id = props[id]
+		}
 		switch (id) {
-			// flex stuff, the difficult thing!
+			// main axis
+			// justify-content space between items
+			// justify-items for the default justify-self
+			// justify-self alignment
+
+			// cross axis
+			// align-content space between items
+			// align-items for the default align-self
+			// align-self alignment
+
 			case 'row':
 				style += 'display:flex;'
 				style += 'flex-direction:row;'
 				style += 'min-height:0;'
 				style += 'min-width:0;'
-				//style += 'flex:auto;'
-				//style += 'width:100%;'
 
-				style_children += 'align-self:start;'
+				style += 'align-content:flex-start;'
+				style += 'justify-content:flex-start;'
+				style += 'justify-items:flex-start;'
+				style += 'align-items:flex-start;'
 
 				_props['data-' + id] = props[id]
 
@@ -44,9 +58,11 @@ function props_to_style(props) {
 				style += 'min-height:0;'
 				style += 'min-width:0;'
 
-				//style += 'height:100%;'
+				style += 'align-content:flex-start;'
+				style += 'justify-content:flex-start;'
+				style += 'justify-items:flex-start;'
+				style += 'align-items:flex-start;'
 
-				style_children += 'align-self:start;'
 				_props['data-' + id] = props[id]
 				break
 			case 'grow':
@@ -55,14 +71,16 @@ function props_to_style(props) {
 				style += 'align-self:stretch;'
 				style += 'min-height:0;'
 				style += 'min-width:0;'
-				//style += 'width:auto;'
 
-				//style += 'height:auto%;'
+				style += 'align-content:flex-start;'
+				style += 'justify-content:flex-start;'
+				style += 'justify-items:flex-start;'
+				style += 'align-items:flex-start;'
 
-				style_children += 'align-self:start;'
 				_props['data-' + id] = props[id]
 				break
 			case 'basis':
+				style += 'display:flex;'
 				style += 'flex-basis:' + props[id] + ';'
 				_props['data-' + id] = props[id]
 				break
@@ -118,69 +136,127 @@ function props_to_style(props) {
 				_props['data-' + id] = props[id]
 				break
 
-			// alignment
-			// justify content = direction axis
-			// align items = cross axis
+			// main axis
+			// justify-content space between items
+			// justify-items for the default justify-self
+			// justify-self alignment
+
+			// cross axis
+			// align-content space between items
+			// align-items for the default align-self
+			// align-self alignment
 			case 'left':
+				style += 'display:flex;'
 				if (props.col) {
+					// the default not tested
+					style_after += 'align-content:flex-start;'
 					style_after += 'align-items:flex-start;'
 				} else {
+					// the default not tested
 					style_after += 'justify-content:flex-start;'
-				}
-				_props['data-' + id] = props[id]
-				break
-
-			case 'right':
-				if (props.col) {
-					style_after += 'align-items:flex-end;'
-				} else {
-					style_after += 'justify-content:flex-end;'
+					style_after += 'justify-items:flex-start;'
 				}
 				_props['data-' + id] = props[id]
 				break
 
 			case 'top':
+				style += 'display:flex;'
 				if (props.col) {
+					// the default not tested
 					style_after += 'justify-content:flex-start;'
+					style_after += 'justify-items:flex-start;'
 				} else {
+					// the default not tested
+					style_after += 'align-content:flex-start;'
 					style_after += 'align-items:flex-start;'
 				}
 				_props['data-' + id] = props[id]
 				break
 
+			case 'right':
+				style += 'display:flex;'
+				if (props.col) {
+					style_after += 'align-content:flex-end;'
+					style_after += 'align-items:flex-end;'
+				} else {
+					style_after += 'justify-content:flex-end;'
+					style_after += 'justify-items:flex-end;'
+				}
+				_props['data-' + id] = props[id]
+				break
+
 			case 'bottom':
+				style += 'display:flex;'
 				if (props.col) {
 					style_after += 'justify-content:flex-end;'
+					style_after += 'justify-items:flex-end;'
 				} else {
+					style_after += 'align-content:flex-end;'
 					style_after += 'align-items:flex-end;'
 				}
 				_props['data-' + id] = props[id]
 				break
 
 			case 'horizontal':
+				style += 'display:flex;'
 				if (props.col) {
+					style_after += 'align-content:center;'
 					style_after += 'align-items:center;'
 				} else {
 					style_after += 'justify-content:center;'
+					style_after += 'justify-items:center;'
 				}
 				_props['data-' + id] = props[id]
 				break
 			case 'vertical':
+				style += 'display:flex;'
 				if (props.col) {
 					style_after += 'justify-content:center;'
+					style_after += 'justify-items:center;'
 				} else {
+					style_after += 'align-content:center;'
 					style_after += 'align-items:center;'
 				}
 				_props['data-' + id] = props[id]
 				break
 			// both horizontal and vertical
 			case 'center':
+				style += 'display:flex;'
 				style_after += 'justify-content:center;'
+				style_after += 'align-content:center;'
+				style_after += 'justify-items:center;'
 				style_after += 'align-items:center;'
 				_props['data-' + id] = props[id]
 				break
-			case 'spaced':
+			case 'space-around':
+				style += 'display:flex;'
 				style_after += 'justify-content:space-around;'
+				style_after += 'align-content:space-around;'
+				style_after += 'justify-items:center;'
+				style_after += 'align-items:center;'
+				_props['data-' + id] = props[id]
+				break
+			case 'space-between':
+				style += 'display:flex;'
+				style_after += 'justify-content:space-between;'
+				style_after += 'align-content:space-between;'
+				style_after += 'justify-items:center;'
+				style_after += 'align-items:center;'
+				_props['data-' + id] = props[id]
+				break
+			case 'space-evenly':
+				style += 'display:flex;'
+				style_after += 'justify-content:space-evenly;'
+				style_after += 'align-content:space-evenly;'
+				style_after += 'justify-items:center;'
+				style_after += 'align-items:center;'
+				_props['data-' + id] = props[id]
+				break
+			case 'stretch':
+				style += 'display:flex;'
+				style_after += 'justify-content:stretch;'
+				style_after += 'align-content:stretch;'
+				style_after += 'justify-items:center;'
 				style_after += 'align-items:center;'
 				_props['data-' + id] = props[id]
 				break
@@ -221,6 +297,9 @@ function props_to_style(props) {
 	if (style_after.trim() != '') {
 		append_style('#' + _props.id + ' { ' + style_after + '}')
 	}
+	if (style_after_children.trim() != '') {
+		append_style('#' + _props.id + ' > *{ ' + style_after_children + '}')
+	}
 
 	return _props
 }
@@ -237,7 +316,7 @@ class Component extends React.Component {
 	render() {
 		return (
 			<Box grow background data-layout>
-				<Box col grow background max-width="110px" data-column-left-sidebar>
+				<Box col grow background max-width="210px" data-column-left-sidebar>
 					<Box>
 						<a href="#">
 							<Box>
@@ -246,7 +325,7 @@ class Component extends React.Component {
 						</a>
 					</Box>
 					<Box col background>
-						{repeat(3).map(function(k) {
+						{repeat(6).map(function(k) {
 							return (
 								<a key={k} href="#">
 									<Box inline>
@@ -257,8 +336,8 @@ class Component extends React.Component {
 							)
 						})}
 					</Box>
-					<Box row wrap grow scroll-y>
-						{repeat(20).map(function(k) {
+					<Box row wrap grow scroll-y right>
+						{repeat(5).map(function(k) {
 							return (
 								<Box
 									element="img"
@@ -296,8 +375,8 @@ class Component extends React.Component {
 
 						<Box>right content for room toolbar </Box>
 					</Box>
-					<Box background row grow wrap spaced scroll-y data-content>
-						{repeat(3).map(function(k) {
+					<Box background col grow wrap scroll-y data-content stretch>
+						{repeat(5).map(function(k) {
 							return (
 								<Box key={k}>
 									<Box>
@@ -309,6 +388,44 @@ class Component extends React.Component {
 								</Box>
 							)
 						})}
+
+						{/* test alignment*/ false
+							? ['left', 'right', 'top', 'bottom'].map(function(align) {
+									return (
+										<Box
+											col
+											key={align}
+											width="25%"
+											height="10%"
+											background
+											test_align={align}
+										>
+											{align}
+										</Box>
+									)
+							  })
+							: null}
+
+						{/* test alignment*/ false
+							? ['left', 'right', 'horizontal'].map(function(align1) {
+									return ['top', 'bottom', 'vertical'].map(function(align2) {
+										if (align1 == align2) return null
+										return (
+											<Box
+												col
+												key={align2}
+												width="25%"
+												height="10%"
+												background
+												test_align1={align1}
+												test_align2={align2}
+											>
+												{align1} {align2}
+											</Box>
+										)
+									})
+							  })
+							: null}
 					</Box>
 
 					<Box row nowrap background data-footer width="100%">
