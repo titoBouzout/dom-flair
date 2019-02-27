@@ -1,12 +1,11 @@
 // so we track changes and autoreload
 var files = ['flexbox.jsx', 'flexbox.html', 'base.css']
 
-function append_style(styles) {
-	var sheet = document.createElement('style')
-	sheet.appendChild(document.createTextNode(''))
-	document.head.appendChild(sheet)
-
-	sheet.appendChild(document.createTextNode(styles))
+var sheet = document.createElement('style')
+sheet.appendChild(document.createTextNode(''))
+document.head.appendChild(sheet)
+function append_style(style) {
+	sheet.appendChild(document.createTextNode(style))
 }
 
 var element_id = 0
@@ -19,57 +18,83 @@ function props_to_style(props) {
 		style: props.style || {},
 		className: props.className || '',
 	}
+	var style = ''
+	var style_children = ''
+
 	for (var id in props) {
 		switch (id) {
 			// flex stuff, the difficult thing!
 			case 'row':
-				_props.style.display = 'flex'
-				_props.style.flexDirection = 'row'
+				style += 'display:flex;'
+				style += 'flex-direction:row;'
+				_props['data-' + id] = props[id]
+
 				break
 			case 'col':
-				_props.style.display = 'flex'
-				_props.style.flexDirection = 'column'
+				style += 'display:flex;'
+				style += 'flex-direction:column;'
+				_props['data-' + id] = props[id]
 				break
 			case 'grow':
-				_props.style.display = 'flex'
-				_props.style.flex = '1'
-				append_style('#' + _props.id + ' > *{ align-self:start;}')
+				style += 'display:flex;'
+				style += 'flex:1;'
+				style_children += 'align-self:start;'
+				_props['data-' + id] = props[id]
 				break
 			case 'basis':
-				_props.style.flexBasis = props[id]
+				style += 'flex-basis:' + props[id] + ';'
+				_props['data-' + id] = props[id]
 				break
 			case 'wrap':
-				_props.style.display = 'flex'
-				_props.style.flexWrap = 'wrap'
+				style += 'display:flex;'
+				style += 'flex-wrap:wrap;'
+				_props['data-' + id] = props[id]
 				break
 
 			// scroll
 			case 'scroll-y':
-				_props.style.overflowY = 'auto'
-				_props.style.minWidth = '0'
+				style += 'overflow-Y:auto;'
+				style += 'min-height:0;'
+
+				_props['data-' + id] = props[id]
 				break
 			case 'scroll-x':
-				_props.style.overflowX = 'auto'
-				_props.style.minHeight = '0'
+				style += 'overflow-x:auto;'
+				style += 'min-width:0;'
+
+				_props['data-' + id] = props[id]
 				break
 
 			// display
 			case 'inline':
-				_props.style.display = 'inline'
+				style += 'display:inline;'
+
+				_props['data-' + id] = props[id]
 				break
 
 			// width/height
 			case 'width':
-				_props.style.width = props[id]
+				style += 'width:' + props[id] + ';'
+				_props['data-' + id] = props[id]
 				break
 			case 'height':
-				_props.style.height = props[id]
+				style += 'height:' + props[id] + ';'
+				_props['data-' + id] = props[id]
+				break
+			case 'max-width':
+				style += 'max-width:' + props[id] + ';'
+				_props['data-' + id] = props[id]
+				break
+			case 'max-height':
+				style += 'max-height:' + props[id] + ';'
+				_props['data-' + id] = props[id]
 				break
 
 			// a random background color
 			case 'background':
-				_props.style.background = random_color()
-				_props.style.border = '2px solid ' + random_color()
+				style += 'background:' + random_color() + ';'
+				style += 'border:2px solid ' + random_color() + ';'
+				_props['data-' + id] = props[id]
 				break
 
 			// alignment
@@ -77,68 +102,77 @@ function props_to_style(props) {
 			// align items = cross axis
 			case 'left':
 				if (props.col) {
-					_props.style.alignItems = 'flex-start'
+					style += 'align-items:flex-start;'
 				} else {
-					_props.style.justifyContent = 'flex-start'
+					style += 'justify-content:flex-start;'
 				}
+				_props['data-' + id] = props[id]
 				break
 
 			case 'right':
 				if (props.col) {
-					_props.style.alignItems = 'flex-end'
+					style += 'align-items:flex-end;'
 				} else {
-					_props.style.justifyContent = 'flex-end'
+					style += 'justify-content:flex-end;'
 				}
+				_props['data-' + id] = props[id]
 				break
 
 			case 'top':
 				if (props.col) {
-					_props.style.justifyContent = 'flex-start'
+					style += 'justify-content:flex-start;'
 				} else {
-					_props.style.alignItems = 'flex-start'
+					style += 'align-items:flex-start;'
 				}
+				_props['data-' + id] = props[id]
 				break
 
 			case 'bottom':
 				if (props.col) {
-					_props.style.justifyContent = 'flex-end'
+					style += 'justify-content:flex-end;'
 				} else {
-					_props.style.alignItems = 'flex-end'
+					style += 'align-items:flex-end;'
 				}
+				_props['data-' + id] = props[id]
 				break
 
 			case 'horizontal':
 				if (props.col) {
-					_props.style.alignItems = 'center'
+					style += 'align-items:center;'
 				} else {
-					_props.style.justifyContent = 'center'
+					style += 'justify-content:center;'
 				}
+				_props['data-' + id] = props[id]
 				break
 			case 'vertical':
 				if (props.col) {
-					_props.style.justifyContent = 'center'
+					style += 'justify-content:center;'
 				} else {
-					_props.style.alignItems = 'center'
+					style += 'align-items:center;'
 				}
+				_props['data-' + id] = props[id]
 				break
 			// both horizontal and vertical
 			case 'center':
-				_props.style.justifyContent = 'center'
-				_props.style.alignItems = 'center'
+				style += 'justify-content:center;'
+				style += 'align-items:center;'
+				_props['data-' + id] = props[id]
 				break
 			case 'spaced':
-				_props.style.justifyContent = 'space-around'
-				_props.style.alignItems = 'center'
+				style += 'justify-content:space-around;'
+				style += 'align-items:center;'
+				_props['data-' + id] = props[id]
 				break
 
 			case 'crop':
-				// : 1;
-				_props.style.textOverflow = 'ellipsis'
-				_props.style.whiteSpace = 'nowrap'
-				_props.style.overflow = 'hidden'
-				_props.style.minWidth = '0'
-				_props.style.minHeight = '0'
-				//_props.style.flexShrink = '1'
+				style += 'text-overflow:ellipsis;'
+				style += 'white-space:nowrap;'
+				style += 'overflow:hidden;'
+				style += 'min-width:0;'
+				style += 'min-height:0;'
+				// style += 'flexShrink:1;'
+
+				_props['data-' + id] = props[id]
 				break
 
 			// already copied at the top of the function
@@ -151,6 +185,13 @@ function props_to_style(props) {
 			default:
 				_props[id] = props[id]
 		}
+	}
+
+	if (style.trim() != '') {
+		append_style('#' + _props.id + ' { ' + style + '}')
+	}
+	if (style_children.trim() != '') {
+		append_style('#' + _props.id + ' > *{ ' + style_children + '}')
 	}
 
 	return _props
@@ -168,7 +209,7 @@ class Component extends React.Component {
 	render() {
 		return (
 			<Box grow background data-layout>
-				<Box col grow background basis="110px" data-column-left-sidebar>
+				<Box col grow background max-width="110px" data-column-left-sidebar>
 					<Box>
 						<a href="#">
 							<Box>
