@@ -1,9 +1,24 @@
 // so we track changes and autoreload
 var files = ['flexbox.jsx', 'flexbox.html', 'base.css']
 
+function append_style(styles) {
+	var sheet = document.createElement('style')
+	sheet.appendChild(document.createTextNode(''))
+	document.head.appendChild(sheet)
+
+	sheet.appendChild(document.createTextNode(styles))
+}
+
+var element_id = 0
+
 // returns props for react with the style element modified
 function props_to_style(props) {
-	var _props = { style: props.style || {}, className: props.className || '' }
+	element_id += 1
+	var _props = {
+		id: 'c' + element_id,
+		style: props.style || {},
+		className: props.className || '',
+	}
 	for (var id in props) {
 		switch (id) {
 			// flex stuff, the difficult thing!
@@ -18,6 +33,7 @@ function props_to_style(props) {
 			case 'grow':
 				_props.style.display = 'flex'
 				_props.style.flex = '1'
+				append_style('#' + _props.id + ' > *{ align-self:start;}')
 				break
 			case 'basis':
 				_props.style.flexBasis = props[id]
