@@ -168,7 +168,7 @@ class Component extends React.Component {
 	render() {
 		return (
 			<Box grow background data-layout>
-				<Box col background basis="110px" data-column-left-sidebar>
+				<Box col grow background basis="110px" data-column-left-sidebar>
 					<Box>
 						<a href="#">
 							<Box>
@@ -260,7 +260,7 @@ class Component extends React.Component {
 						</Box>
 					</Box>
 				</Box>
-				<Box col background basis="15%" data-column-right-sidebar>
+				<Box col grow background basis="15%" data-column-right-sidebar>
 					<Box scroll-y>
 						{repeat(10).map(function(k) {
 							return (
