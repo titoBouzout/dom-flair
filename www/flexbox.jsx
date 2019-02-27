@@ -28,7 +28,7 @@ function props_to_style(props) {
 				style += 'display:flex;'
 				style += 'flex-direction:row;'
 				//style += 'flex:auto;'
-				style += 'width:100%;'
+				//style += 'width:100%;'
 				_props['data-' + id] = props[id]
 
 				break
@@ -254,7 +254,7 @@ class Component extends React.Component {
 					</Box>
 				</Box>
 				<Box grow col background data-column-middle>
-					<Box row background data-toolbar>
+					<Box row background data-toolbar width="100%">
 						<Box title="Go Back">
 							<img src="images/icon.png" />
 						</Box>
@@ -290,7 +290,7 @@ class Component extends React.Component {
 						})}
 					</Box>
 
-					<Box row background data-footer>
+					<Box row background data-footer width="100%">
 						<Box>
 							Guest 922 <Box inline>— </Box>
 						</Box>
