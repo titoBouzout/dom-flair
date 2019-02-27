@@ -172,13 +172,12 @@ class Component extends React.Component {
 							)
 						})}
 					</Box>
-					<Box wrap grow scroll-y>
+					<Box col wrap grow scroll-y>
 						{repeat(3).map(function(k) {
 							return (
 								<img
 									key={k}
 									src="images/profile.png"
-									width="2em"
 									style={{ border: '2px solid lime' }}
 								/>
 							)
