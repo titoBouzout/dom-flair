@@ -27,18 +27,26 @@ function props_to_style(props) {
 			case 'row':
 				style += 'display:flex;'
 				style += 'flex-direction:row;'
+				//style += 'flex:auto;'
+				style += 'width:100%;'
 				_props['data-' + id] = props[id]
 
 				break
 			case 'col':
 				style += 'display:flex;'
 				style += 'flex-direction:column;'
+				//style += 'height:100%;'
+
 				_props['data-' + id] = props[id]
 				break
 			case 'grow':
 				style += 'display:flex;'
 				style += 'flex:1;'
 				style += 'align-self:stretch;'
+				//style += 'width:auto;'
+
+				//style += 'height:auto%;'
+
 				style_children += 'align-self:start;'
 				_props['data-' + id] = props[id]
 				break
