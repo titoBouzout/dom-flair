@@ -27,22 +27,33 @@ function props_to_style(props) {
 			case 'row':
 				style += 'display:flex;'
 				style += 'flex-direction:row;'
+				style += 'min-height:0;'
+				style += 'min-width:0;'
 				//style += 'flex:auto;'
 				//style += 'width:100%;'
+
+				style_children += 'align-self:start;'
+
 				_props['data-' + id] = props[id]
 
 				break
 			case 'col':
 				style += 'display:flex;'
 				style += 'flex-direction:column;'
+				style += 'min-height:0;'
+				style += 'min-width:0;'
+
 				//style += 'height:100%;'
 
+				style_children += 'align-self:start;'
 				_props['data-' + id] = props[id]
 				break
 			case 'grow':
 				style += 'display:flex;'
 				style += 'flex:1;'
 				style += 'align-self:stretch;'
+				style += 'min-height:0;'
+				style += 'min-width:0;'
 				//style += 'width:auto;'
 
 				//style += 'height:auto%;'
@@ -173,6 +184,9 @@ function props_to_style(props) {
 				_props['data-' + id] = props[id]
 				break
 
+			case 'nowrap':
+				style += 'white-space:nowrap;'
+
 			case 'crop':
 				style += 'text-overflow:ellipsis;'
 				style += 'white-space:nowrap;'
@@ -255,10 +269,10 @@ class Component extends React.Component {
 				</Box>
 				<Box grow col background data-column-middle>
 					<Box row background data-toolbar width="100%">
-						<Box title="Go Back">
+						<Box row title="Go Back">
 							<img src="images/icon.png" />
 						</Box>
-						<Box data-toolbar-title>
+						<Box row data-toolbar-title>
 							<Box inline>
 								<Box inline>
 									<img src="images/icon.png" />
@@ -267,7 +281,7 @@ class Component extends React.Component {
 							</Box>
 							<Box inline>· </Box>
 						</Box>
-						<Box grow data-toolbar-description>
+						<Box grow crop data-toolbar-description>
 							Lorem Ipsum is simply dummy text of the printing and typesetting
 							industry. Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.
@@ -276,7 +290,7 @@ class Component extends React.Component {
 						<Box>right content for room toolbar </Box>
 					</Box>
 					<Box background grow wrap spaced scroll-y data-content>
-						{repeat(20).map(function(k) {
+						{repeat(3).map(function(k) {
 							return (
 								<Box key={k}>
 									<Box>
@@ -290,9 +304,12 @@ class Component extends React.Component {
 						})}
 					</Box>
 
-					<Box row background data-footer width="100%">
-						<Box>
-							Guest 922 <Box inline>— </Box>
+					<Box row nowrap background data-footer width="100%">
+						<Box row>
+							Guest 922
+							<Box inline row>
+								—{' '}
+							</Box>
 						</Box>
 						<Box grow />
 						<Box row crop>
@@ -332,7 +349,7 @@ class Component extends React.Component {
 							)
 						})}
 					</Box>
-					<Box>
+					<Box width="100%">
 						<label>
 							<Box>
 								<Box
