@@ -20,9 +20,9 @@ function random_color() {
 	}
 	color += 30
 	if (color > 255) color = 0
-	var red = (color + 0) >> 1
-	var green = (color + 100) >> 1
-	var blue = (color + 200) >> 1
+	var red = (color + 100) >> 1
+	var green = (color + 20) >> 1
+	var blue = (color + 5) >> 1
 
 	return '#' + color2hex(red) + '' + color2hex(green) + '' + color2hex(blue)
 }
