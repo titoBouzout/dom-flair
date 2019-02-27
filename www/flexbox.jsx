@@ -38,6 +38,7 @@ function props_to_style(props) {
 			case 'grow':
 				style += 'display:flex;'
 				style += 'flex:1;'
+				style += 'align-self:stretch;'
 				style_children += 'align-self:start;'
 				_props['data-' + id] = props[id]
 				break
@@ -301,7 +302,7 @@ class Component extends React.Component {
 						</Box>
 					</Box>
 				</Box>
-				<Box col grow background basis="15%" data-column-right-sidebar>
+				<Box col grow background max-width="15%" data-column-right-sidebar>
 					<Box scroll-y>
 						{repeat(10).map(function(k) {
 							return (
