@@ -20,6 +20,7 @@ function props_to_style(props) {
 	}
 	var style = ''
 	var style_children = ''
+	var style_after = ''
 
 	for (var id in props) {
 		switch (id) {
@@ -122,65 +123,65 @@ function props_to_style(props) {
 			// align items = cross axis
 			case 'left':
 				if (props.col) {
-					style += 'align-items:flex-start;'
+					style_after += 'align-items:flex-start;'
 				} else {
-					style += 'justify-content:flex-start;'
+					style_after += 'justify-content:flex-start;'
 				}
 				_props['data-' + id] = props[id]
 				break
 
 			case 'right':
 				if (props.col) {
-					style += 'align-items:flex-end;'
+					style_after += 'align-items:flex-end;'
 				} else {
-					style += 'justify-content:flex-end;'
+					style_after += 'justify-content:flex-end;'
 				}
 				_props['data-' + id] = props[id]
 				break
 
 			case 'top':
 				if (props.col) {
-					style += 'justify-content:flex-start;'
+					style_after += 'justify-content:flex-start;'
 				} else {
-					style += 'align-items:flex-start;'
+					style_after += 'align-items:flex-start;'
 				}
 				_props['data-' + id] = props[id]
 				break
 
 			case 'bottom':
 				if (props.col) {
-					style += 'justify-content:flex-end;'
+					style_after += 'justify-content:flex-end;'
 				} else {
-					style += 'align-items:flex-end;'
+					style_after += 'align-items:flex-end;'
 				}
 				_props['data-' + id] = props[id]
 				break
 
 			case 'horizontal':
 				if (props.col) {
-					style += 'align-items:center;'
+					style_after += 'align-items:center;'
 				} else {
-					style += 'justify-content:center;'
+					style_after += 'justify-content:center;'
 				}
 				_props['data-' + id] = props[id]
 				break
 			case 'vertical':
 				if (props.col) {
-					style += 'justify-content:center;'
+					style_after += 'justify-content:center;'
 				} else {
-					style += 'align-items:center;'
+					style_after += 'align-items:center;'
 				}
 				_props['data-' + id] = props[id]
 				break
 			// both horizontal and vertical
 			case 'center':
-				style += 'justify-content:center;'
-				style += 'align-items:center;'
+				style_after += 'justify-content:center;'
+				style_after += 'align-items:center;'
 				_props['data-' + id] = props[id]
 				break
 			case 'spaced':
-				style += 'justify-content:space-around;'
-				style += 'align-items:center;'
+				style_after += 'justify-content:space-around;'
+				style_after += 'align-items:center;'
 				_props['data-' + id] = props[id]
 				break
 
@@ -215,6 +216,10 @@ function props_to_style(props) {
 	}
 	if (style_children.trim() != '') {
 		append_style('#' + _props.id + ' > *{ ' + style_children + '}')
+	}
+
+	if (style_after.trim() != '') {
+		append_style('#' + _props.id + ' { ' + style_after + '}')
 	}
 
 	return _props
@@ -252,10 +257,12 @@ class Component extends React.Component {
 							)
 						})}
 					</Box>
-					<Box col wrap grow scroll-y>
-						{repeat(3).map(function(k) {
+					<Box row wrap grow scroll-y>
+						{repeat(20).map(function(k) {
 							return (
-								<img
+								<Box
+									element="img"
+									width="2em"
 									key={k}
 									src="images/profile.png"
 									style={{ border: '2px solid lime' }}
@@ -289,7 +296,7 @@ class Component extends React.Component {
 
 						<Box>right content for room toolbar </Box>
 					</Box>
-					<Box background grow wrap spaced scroll-y data-content>
+					<Box background row grow wrap spaced scroll-y data-content>
 						{repeat(3).map(function(k) {
 							return (
 								<Box key={k}>
