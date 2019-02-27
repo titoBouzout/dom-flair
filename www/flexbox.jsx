@@ -160,7 +160,7 @@ class Component extends React.Component {
 						</a>
 					</Box>
 					<Box col background>
-						{repeat(4).map(function(k) {
+						{repeat(3).map(function(k) {
 							return (
 								<a key={k} href="#">
 									<Box inline>
@@ -172,7 +172,7 @@ class Component extends React.Component {
 						})}
 					</Box>
 					<Box wrap grow scroll-y>
-						{repeat(25).map(function(k) {
+						{repeat(3).map(function(k) {
 							return (
 								<img
 									key={k}
@@ -188,56 +188,55 @@ class Component extends React.Component {
 					</Box>
 				</Box>
 				<Box grow col background data-column-middle>
-					<Box background data-toolbar>
+					<Box row background data-toolbar>
 						<Box title="Go Back">
 							<img src="images/icon.png" />
 						</Box>
 						<Box data-toolbar-title>
-							<Box>
-								<Box>
+							<Box inline>
+								<Box inline>
 									<img src="images/icon.png" />
 								</Box>
 								<b>LALA.UY</b>
 							</Box>
-							<Box>· </Box>
+							<Box inline>· </Box>
 						</Box>
-						<Box>
+						<Box grow>
 							Lorem Ipsum is simply dummy text of the printing and typesetting
 							industry. Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.
 						</Box>
-						<Box right>right content for room toolbar </Box>
+
+						<Box>right content for room toolbar </Box>
 					</Box>
-					<Box background data-content>
-						<Box grow wrap spaced scroll-y>
-							{repeat(20).map(function(k) {
-								return (
-									<Box key={k}>
-										<Box>
-											<img src="images/profile.png" width="221" height="221" />
-										</Box>
-										<Box>Guest 917 </Box>
-										<Box> Level 0 </Box>
-										<Box> I ♥ lala </Box>
+					<Box background grow wrap spaced scroll-y data-content>
+						{repeat(20).map(function(k) {
+							return (
+								<Box key={k}>
+									<Box>
+										<img src="images/profile.png" width="221" height="221" />
 									</Box>
-								)
-							})}
-						</Box>
+									<Box>Guest 917 </Box>
+									<Box> Level 0 </Box>
+									<Box> I ♥ lala </Box>
+								</Box>
+							)
+						})}
 					</Box>
 
-					<Box background data-footer>
+					<Box row background data-footer>
 						<Box>
-							Guest 922 <Box>— </Box>
+							Guest 922 <Box inline>— </Box>
 						</Box>
 						<Box grow />
-						<Box crop>
+						<Box row crop>
 							Users 1<Box>· </Box>Rooms 4<Box>· </Box>v4.0226,1509<Box>| </Box>
 							<Box>
 								<img src="images/icon.png" />
 							</Box>
 							<Box> 2049 </Box>
 						</Box>
-						<Box>
+						<Box row>
 							lalal.uy
 							<Box>
 								<img src="images/icon.png" />
