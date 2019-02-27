@@ -1,7 +1,5 @@
-// helper to repeat an element N times
-function repeat(n) {
-	return Array.apply(null, { length: n }).map(Number.call, Number)
-}
+// so we track changes and autoreload
+var files = ['flexbox.jsx', 'flexbox.html', 'base.css']
 
 // returns props for react with the style element modified
 function props_to_style(props) {
@@ -280,31 +278,6 @@ class Component extends React.Component {
 	}
 }
 
-// just a random color to help us see stuff
-
-var color = 0
-function random_color() {
-	function random(bottom, top) {
-		return Math.floor(Math.random() * (1 + top - bottom)) + bottom
-	}
-	function color2hex(n) {
-		n = parseInt(n, 10)
-		if (isNaN(n)) return '00'
-		n = Math.max(0, Math.min(n, 255))
-		return (
-			'0123456789ABCDEF'.charAt((n - (n % 16)) / 16) +
-			'0123456789ABCDEF'.charAt(n % 16)
-		)
-	}
-	color += 30
-	if (color > 255) color = 0
-	var red = (color + 0) >> 1
-	var green = (color + 100) >> 1
-	var blue = (color + 200) >> 1
-
-	return '#' + color2hex(red) + '' + color2hex(green) + '' + color2hex(blue)
-}
-
-// mount the Component
+// mount it
 
 ReactDOM.render(React.createElement(Component), document.querySelector('#root'))
