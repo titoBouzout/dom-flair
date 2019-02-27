@@ -116,12 +116,13 @@ function props_to_style(props) {
 				break
 
 			case 'crop':
-				// flex-shrink: 1;
+				// : 1;
 				_props.style.textOverflow = 'ellipsis'
 				_props.style.whiteSpace = 'nowrap'
 				_props.style.overflow = 'hidden'
 				_props.style.minWidth = '0'
 				_props.style.minHeight = '0'
+				//_props.style.flexShrink = '1'
 				break
 
 			// already copied at the top of the function
@@ -201,7 +202,7 @@ class Component extends React.Component {
 							</Box>
 							<Box inline>· </Box>
 						</Box>
-						<Box grow>
+						<Box grow data-toolbar-description>
 							Lorem Ipsum is simply dummy text of the printing and typesetting
 							industry. Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.
