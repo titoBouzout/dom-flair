@@ -121,6 +121,9 @@ function props_to_style(props) {
 			case 'style':
 			case 'className':
 				break
+			// internal to the box element
+			case 'element':
+				break
 			default:
 				_props[id] = props[id]
 		}
@@ -131,7 +134,7 @@ function props_to_style(props) {
 
 // the meta element that based on props should just work
 function Box(props) {
-	return React.createElement('div', props_to_style(props))
+	return React.createElement(props.element || 'div', props_to_style(props))
 }
 
 // just a component so is easier to edit programmatically
@@ -141,7 +144,7 @@ class Component extends React.Component {
 	render() {
 		return (
 			<Box grow background data-layout>
-				<Box col background basis="110px" data-left-sidebar>
+				<Box col background basis="110px" data-column-left-sidebar>
 					<Box>
 						<a href="#">
 							<Box>
@@ -177,7 +180,7 @@ class Component extends React.Component {
 						<img src="images/profile.png" />
 					</Box>
 				</Box>
-				<Box grow col background>
+				<Box grow col background data-column-middle>
 					<Box background data-toolbar>
 						<Box title="Go Back">
 							<img src="images/icon.png" />
@@ -235,11 +238,11 @@ class Component extends React.Component {
 						</Box>
 					</Box>
 				</Box>
-				<Box col background basis="15%">
+				<Box col background basis="15%" data-column-right-sidebar>
 					<Box scroll-y>
-						{repeat(10).map(function() {
+						{repeat(10).map(function(k) {
 							return (
-								<Box>
+								<Box key={k}>
 									Lorem Ipsum is simply dummy text of the printing and
 									typesetting industry. Lorem Ipsum has been the industry's
 									standard dummy text ever since the 1500s, .......
@@ -260,7 +263,8 @@ class Component extends React.Component {
 					<Box>
 						<label>
 							<Box>
-								<input
+								<Box
+									element="input"
 									spellCheck="false"
 									autoComplete="off"
 									placeholder="Press TAB or click to chat"
