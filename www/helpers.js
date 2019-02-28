@@ -1,9 +1,9 @@
-// helper to repeat an element N times
+// helper to repeat a react element N times
 function repeat(n) {
 	return Array.apply(null, { length: n }).map(Number.call, Number)
 }
-// just a random color to help us see stuff
 
+// just a random color to help us see stuff
 var color = 0
 function random_color() {
 	function random(bottom, top) {
@@ -27,7 +27,10 @@ function random_color() {
 	return '#' + color2hex(red) + '' + color2hex(green) + '' + color2hex(blue)
 }
 
+// autoreload on file change
 ;(function() {
+	var files = ['box.jsx', 'index.jsx', 'index.html', 'index.css']
+
 	var cache = {}
 	var reload = function() {
 		clearTimeout(this.refresh)
@@ -55,3 +58,12 @@ function random_color() {
 		}
 	}, 500)
 })()
+
+// to append a style to the head
+
+var sheet = document.createElement('style')
+sheet.appendChild(document.createTextNode(''))
+document.head.appendChild(sheet)
+function append_style(style) {
+	sheet.appendChild(document.createTextNode(style))
+}
