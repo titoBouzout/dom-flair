@@ -1,6 +1,6 @@
 # Crippling Sorrow Styling
 
-	This project is about having just one React "meta component" named `Box` to solve any `html` layout issues in intuitive ways without having to think anything about CSS. It does not only do layout, but also it could help with trivial CSS that can be just named as an attribute, like lets say `<Box capitalize></Box>` to just capitalize the Box contents.
+This project is about having just one React "meta component" named `Box` to solve any `html` layout issues in intuitive ways without having to think anything about CSS. It does not only do layout, but also it could help with trivial CSS that can be just named as an attribute, like lets say `<Box capitalize></Box>` to just capitalize the Box contents.
 
 - Currently this project uses flexbox properties under the hood but is not limited to flexbox, as the complete idea is to be intuitive, and we shouldn't care about the technology used behind it.
 - The secondary goal is to try to avoid having to deal with CSS as much as possible, but this goal is just secondary.
