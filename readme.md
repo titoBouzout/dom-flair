@@ -9,15 +9,16 @@ In other terms: this project dislikes CSS and wants to avoid it as much as possi
 
 ## The "Holy Grail Layout" (sticky footer) example:
 
+```jsx
 	<Box col grow>
 		<Box>header</Box>
 		<Box grow>content</Box>
 		<Box>footer</Box>
 	</Box>
-
+```
 
 ## A "complicated" example, with two sidebars, a toolbar, footer and growing middle content:
-
+```jsx
 	<Box grow>
 		<Box col grow max-width="210px" horizontal>
 			left sidebar
@@ -37,7 +38,7 @@ In other terms: this project dislikes CSS and wants to avoid it as much as possi
 			right sidebar
 		</Box>
 	</Box>
-
+```
 
 ## Attributes of the Box Element
 
