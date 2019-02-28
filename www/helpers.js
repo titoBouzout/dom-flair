@@ -29,7 +29,7 @@ function random_color() {
 
 // autoreload on file change
 ;(function() {
-	var files = ['box.jsx', 'index.jsx', 'index.html', 'index.css']
+	var files = ['index.jsx', 'index.html', 'index.css', 'style.js']
 
 	var cache = {}
 	var reload = function() {

@@ -1,8 +1,14 @@
+style.css_property_fn.background = function(value, props, style_hp) {
+	return 'background:' + random_color() + ';'
+}
+
+const PriorityTest = css('background:yellow;')
+
 class Component extends React.Component {
 	render() {
 		return (
 			<Box grow background data-layout>
-				<Box col grow background max-width="210px" data-column-left-sidebar>
+				<Box col grow background max-w="210px" data-column-left-sidebar>
 					<Box>
 						<a href="#">
 							<Box>
@@ -22,12 +28,12 @@ class Component extends React.Component {
 							)
 						})}
 					</Box>
-					<Box row wrap grow scroll-y right>
+					<Box col wrap grow scroll-y right>
 						{repeat(5).map(function(k) {
 							return (
 								<Box
 									element="img"
-									width="2em"
+									w="2em"
 									key={k}
 									src="images/profile.png"
 									style={{ border: '2px solid lime' }}
@@ -40,7 +46,7 @@ class Component extends React.Component {
 					</Box>
 				</Box>
 				<Box grow col background data-column-middle>
-					<Box row background data-toolbar width="100%">
+					<Box row background data-toolbar w="100%">
 						<Box row title="Go Back">
 							<img src="images/icon.png" />
 						</Box>
@@ -53,15 +59,21 @@ class Component extends React.Component {
 							</Box>
 							<Box inline>· </Box>
 						</Box>
-						<Box grow crop data-toolbar-description>
+						<Box grow text-crop data-toolbar-description>
 							Lorem Ipsum is simply dummy text of the printing and typesetting
 							industry. Lorem Ipsum is simply dummy text of the printing and
 							typesetting industry.
 						</Box>
 
-						<Box>right content for room toolbar </Box>
+						<PriorityTest
+							css="background:blue;"
+							className="orange"
+							style={{ background: 'red' }}
+						>
+							css priority test
+						</PriorityTest>
 					</Box>
-					<Box background col grow wrap scroll-y data-content stretch>
+					<Box background col grow wrap scroll-y data-content space-evenly>
 						{repeat(5).map(function(k) {
 							return (
 								<Box key={k}>
@@ -81,8 +93,8 @@ class Component extends React.Component {
 										<Box
 											col
 											key={align}
-											width="25%"
-											height="10%"
+											w="25%"
+											h="10%"
 											background
 											test_align={align}
 										>
@@ -100,8 +112,8 @@ class Component extends React.Component {
 											<Box
 												col
 												key={align2}
-												width="25%"
-												height="10%"
+												w="25%"
+												h="10%"
 												background
 												test_align1={align1}
 												test_align2={align2}
@@ -114,7 +126,7 @@ class Component extends React.Component {
 							: null}
 					</Box>
 
-					<Box row nowrap background data-footer width="100%">
+					<Box row nowrap background data-footer w="100%">
 						<Box row>
 							Guest 922
 							<Box inline row>
@@ -122,7 +134,7 @@ class Component extends React.Component {
 							</Box>
 						</Box>
 						<Box grow />
-						<Box row crop>
+						<Box row text-crop>
 							Users 1<Box>· </Box>Rooms 4<Box>· </Box>v4.0226,1509<Box>| </Box>
 							<Box>
 								<img src="images/icon.png" />
@@ -137,7 +149,7 @@ class Component extends React.Component {
 						</Box>
 					</Box>
 				</Box>
-				<Box col grow background max-width="15%" data-column-right-sidebar>
+				<Box col grow background max-w="15%" data-column-right-sidebar>
 					<Box scroll-y>
 						{repeat(10).map(function(k) {
 							return (
@@ -159,7 +171,7 @@ class Component extends React.Component {
 							)
 						})}
 					</Box>
-					<Box width="100%">
+					<Box w="100%">
 						<label>
 							<Box>
 								<Box
@@ -168,7 +180,7 @@ class Component extends React.Component {
 									autoComplete="off"
 									placeholder="Press TAB or click to chat"
 									type="text"
-									width="100%"
+									w="100%"
 								/>
 							</Box>
 						</label>
