@@ -778,13 +778,15 @@ class Style {
 		if (this.parent.length) {
 			var parent_new = []
 			for (var parent of this.parent) {
-				var elements = $$(parent.children)
+				var elements = document.querySelectorAll(parent.children)
 				for (var element of elements) {
 					if (element) {
 						element.parentNode.classList.add(parent.className)
 						parent_new.push(parent)
 					} else {
-						console.log('element does not exists', element)
+						if (this.debug) {
+							console.log('element does not exists', element)
+						}
 					}
 				}
 			}
