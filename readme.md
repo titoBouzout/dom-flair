@@ -1,53 +1,126 @@
 # Crippling Sorrow Styling
 
-A Box react element to solve layout. Example:
+This project is about having just one React "meta component" named `Box` to solve any `html` layout issues in intuitive ways without having to think anything about CSS. It does not only do layout, but also it could help with trivial CSS that can be just named as an attribute to a react component like lets say "capitalize".
 
-	<Box row>content is displayed in a row</Box>
+- Currently this project uses flexbox properties under the hood but is not limited to flexbox as the complete idea is to be intuitive, and we shoulnt care about the technology used behind it.
+- The secondary goal is to try to avoid having to deal with CSS as much as possible, but this goal is just secondary.
+
+In other terms: this project dislikes CSS and wants to avoid it as much as possible by providing intuitive solutions.
+
+The "Holy Grail Layout" (sticky footer) example:
+
+	<Box col grow>
+		<Box>header</Box>
+		<Box grow>content</Box>
+		<Box>footer</Box>
+	</Box>
 
 
-## Attributes (most are self explanatory some are a bit tricky)
+A "complicated" example (you get idea):
 
-### row / column
+	<Box grow>
+		<Box col grow max-width="210px" horizontal>
+			left sidebar
+		</Box>
+		<Box col grow>
+			<Box row width="100%" right>
+				toolbar
+			</Box>
+			<Box row grow center>
+				content
+			</Box>
+			<Box row width="100%" left>
+				footer
+			</Box>
+		</Box>
+		<Box col grow max-width="210px" center>
+			right sidebar
+		</Box>
+	</Box>
 
-should display all the immediate content as a row/column
 
-### grow
+## Attributes of the Box Element
 
-should grow self not the children
+The element is `<Box></Box>` and you can just add attributes to it without any value. Some attributes like `width` will require a value, obviously, but if the value is not required then it just gonna be ignored. Most are self explanatory some are a bit tricky, some aren't implemented yet. Here you have a table of the complete list of  `Box` attributes.
 
-### wrap
+Core
 
-should wrap the content as in flex-wrap
+attribute | description | implementation
+--- | --- | ---
+`element` | a string telling what kind of element should the Box have, by default is just a `div`, but if you do `<Box element="span"/>` it should just work and use a span instead of a div. | implemented maybe we should name this `item`
 
-### scroll-y / scroll-x
+Direction
 
-should scroll-y/x when overflows
+attribute | description | implementation
+--- | --- | ---
+`row` | childrens will display as a row | implemented
+`col` | childrens will display as a column | implemented
 
-### inline
+Size
 
-should display:inline
+attribute | description | implementation
+--- | --- | ---
+`grow` | grow as much as you can | implemented
+`basis` | sets the flex-basis value | implemented this has a bug because we forcing elements with grow as "stretch"
+`width` | sets the width value |  implemented
+`height` | sets the height value  | implemented
+`max-width` | sets the max-width value  | implemented
+`max-height` | sets the max-height value  | implemented
 
-### width / height
+Children Alignment
 
-should set the width/height
+attribute | description | implementation
+--- | --- | ---
+`left` | aligns to left | implemented
+`top` | aligns to top | implemented
+`right` | aligns to right | implemented
+`bottom` | aligns to bottom | implemented
+`horizontal` | aligns to the center horizontally | implemented
+`vertical` | aligns to the center vertically | implemented
+`center` | aligns to center both horizontally and vertically | implemented
+`wrap` | not sure if call this align, this should wrap any row or column items as in flex-wrap | implemented
 
-### left / right / top / bottom / horizontal(center) / vertical(center)
+Children Content Alignment
 
-should align the childrens (not the children contents)
+attribute | description | implementation
+--- | --- | ---
+`content-left` | aligns the childrens content to left | not implemented
+`content-top` | aligns the childrens content to top | not implemented
+`content-right` | aligns the childrens content to right | not implemented
+`content-bottom` | aligns the childrens content to bottom | not implemented
+`content-horizontal` | aligns the childrens content to the center horizontally | not implemented
+`content-vertical` | aligns the childrens content to the center vertically | not implemented
+`content-center` | aligns the childrens content to center both horizontally and vertically | not implemented
 
-### spaced
+Space Between Elements
 
-should space the childrens evenly/around or whatever
+attribute | description | implementation
+--- | --- | ---
+`space-around` |  space-around | implemented it could be improved like in horizontal-space-around and vertical-something-else
+`space-between` | space-between | implemented it could be improved like in horizontal-space-around and vertical-something-else
+`space-evenly` | space-evenly | implemented it could be improved like in horizontal-space-around and vertical-something-else
+`stretch` | stretch | implemented not tested | implemented it could be improved like in horizontal-space-around and vertical-something-else
 
-### crop
+Text
+--- | --- | ---
+`crop` | it should crop the text if it overflows | implemented not sure if crops on every situation | implemented but not really tested
+`nowrap` | it should nowrap the text if it overflows | implemented
 
-should crop the text when overflows
+CSS
 
-### content-left / content-right / content-top / content-bottom / content-horizontal(center) / content-vertical(center)
+attribute | description | implementation
+--- | --- | ---
+`style` | React standard object for styles (to be merged with all the styles of this element and having higher priority than Box attributes [you can overwrite Box attributes using this]) | not implemented depends of styled | not implemented
+`className` | react standard string with classNames (to be merged with all the styles of this element and having higher priority than Box attributes but lower than Box.style) | not implemented depends of styled | not implemented
 
-should align the content of the childrens
 
-### basis
+Random CSS Helpers As We See These Fit
 
-should control the flex-basis attribute (this attribute kinda overlaps with width or height (depends if col or row) Im not sure I want to use basis attribute as I dont want stuff to change size and the purpose of basis is to change size based on a proportion (if I remember correctly)
+attribute | description | implementation
+--- | --- | ---
+`scroll-y` | should scroll horizontally when overflows | implemented
+`scroll-x` | should scroll vertically when overflows | implemented
+`inline` | should display inline  | implemented
+
+
 
