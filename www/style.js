@@ -187,6 +187,14 @@ class Style {
 		br: 'border-right:',
 		bt: 'border-top:',
 
+		w: 'width:',
+		'max-w': 'max-width:',
+		'min-w': 'min-width:',
+
+		h: 'height:',
+		'max-h': 'max-height:',
+		'min-h': 'min-height:',
+
 		z: 'z-index:',
 
 		align: 'text-align:',
@@ -199,38 +207,6 @@ class Style {
 		this.css_property_fn[name] = fn
 	}
 	css_property_fn = {
-		// width
-		width: function(value, props, style_hp) {
-			return 'width:' + (value !== true ? value : '100%') + ';'
-		},
-		w: function(value, props, style_hp) {
-			return 'width:' + (value !== true ? value : '100%') + ';'
-		},
-		'max-w': function(value, props, style_hp) {
-			return 'max-width:' + (value !== true ? value : '100%') + ';'
-		},
-		'min-w': function(value, props, style_hp) {
-			return 'min-width:' + (value !== true ? value : '100%') + ';'
-		},
-
-		// height
-		height: function(value, props, style_hp) {
-			return 'height:' + (value !== true ? value : '100%') + ';'
-		},
-		h: function(value, props, style_hp) {
-			return 'height:' + (value !== true ? value : '100%') + ';'
-		},
-		'max-h': function(value, props, style_hp) {
-			return 'max-height:' + (value !== true ? value : '100%') + ';'
-		},
-		'min-h': function(value, props, style_hp) {
-			return 'min-height:' + (value !== true ? value : '100%') + ';'
-		},
-
-		radius: function(value, props, style_hp) {
-			return 'border-radius:' + (value !== true ? value : '100%') + ';'
-		},
-
 		// main axis
 		// justify-content space between items
 		// justify-items for the default justify-self
