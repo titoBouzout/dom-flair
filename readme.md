@@ -72,31 +72,18 @@ When we said `self` it's because we are referring to the `Box` element itself yo
 
 The size of the `Box` and NOT the size of the children.
 
-<<<<<<< HEAD
-| attribute | description                   | status                                                                          |
-| --------- | ----------------------------- | ------------------------------------------------------------------------------- |
-| `grow`    | grow `self` as much as it can | implemented                                                                     |
-| `basis`   | sets the flex-basis value     | buggy, we're forcing `align-self:stretch;` to `grow`, so flex-basis is ignored. |
-| `w`       | sets the width value          | implemented                                                                     |
-| `max-w`   | sets the max-width value      | implemented                                                                     |
-| `min-w`   | sets the min-width value      | implemented                                                                     |
-| `h`       | sets the height value         | implemented                                                                     |
-| `max-h`   | sets the max-height value     | implemented                                                                     |
-| `min-h`   | sets the min-height value     | implemented                                                                     |
-=======
-attribute | description | status
---- | --- | ---
-`grow` | grow `self` as much as it can | implemented
-`basis` | sets the flex-basis value | buggy,  we forcing `align-self:stretch;` to `grow` so flex-basis is ignored.
-`width` | sets the width value(if empty defaults to 100%) |  implemented
-`w` | sets the width value(if empty defaults to 100%) |  implemented
-`max-w` | sets the max-width value (if empty defaults to 100%)  | implemented
-`min-w` | sets the min-width value (if empty defaults to 100%)  | implemented
-`height` | sets the height value (if empty defaults to 100%) | implemented
-`h` | sets the height value (if empty defaults to 100%) | implemented
-`max-h` | sets the max-height value (if empty defaults to 100%)  | implemented
-`min-h` | sets the min-height value (if empty defaults to 100%)  | implemented
->>>>>>> ce340d3bf1d62257eb08c6bd5ae00a4da9731b47
+| attribute | description                                           | status                                                                          |
+| --------- | ----------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `grow`    | grow `self` as much as it can                         | implemented                                                                     |
+| `basis`   | sets the flex-basis value                             | buggy, we're forcing `align-self:stretch;` to `grow`, so flex-basis is ignored. |
+| `width`   | sets the width value(if empty defaults to 100%)       | implemented                                                                     |
+| `w`       | sets the width value(if empty defaults to 100%)       | implemented                                                                     |
+| `max-w`   | sets the max-width value (if empty defaults to 100%)  | implemented                                                                     |
+| `min-w`   | sets the min-width value (if empty defaults to 100%)  | implemented                                                                     |
+| `height`  | sets the height value (if empty defaults to 100%)     | implemented                                                                     |
+| `h`       | sets the height value (if empty defaults to 100%)     | implemented                                                                     |
+| `max-h`   | sets the max-height value (if empty defaults to 100%) | implemented                                                                     |
+| `min-h`   | sets the min-height value (if empty defaults to 100%) | implemented                                                                     |
 
 ### Children Alignment
 
@@ -173,50 +160,27 @@ This is semi-implemented. It could be improved like in horizontal-space-around a
 
 ### Padding / Margin / Border
 
-<<<<<<< HEAD
-| attribute | description    | status      |
-| --------- | -------------- | ----------- |
-| `padding` | padding        | implemented |
-| `p`       | padding        | implemented |
-| `pb`      | padding bottom | implemented |
-| `pl`      | padding left   | implemented |
-| `pr`      | padding right  | implemented |
-| `pt`      | padding top    | implemented |
-| `margin`  | margin         | implemented |
-| `m`       | margin         | implemented |
-| `mb`      | margin bottom  | implemented |
-| `ml`      | margin left    | implemented |
-| `mr`      | margin right   | implemented |
-| `mt`      | margin top     | implemented |
-| `border`  | border         | implemented |
-| `b`       | border         | implemented |
-| `bb`      | border bottom  | implemented |
-| `bl`      | border left    | implemented |
-| `br`      | border right   | implemented |
-| `bt`      | border top     | implemented |
-=======
-attribute | description | status
---- | --- | ---
-`padding` | padding | implemented
-`p` | padding | implemented
-`pb` | padding bottom | implemented
-`pl` | padding left | implemented
-`pr` | padding right | implemented
-`pt` | padding top | implemented
-`margin` | margin | implemented
-`m` | margin | implemented
-`mb` | margin bottom | implemented
-`ml` | margin left | implemented
-`mr` | margin right | implemented
-`mt` | margin top | implemented
-`border` | border | implemented
-`b` | border | implemented
-`bb` | border bottom | implemented
-`bl` | border left | implemented
-`br` | border right | implemented
-`bt` | border top | implemented
-`radius` | border-radius (if empty defaults to 100%) | implemented
->>>>>>> ce340d3bf1d62257eb08c6bd5ae00a4da9731b47
+| attribute | description                               | status      |
+| --------- | ----------------------------------------- | ----------- |
+| `padding` | padding                                   | implemented |
+| `p`       | padding                                   | implemented |
+| `pb`      | padding bottom                            | implemented |
+| `pl`      | padding left                              | implemented |
+| `pr`      | padding right                             | implemented |
+| `pt`      | padding top                               | implemented |
+| `margin`  | margin                                    | implemented |
+| `m`       | margin                                    | implemented |
+| `mb`      | margin bottom                             | implemented |
+| `ml`      | margin left                               | implemented |
+| `mr`      | margin right                              | implemented |
+| `mt`      | margin top                                | implemented |
+| `border`  | border                                    | implemented |
+| `b`       | border                                    | implemented |
+| `bb`      | border bottom                             | implemented |
+| `bl`      | border left                               | implemented |
+| `br`      | border right                              | implemented |
+| `bt`      | border top                                | implemented |
+| `radius`  | border-radius (if empty defaults to 100%) | implemented |
 
 ### CSS
 
