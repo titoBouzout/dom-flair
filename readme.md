@@ -80,12 +80,14 @@ attribute | description | status
 --- | --- | ---
 `grow` | grow `self` as much as it can | implemented
 `basis` | sets the flex-basis value | buggy,  we forcing `align-self:stretch;` to `grow` so flex-basis is ignored.
-`w` | sets the width value |  implemented
-`max-w` | sets the max-width value  | implemented
-`min-w` | sets the min-width value  | implemented
-`h` | sets the height value  | implemented
-`max-h` | sets the max-height value  | implemented
-`min-h` | sets the min-height value  | implemented
+`width` | sets the width value(if empty defaults to 100%) |  implemented
+`w` | sets the width value(if empty defaults to 100%) |  implemented
+`max-w` | sets the max-width value (if empty defaults to 100%)  | implemented
+`min-w` | sets the min-width value (if empty defaults to 100%)  | implemented
+`height` | sets the height value (if empty defaults to 100%) | implemented
+`h` | sets the height value (if empty defaults to 100%) | implemented
+`max-h` | sets the max-height value (if empty defaults to 100%)  | implemented
+`min-h` | sets the min-height value (if empty defaults to 100%)  | implemented
 
 ### Children Alignment
 
@@ -182,6 +184,7 @@ attribute | description | status
 `bl` | border left | implemented
 `br` | border right | implemented
 `bt` | border top | implemented
+`radius` | border-radius (if empty defaults to 100%) | implemented
 
 ### CSS
 
