@@ -59,7 +59,7 @@ When we said `self` is because we referring to the `Box` element you just added 
 
 attribute | description | status
 --- | --- | ---
-`element` | a string telling what kind of element should the Box have, by default is just a `div`, but if you do `<Box element="span"/>` it should just work and use a `span` instead of a `div`. | implemented, maybe we should name this `item`
+`element` | a string telling what kind of element should the Box have, by default is just a `div`, but if you do `<Box element="span"/>` it should just work and use a `span` instead of a `div`. | implemented
 
 ### Self Direction
 
@@ -70,16 +70,20 @@ attribute | description | status
 
 ### Self Size
 
+The size of the `Box` and NOT the size of the childrens.
+
 attribute | description | status
 --- | --- | ---
 `grow` | grow `self` as much as it can | implemented
-`basis` | sets the flex-basis value | implemented, this has a bug maybe because we forcing `self` to be `align-self:stretch;`
+`basis` | sets the flex-basis value | implemented, this has a bug maybe because we forcing `self` to be `align-self:stretch;` and it looks like `flex-basis` is ignored maybe.
 `width` | sets the width value |  implemented
 `height` | sets the height value  | implemented
 `max-width` | sets the max-width value  | implemented
 `max-height` | sets the max-height value  | implemented
 
 ### Children Alignment
+
+This is the alignment of the direct children and NOT the alignment of the content of these children. Example: You can display a div aligned to the left but the text on it aligned to the right. Well, in here we only control the div and not the div content.
 
 attribute | description | status
 --- | --- | ---
@@ -93,6 +97,8 @@ attribute | description | status
 `wrap` | not sure if call this align, this should wrap any row or column items as in flex-wrap | implemented
 
 ### Children Contents Alignment
+
+This is the alignment of the direct children contents and NOT the alignment of the children itself. Example: You can display a div aligned to the left but the text on it aligned to the right. Well, in here we only control the text on the children div and not the div itself.
 
 attribute | description | status
 --- | --- | ---
