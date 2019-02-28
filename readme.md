@@ -1,15 +1,12 @@
 # Crippling Sorrow Styling
 
-This goal of this project is to have just one React "meta component" named `Box` to solve any `html` layout issues in intuitive ways without having to think anything about CSS, like lets say `<Box col grow></Box>`
+This goal of this project is to have just one React "meta component" named `Box` to solve any `html` layout issues in intuitive ways without having to think anything about CSS, like lets say `<Box col grow></Box>`. That's it.
 
-It could also help with trivial CSS that can be just named in an attribute, like lets say `<Box capitalize></Box>` to capitalize the Box contents.
+It could also help with trivial CSS that can be just named in an attribute, like lets say `<Box capitalize></Box>` to capitalize the `Box` contents. It could also be used similarly to styled-components.
+
+You must include `style.js` like in `<script src='style.js'></script>`. Please note React is required.
 
 ## Examples
-
-### Usage:
-
-You must include style.js like in `<script src='style.js'></script>`.
-Please note React is required, this will not work without React.
 
 ### The "Holy Grail Layout":
 
@@ -122,7 +119,7 @@ attribute | description | status
 
 ### Space Between Children Elements
 
-It could be improved like in horizontal-space-around and vertical-space-something-else
+This is semi-implemented. It could be improved like in horizontal-space-around and vertical-space-evenly. But Im not sure.
 
 attribute | description | status
 --- | --- | ---
@@ -148,24 +145,6 @@ attribute | description | status
 `size` | font size  | implemented
 `text` | sets line-height:1.4;  | implemented
 `align` | text-align could be left, center, right  | implemented
-
-### CSS
-
-Attributes to add custom CSS/classNames. Priority: higher overwrites lower.
-
-1. css_children (attribute)
-4. Box className
-2. Box (attributes)
-3. Box.style (the react standard style object)
-5. css_parent (attribute)
-
-attribute | description | status
---- | --- | ---
-`style` | React standard object for styles | implemented
-`className` | react standard string with classNames | implemented
-`css` | string with regular css properties | implemented
-`css_children` | string with regular css properties to be applied to childrens | not implemented
-`css_parent` | string with regular css properties to be applied to the parent | implemented
 
 ### Scroll
 
@@ -206,7 +185,25 @@ attribute | description | status
 `br` | border right | implemented
 `bt` | border top | implemented
 
-### Random CSS Helpers As We See These Fit
+### CSS
+
+Attributes to add custom CSS/classNames. Priority: higher overwrites lower.
+
+1. css_children (attribute)
+4. Box className
+2. Box (attributes)
+3. Box.style (the react standard style object)
+5. css_parent (attribute)
+
+attribute | description | status
+--- | --- | ---
+`style` | React standard object for styles | implemented
+`className` | React standard string with classNames | implemented
+`css` | string with regular css properties | implemented
+`css_children` | string with regular css properties to be applied to childrens | not implemented
+`css_parent` | string with regular css properties to be applied to the parent. This is :parent selector xD | implemented
+
+### Random Helpers As We See These Fit
 
 attribute | description | status
 --- | --- | ---
@@ -243,7 +240,6 @@ attribute | description | status
 - Add more examples
 - memoize string processing functions or indicate which functions may be memoize
 - document mobile features
-- document how to add or change the attribute features
 
 ## Bugs
 
@@ -265,7 +261,7 @@ function Component(){
 }
 ```
 
-`css` function is the component factory that could be used like `styled-components`
+`css` function is the component `factory` that could be used like `styled-components`
 
 ```javascript
 
@@ -294,13 +290,15 @@ function Component(){
 	`
 
 	return <Button row center capitalize width="100%">
-				<Blue>Hola!</Blue>
+		<Blue>Hola!</Blue>
 	</Button>
 }
 
 ```
 
 In this example we use the keyword `class` which gonna be replaced for a unique class given the css properties trying to deduplicate the amount of classes you append to the document.
+
+We use the class keyword to be able to use the `hover` feature. You can use anything you want, like `class > a` to apply style to `a` childrens. Just keep the classname as `class`.
 
 ```javascript
 
@@ -320,7 +318,7 @@ function Component(){
 
 ```
 
-Extending this component. We add a new keyword `random_margin`
+Extending this component. We add a new attribute `random_margin`
 
 
 ```javascript
