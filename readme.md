@@ -61,14 +61,14 @@ attribute | description | status
 --- | --- | ---
 `element` | a string telling what kind of element should the Box have, by default is just a `div`, but if you do `<Box element="span"/>` it should just work and use a `span` instead of a `div`. | implemented
 
-### Self Direction
+### Direction
 
 attribute | description | status
 --- | --- | ---
 `row` | childrens will display as a row | implemented
 `col` | childrens will display as a column | implemented
 
-### Self Size
+### Size
 
 The size of the `Box` and NOT the size of the childrens.
 
