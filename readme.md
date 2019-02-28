@@ -59,19 +59,19 @@ attribute | description | status
 --- | --- | ---
 `element` | a string telling what kind of element should the Box have, by default is just a `div`, but if you do `<Box element="span"/>` it should just work and use a `span` instead of a `div`. | implemented, maybe we should name this `item`
 
-### Direction
+### Self Direction
 
 attribute | description | status
 --- | --- | ---
 `row` | childrens will display as a row | implemented
 `col` | childrens will display as a column | implemented
 
-### Size
+### Self Size
 
 attribute | description | status
 --- | --- | ---
-`grow` | grow self as much as it can | implemented
-`basis` | sets the flex-basis value | implemented, this has a bug maybe because we forcing self-elements with grow as "stretch"
+`grow` | grow `self` as much as it can | implemented
+`basis` | sets the flex-basis value | implemented, this has a bug maybe because we forcing `self` to be `align-self:stretch;`
 `width` | sets the width value |  implemented
 `height` | sets the height value  | implemented
 `max-width` | sets the max-width value  | implemented
@@ -87,10 +87,10 @@ attribute | description | status
 `bottom` | aligns to bottom | implemented
 `horizontal` | aligns to the center horizontally | implemented
 `vertical` | aligns to the center vertically | implemented
-`center` | aligns to center both horizontally and vertically | implemented
+`center` | aligns to center, both horizontally and vertically | implemented
 `wrap` | not sure if call this align, this should wrap any row or column items as in flex-wrap | implemented
 
-### Children Content Alignment
+### Children Contents Alignment
 
 attribute | description | status
 --- | --- | ---
@@ -100,9 +100,9 @@ attribute | description | status
 `content-bottom` | aligns the childrens content to bottom | not implemented
 `content-horizontal` | aligns the childrens content to the center horizontally | not implemented
 `content-vertical` | aligns the childrens content to the center vertically | not implemented
-`content-center` | aligns the childrens content to center both horizontally and vertically | not implemented
+`content-center` | aligns the childrens content to center, both horizontally and vertically | not implemented
 
-### Space Between Elements
+### Space Between Children Elements
 
 attribute | description | status
 --- | --- | ---
@@ -111,13 +111,13 @@ attribute | description | status
 `space-evenly` | space-evenly | implemented it could be improved like in horizontal-space-around and vertical-something-else
 `stretch` | stretch | implemented not tested | implemented it could be improved like in horizontal-space-around and vertical-something-else
 
-### Text
+### Children Text
 attribute | description | status
 --- | --- | ---
 `crop` | it should crop the text if it overflows | implemented not sure if crops on every situation | implemented but not really tested
 `nowrap` | it should nowrap the text if it overflows | implemented
 
-### CSS
+### Self CSS
 
 attribute | description | status
 --- | --- | ---
@@ -125,7 +125,7 @@ attribute | description | status
 `className` | react standard string with classNames (to be merged with all the styles of this element and having higher priority than Box attributes but lower than Box.style) | not implemented depends of styled | not implemented
 
 
-### Random CSS Helpers As We See These Fit
+### Self Random CSS Helpers As We See These Fit
 
 attribute | description | status
 --- | --- | ---
