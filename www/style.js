@@ -464,7 +464,10 @@ class Style {
 
 	factory(element, classNames) {
 		return function(style, element, classNames, props) {
-			return React.createElement(element, style.props(props, classNames))
+			return React.createElement(
+				props.element || element,
+				style.props(props, classNames)
+			)
 		}.bind(null, this, element, classNames)
 	}
 
@@ -738,8 +741,9 @@ class Style {
 				try {
 					this.insertRule('@media{' + styles + '}', this.sheet_rules++)
 				} catch (e) {
-					this.sheet_append.appendChild(document.createTextNode(styles))
-					error(e)
+					this.sheet_append.appendChild(document.createTextNode(styles))(
+						error || console.error
+					)(e)
 				}
 			} else {
 				this.sheet_append.appendChild(document.createTextNode(styles))
