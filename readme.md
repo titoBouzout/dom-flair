@@ -7,7 +7,7 @@ This project is about having just one React "meta component" named `Box` to solv
 
 In other terms: this project dislikes CSS and wants to avoid it as much as possible by providing intuitive solutions.
 
-## The "Holy Grail Layout" (sticky footer) example:
+## The "Holy Grail Layout" (sticky footer):
 
 ```jsx
 <Box col grow>
@@ -17,9 +17,9 @@ In other terms: this project dislikes CSS and wants to avoid it as much as possi
 </Box>
 ```
 
-## A "complicated" example
+## Something "complicated":
 
-With two sidebars, a toolbar, footer and growing middle content:
+Has two sidebars, a toolbar, a footer and grows in the middle content:
 
 ```jsx
 <Box grow>
@@ -49,11 +49,15 @@ The element is `<Box></Box>` and you can just add attributes to it without any v
 
 Here have a table of the complete list of the `Box` attributes:
 
+### Definitions
+
+When we said `self` is because we referring to the `Box` element you just added the `attribute` to, and not to the children, unless is explicitly noted. Example: if you say `<Box grow>`, and we mean that `grow` applies to `self`, then that means that `self` will `grow` and NOT the children.
+
 ### Core
 
 attribute | description | status
 --- | --- | ---
-`element` | a string telling what kind of element should the Box have, by default is just a `div`, but if you do `<Box element="span"/>` it should just work and use a `span` instead of a `div`. | implemented,  maybe we should name this `item`
+`element` | a string telling what kind of element should the Box have, by default is just a `div`, but if you do `<Box element="span"/>` it should just work and use a `span` instead of a `div`. | implemented, maybe we should name this `item`
 
 ### Direction
 
@@ -66,8 +70,8 @@ attribute | description | status
 
 attribute | description | status
 --- | --- | ---
-`grow` | grow as much as you can | implemented
-`basis` | sets the flex-basis value | implemented, this has a bug maybe because we forcing elements with grow as "stretch"
+`grow` | grow self as much as it can | implemented
+`basis` | sets the flex-basis value | implemented, this has a bug maybe because we forcing self-elements with grow as "stretch"
 `width` | sets the width value |  implemented
 `height` | sets the height value  | implemented
 `max-width` | sets the max-width value  | implemented
