@@ -98,7 +98,7 @@ attribute | description | status
 
 ### Children Contents Alignment
 
-This is the alignment of the direct children contents and NOT the alignment of the children. Example: You can display a `div` aligned to the left but the text on it aligned to the `right`. Well, in here we only control the text on the children `div` and not the div itself.
+This is the alignment of the direct children contents and NOT the alignment of the children. Example: You can display a `div` aligned to the left but the text on it aligned to the `right`. Well, in here we only control the text on the children `div` and not the `div` itself.
 
 attribute | description | status
 --- | --- | ---
@@ -114,18 +114,18 @@ attribute | description | status
 
 attribute | description | status
 --- | --- | ---
-`space-around` |  space-around | implemented it could be improved like in horizontal-space-around and vertical-something-else
-`space-between` | space-between | implemented it could be improved like in horizontal-space-around and vertical-something-else
-`space-evenly` | space-evenly | implemented it could be improved like in horizontal-space-around and vertical-something-else
-`stretch` | stretch | implemented not tested | implemented it could be improved like in horizontal-space-around and vertical-something-else
+`space-around` |  space-around | implemented, it could be improved like in horizontal-space-around and vertical-space-something-else
+`space-between` | space-between | implemented, it could be improved like in horizontal-space-around and vertical-space-something-else
+`space-evenly` | space-evenly | implemented, it could be improved like in horizontal-space-around and vertical-space-something-else
+`stretch` | stretch | implemented, not tested
 
 ### Children Text
 attribute | description | status
 --- | --- | ---
-`crop` | it should crop the text if it overflows | implemented not sure if crops on every situation | implemented but not really tested
+`crop` | it should crop the text if it overflows | implemented, not sure if crops on every situation | implemented but not really tested
 `nowrap` | it should nowrap the text if it overflows | implemented
 
-### Self CSS
+### CSS
 
 attribute | description | status
 --- | --- | ---
@@ -133,7 +133,7 @@ attribute | description | status
 `className` | react standard string with classNames (to be merged with all the styles of this element and having higher priority than Box attributes but lower than Box.style) | not implemented depends of styled | not implemented
 
 
-### Self Random CSS Helpers As We See These Fit
+### Random CSS Helpers As We See These Fit
 
 attribute | description | status
 --- | --- | ---
