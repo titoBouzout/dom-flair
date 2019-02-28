@@ -201,34 +201,34 @@ class Style {
 	css_property_fn = {
 		// width
 		width: function(value, props, style_hp) {
-			return 'width:' + (value ? value : '100%;')
+			return 'width:' + (value ? value : '100%') + ';'
 		},
 		w: function(value, props, style_hp) {
-			return 'width:' + (value ? value : '100%;')
+			return 'width:' + (value ? value : '100%') + ';'
 		},
 		'max-w': function(value, props, style_hp) {
-			return 'max-width:' + (value ? value : '100%;')
+			return 'max-width:' + (value ? value : '100%') + ';'
 		},
 		'min-w': function(value, props, style_hp) {
-			return 'min-width:' + (value ? value : '100%;')
+			return 'min-width:' + (value ? value : '100%') + ';'
 		},
 
 		// height
 		height: function(value, props, style_hp) {
-			return 'height:' + (value ? value : '100%;')
+			return 'height:' + (value ? value : '100%') + ';'
 		},
 		h: function(value, props, style_hp) {
-			return 'height:' + (value ? value : '100%;')
+			return 'height:' + (value ? value : '100%') + ';'
 		},
 		'max-h': function(value, props, style_hp) {
-			return 'max-height:' + (value ? value : '100%;')
+			return 'max-height:' + (value ? value : '100%') + ';'
 		},
 		'min-h': function(value, props, style_hp) {
-			return 'min-height:' + (value ? value : '100%;')
+			return 'min-height:' + (value ? value : '100%') + ';'
 		},
 
 		radius: function(value, props, style_hp) {
-			return 'border-radius:' + (value ? value : '100%;')
+			return 'border-radius:' + (value ? value : '100%') + ';'
 		},
 
 		// main axis
