@@ -83,7 +83,7 @@ attribute | description | status
 
 ### Children Alignment
 
-This is the alignment of the direct children and NOT the alignment of the content of these children. Example: You can display a div aligned to the left but the text on it aligned to the right. Well, in here we only control the div and not the div content.
+This is the alignment of the direct children and NOT the alignment of the content of these children. Example: You can display a `div` aligned to the left but the text on it aligned to the `right`. Well, in here we only control the `div` itself and not the `div` contents.
 
 attribute | description | status
 --- | --- | ---
@@ -98,7 +98,7 @@ attribute | description | status
 
 ### Children Contents Alignment
 
-This is the alignment of the direct children contents and NOT the alignment of the children itself. Example: You can display a div aligned to the left but the text on it aligned to the right. Well, in here we only control the text on the children div and not the div itself.
+This is the alignment of the direct children contents and NOT the alignment of the children. Example: You can display a `div` aligned to the left but the text on it aligned to the `right`. Well, in here we only control the text on the children `div` and not the div itself.
 
 attribute | description | status
 --- | --- | ---
