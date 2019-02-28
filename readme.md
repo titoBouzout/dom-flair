@@ -17,7 +17,10 @@ In other terms: this project dislikes CSS and wants to avoid it as much as possi
 </Box>
 ```
 
-## A "complicated" example, with two sidebars, a toolbar, footer and growing middle content:
+## A "complicated" example
+
+With two sidebars, a toolbar, footer and growing middle content:
+
 ```jsx
 <Box grow>
 	<Box col grow max-width="210px" horizontal>
@@ -40,37 +43,39 @@ In other terms: this project dislikes CSS and wants to avoid it as much as possi
 </Box>
 ```
 
-## Attributes of the Box Element
+## Attributes of the Box React Element
 
-The element is `<Box></Box>` and you can just add attributes to it without any values. Some attributes like `width` will require a value, obviously, but if the value is not required then it just gonna be ignored. Here you have a table of the complete list of the `Box` attributes:
+The element is `<Box></Box>` and you can just add attributes to it without any values. Some attributes like `width` will require a value, obviously, but if the value is not required then it just gonna be ignored.
 
-#### Core
+Here have a table of the complete list of the `Box` attributes:
 
-attribute | description | implementation
+### Core
+
+attribute | description | status
 --- | --- | ---
-`element` | a string telling what kind of element should the Box have, by default is just a `div`, but if you do `<Box element="span"/>` it should just work and use a span instead of a div. | implemented maybe we should name this `item`
+`element` | a string telling what kind of element should the Box have, by default is just a `div`, but if you do `<Box element="span"/>` it should just work and use a `span` instead of a `div`. | implemented,  maybe we should name this `item`
 
-#### Direction
+### Direction
 
-attribute | description | implementation
+attribute | description | status
 --- | --- | ---
 `row` | childrens will display as a row | implemented
 `col` | childrens will display as a column | implemented
 
-#### Size
+### Size
 
-attribute | description | implementation
+attribute | description | status
 --- | --- | ---
 `grow` | grow as much as you can | implemented
-`basis` | sets the flex-basis value | implemented, this has a bug because we forcing elements with grow as "stretch"
+`basis` | sets the flex-basis value | implemented, this has a bug maybe because we forcing elements with grow as "stretch"
 `width` | sets the width value |  implemented
 `height` | sets the height value  | implemented
 `max-width` | sets the max-width value  | implemented
 `max-height` | sets the max-height value  | implemented
 
-#### Children Alignment
+### Children Alignment
 
-attribute | description | implementation
+attribute | description | status
 --- | --- | ---
 `left` | aligns to left | implemented
 `top` | aligns to top | implemented
@@ -81,9 +86,9 @@ attribute | description | implementation
 `center` | aligns to center both horizontally and vertically | implemented
 `wrap` | not sure if call this align, this should wrap any row or column items as in flex-wrap | implemented
 
-#### Children Content Alignment
+### Children Content Alignment
 
-attribute | description | implementation
+attribute | description | status
 --- | --- | ---
 `content-left` | aligns the childrens content to left | not implemented
 `content-top` | aligns the childrens content to top | not implemented
@@ -93,32 +98,32 @@ attribute | description | implementation
 `content-vertical` | aligns the childrens content to the center vertically | not implemented
 `content-center` | aligns the childrens content to center both horizontally and vertically | not implemented
 
-#### Space Between Elements
+### Space Between Elements
 
-attribute | description | implementation
+attribute | description | status
 --- | --- | ---
 `space-around` |  space-around | implemented it could be improved like in horizontal-space-around and vertical-something-else
 `space-between` | space-between | implemented it could be improved like in horizontal-space-around and vertical-something-else
 `space-evenly` | space-evenly | implemented it could be improved like in horizontal-space-around and vertical-something-else
 `stretch` | stretch | implemented not tested | implemented it could be improved like in horizontal-space-around and vertical-something-else
 
-#### Text
-attribute | description | implementation
+### Text
+attribute | description | status
 --- | --- | ---
 `crop` | it should crop the text if it overflows | implemented not sure if crops on every situation | implemented but not really tested
 `nowrap` | it should nowrap the text if it overflows | implemented
 
-#### CSS
+### CSS
 
-attribute | description | implementation
+attribute | description | status
 --- | --- | ---
 `style` | React standard object for styles (to be merged with all the styles of this element and having higher priority than Box attributes [you can overwrite Box attributes using this]) | not implemented depends of styled | not implemented
 `className` | react standard string with classNames (to be merged with all the styles of this element and having higher priority than Box attributes but lower than Box.style) | not implemented depends of styled | not implemented
 
 
-#### Random CSS Helpers As We See These Fit
+### Random CSS Helpers As We See These Fit
 
-attribute | description | implementation
+attribute | description | status
 --- | --- | ---
 `scroll-y` | should scroll horizontally when overflows | implemented
 `scroll-x` | should scroll vertically when overflows | implemented
