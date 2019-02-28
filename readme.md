@@ -45,7 +45,7 @@ Has two sidebars, a toolbar, a footer and grows in the middle content:
 </Box>
 ```
 
-## Attributes of the Box React Element
+## Attributes supported by `Box`
 
 The element is `<Box></Box>` and you can just add attributes to it without any values. Some attributes like `width` will require a value, obviously, but if the value is not required then it just gonna be ignored.
 
