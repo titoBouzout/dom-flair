@@ -1,13 +1,13 @@
 # Crippling Sorrow Styling
 
-This project is about having just one React "meta component" named `Box` to solve any `html` layout issues in intuitive ways without having to think anything about CSS. It does not only do layout, but also it could help with trivial CSS that can be just named as an attribute to a react component like lets say "capitalize".
+	This project is about having just one React "meta component" named `Box` to solve any `html` layout issues in intuitive ways without having to think anything about CSS. It does not only do layout, but also it could help with trivial CSS that can be just named as an attribute, like lets say `<Box capitalize></Box>` to just capitalize the Box contents.
 
-- Currently this project uses flexbox properties under the hood but is not limited to flexbox as the complete idea is to be intuitive, and we shoulnt care about the technology used behind it.
+- Currently this project uses flexbox properties under the hood but is not limited to flexbox, as the complete idea is to be intuitive, and we shouldn't care about the technology used behind it.
 - The secondary goal is to try to avoid having to deal with CSS as much as possible, but this goal is just secondary.
 
 In other terms: this project dislikes CSS and wants to avoid it as much as possible by providing intuitive solutions.
 
-The "Holy Grail Layout" (sticky footer) example:
+## The "Holy Grail Layout" (sticky footer) example:
 
 	<Box col grow>
 		<Box>header</Box>
@@ -16,7 +16,7 @@ The "Holy Grail Layout" (sticky footer) example:
 	</Box>
 
 
-A "complicated" example (you get idea):
+## A "complicated" example, with two sidebars, a toolbar, footer and growing middle content:
 
 	<Box grow>
 		<Box col grow max-width="210px" horizontal>
@@ -41,33 +41,33 @@ A "complicated" example (you get idea):
 
 ## Attributes of the Box Element
 
-The element is `<Box></Box>` and you can just add attributes to it without any value. Some attributes like `width` will require a value, obviously, but if the value is not required then it just gonna be ignored. Most are self explanatory some are a bit tricky, some aren't implemented yet. Here you have a table of the complete list of  `Box` attributes.
+The element is `<Box></Box>` and you can just add attributes to it without any values. Some attributes like `width` will require a value, obviously, but if the value is not required then it just gonna be ignored. Here you have a table of the complete list of the `Box` attributes:
 
-Core
+#### Core
 
 attribute | description | implementation
 --- | --- | ---
 `element` | a string telling what kind of element should the Box have, by default is just a `div`, but if you do `<Box element="span"/>` it should just work and use a span instead of a div. | implemented maybe we should name this `item`
 
-Direction
+#### Direction
 
 attribute | description | implementation
 --- | --- | ---
 `row` | childrens will display as a row | implemented
 `col` | childrens will display as a column | implemented
 
-Size
+#### Size
 
 attribute | description | implementation
 --- | --- | ---
 `grow` | grow as much as you can | implemented
-`basis` | sets the flex-basis value | implemented this has a bug because we forcing elements with grow as "stretch"
+`basis` | sets the flex-basis value | implemented, this has a bug because we forcing elements with grow as "stretch"
 `width` | sets the width value |  implemented
 `height` | sets the height value  | implemented
 `max-width` | sets the max-width value  | implemented
 `max-height` | sets the max-height value  | implemented
 
-Children Alignment
+#### Children Alignment
 
 attribute | description | implementation
 --- | --- | ---
@@ -80,7 +80,7 @@ attribute | description | implementation
 `center` | aligns to center both horizontally and vertically | implemented
 `wrap` | not sure if call this align, this should wrap any row or column items as in flex-wrap | implemented
 
-Children Content Alignment
+#### Children Content Alignment
 
 attribute | description | implementation
 --- | --- | ---
@@ -92,7 +92,7 @@ attribute | description | implementation
 `content-vertical` | aligns the childrens content to the center vertically | not implemented
 `content-center` | aligns the childrens content to center both horizontally and vertically | not implemented
 
-Space Between Elements
+#### Space Between Elements
 
 attribute | description | implementation
 --- | --- | ---
@@ -101,12 +101,13 @@ attribute | description | implementation
 `space-evenly` | space-evenly | implemented it could be improved like in horizontal-space-around and vertical-something-else
 `stretch` | stretch | implemented not tested | implemented it could be improved like in horizontal-space-around and vertical-something-else
 
-Text
+#### Text
+attribute | description | implementation
 --- | --- | ---
 `crop` | it should crop the text if it overflows | implemented not sure if crops on every situation | implemented but not really tested
 `nowrap` | it should nowrap the text if it overflows | implemented
 
-CSS
+#### CSS
 
 attribute | description | implementation
 --- | --- | ---
@@ -114,7 +115,7 @@ attribute | description | implementation
 `className` | react standard string with classNames (to be merged with all the styles of this element and having higher priority than Box attributes but lower than Box.style) | not implemented depends of styled | not implemented
 
 
-Random CSS Helpers As We See These Fit
+#### Random CSS Helpers As We See These Fit
 
 attribute | description | implementation
 --- | --- | ---
