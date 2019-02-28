@@ -1,5 +1,5 @@
 class Style {
-	debug = true
+	debug = false
 
 	element = 'div'
 
@@ -203,7 +203,9 @@ class Style {
 
 		basis: 'flex-basis:',
 	}
-
+	define_attribute(name, fn) {
+		this.css_property_fn[name] = fn
+	}
 	css_property_fn = {
 		// main axis
 		// justify-content space between items

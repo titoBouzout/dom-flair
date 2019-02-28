@@ -1,6 +1,8 @@
-style.css_property_fn.background = function(value, props, style_hp) {
+style.debug = true
+
+style.define_attribute('background', function(value, props, style_hp) {
 	return 'background:' + random_color() + ';'
-}
+})
 
 const PriorityTest = css('background:yellow;')
 
