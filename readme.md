@@ -193,14 +193,12 @@ attribute | description | status
 `pl` | padding left | implemented
 `pr` | padding right | implemented
 `pt` | padding top | implemented
-
 `margin` | margin | implemented
 `m` | margin | implemented
 `mb` | margin bottom | implemented
 `ml` | margin left | implemented
 `mr` | margin right | implemented
 `mt` | margin top | implemented
-
 `border` | border | implemented
 `b` | border | implemented
 `bb` | border bottom | implemented
@@ -298,6 +296,49 @@ function Component(){
 	return <Button row center capitalize width="100%">
 				<Blue>Hola!</Blue>
 	</Button>
+}
+
+```
+
+In this example we use the keyword `class` which gonna be replaced for a unique class given the css properties trying to deduplicate the amount of classes you append to the document.
+
+```javascript
+
+function Component(){
+
+	const BlueHover = css(`
+	    class {
+			color: red;
+		}
+		class:hover {
+			color: blue;
+		}
+	`)
+
+	return <BlueHover>Im blue lararirara</BlueHover>
+}
+
+```
+
+Extending this component. We add a new keyword `random_margin`
+
+
+```javascript
+
+style.css_property_fn.random_margin = function(value, props, style_hp) {
+	return 'margin:' + ((Math.random()*10)|0) + 'px;'
+}
+
+function Component(){
+
+	const Blue = css(`color: blue;`)
+
+	return <Box>
+			<Blue random_margin>
+				Im blue
+				<Box row grow random_margin>Lala</Box>
+			</Blue>
+	</Box>
 }
 
 ```
