@@ -49,18 +49,14 @@ Has two sidebars, a toolbar, a footer, and grows in the middle content:
 ## Caveats / Surprises
 
 1. Rows will not take the full width unless you add to them width="100%"
-2. You need to explicitly tell how stuff is aligned
-3. It does not do any kind of prefixing.
-4. If you use interpolation, we will just use `string.raw[0]` without doing any sort of processing.
+2. You need to explicitly tell how stuff is aligned. (this for me is a feature)
+3. It does not do any kind of prefixing. (stop prefixing!)
+4. If you use interpolation, we will just use `string.raw[0]` without doing any sort of processing. (I dont use interpolation)
 5. You are responsible of defining `html`, `body` or `body > div` so the styles of this library work properly. (example, if you use `<Box grow/>` and it does not work then maybe the parent is preventing the Box from growing.
 
 ## Attributes supported by `Box`
 
 The element is `<Box></Box>`, and you can just add attributes to it without any values. Some attributes like `width` will require a value. If a value is not required, then it'll be ignored.
-
-### Definitions
-
-When we said `self` it's because we are referring to the `Box` element itself you just added the `attribute` to, and not to the `children`.
 
 ### Direction
 
@@ -77,7 +73,7 @@ The size of the `Box` and NOT the size of the children.
 
 | attribute | description                                           | status                                                                          |
 | --------- | ----------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `grow`    | grow `self` as much as it can                         | implemented                                                                     |
+| `grow`    | grow `self` as much as it can without growing the children                         | implemented                                                                     |
 | `basis`   | sets the flex-basis value                             | buggy, we're forcing `align-self:stretch;` to `grow`, so flex-basis is ignored. |
 | `width`   | sets the width value(if empty defaults to 100%)       | implemented                                                                     |
 | `w`       | sets the width value(if empty defaults to 100%)       | implemented                                                                     |
@@ -102,22 +98,6 @@ This is the alignment of the children, NOT the alignment of the content of these
 | `vertical`   | aligns to the center vertically                    | implemented |
 | `center`     | aligns to center, both horizontally and vertically | implemented |
 
-### Children Contents Alignment
-
-This is the alignment of the children contents and NOT the alignment of the children. Example: You can display a `div` aligned to the left, but the text on it aligned to the `right`. Well, in here we only control the text on the `div` and not the `div` itself.
-
-I'm not sure if this is a good idea.
-
-| attribute            | description                                                               | status          |
-| -------------------- | ------------------------------------------------------------------------- | --------------- |
-| `content-left`       | aligns the children's content to left                                     | not implemented |
-| `content-top`        | aligns the children's content to top                                      | not implemented |
-| `content-right`      | aligns the children's content to right                                    | not implemented |
-| `content-bottom`     | aligns the children's content to bottom                                   | not implemented |
-| `content-horizontal` | aligns the children's content to the center horizontally                  | not implemented |
-| `content-vertical`   | aligns the children's content to the center vertically                    | not implemented |
-| `content-center`     | aligns the children's content to center, both horizontally and vertically | not implemented |
-
 ### Space Between Children Elements
 
 | attribute       | description   | status                  |
@@ -134,6 +114,8 @@ I'm not sure if this is a good idea.
 | `stretch`       | stretch       | implemented, not tested |
 
 ### Text
+
+Useful text stuff.
 
 | attribute      | description                             | status      |
 | -------------- | --------------------------------------- | ----------- |
@@ -195,14 +177,13 @@ I'm not sure if this is a good idea.
 
 Attributes to add custom CSS/classNames. Priority, the ones on top overwrite the ones on bottom:
 
-`css_parent` overwrites:
-custom defined function high priority overwrites:
-`style` (`<Box style={{background:'red';}}/>`) overwrites:
-`css` (`<Box css="background:red;"/>`) overwrites:
-`attribute definition` (`<Box grow/>`) overwrites:
+1. `css_parent` overwrites:
+2.  custom defined function high priority overwrites:
+3. `style` (`<Box style={{background:'red';}}/>`) overwrites:
+4. `css` (`<Box css="background:red;"/>`) overwrites:
+5. `attribute definition` (`<Box grow/>`) overwrites:
 component definition (`css('background:red;');`):
-
-`className` is unknown if overwrites or not because depends were you include the className definition.
+6. `className` is unknown if overwrites or not because depends were you include the className definition.
 
 | attribute      | description                                                                                         | status          |
 | -------------- | --------------------------------------------------------------------------------------------------- | --------------- |
