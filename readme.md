@@ -104,6 +104,8 @@ This is the alignment of the children, NOT the alignment of the content of these
 
 This is the alignment of the children contents and NOT the alignment of the children. Example: You can display a `div` aligned to the left, but the text on it aligned to the `right`. Well, in here we only control the text on the `div` and not the `div` itself.
 
+I'm not sure if this is a good idea.
+
 | attribute            | description                                                               | status          |
 | -------------------- | ------------------------------------------------------------------------- | --------------- |
 | `content-left`       | aligns the children's content to left                                     | not implemented |
@@ -116,26 +118,24 @@ This is the alignment of the children contents and NOT the alignment of the chil
 
 ### Space Between Children Elements
 
-This is semi-implemented. It could be improved like in horizontal-space-around and vertical-space-evenly, but I'm not sure.
-
 | attribute       | description   | status                  |
 | --------------- | ------------- | ----------------------- |
 | `space-around`  | space-around  | implemented        |
-| `space-around-horizontal`  | space-around  | implemented (does not work in cols)       |
-| `space-around-vertical`  | space-around  | implemented (does not work in cols)       |
+| `space-around-horizontal`  | space-around  | semi implemented (does not work in cols)       |
+| `space-around-vertical`  | space-around  | semi implemented (does not work in cols)       |
 | `space-between` | space-between | implemented        |
-| `space-between-horizontal` | space-between | implemented (does not work in cols)       |
-| `space-between-vertical` | space-between | implemented (does not work in cols)       |
+| `space-between-horizontal` | space-between | semi implemented (does not work in cols)       |
+| `space-between-vertical` | space-between | semi implemented (does not work in cols)       |
 | `space-evenly`  | space-evenly  | implemented        |
-| `space-evenly-horizontal`  | space-evenly  | implemented (does not work in cols)       |
-| `space-evenly-vertical`  | space-evenly  | implemented (does not work in cols)       |
+| `space-evenly-horizontal`  | space-evenly  | semi implemented (does not work in cols)       |
+| `space-evenly-vertical`  | space-evenly  | semi implemented (does not work in cols)       |
 | `stretch`       | stretch       | implemented, not tested |
 
 ### Text
 
 | attribute      | description                             | status      |
 | -------------- | --------------------------------------- | ----------- |
-| `text-crop`    | crops the text (ellipsis will only be shown if the container in not display:flex aka not row/col/grow)         | implemented |
+| `text-crop`    | crops the text (ellipsis will only be shown if the container in not display:flex aka not row/col/grow, if you want to show ellipsis in a flex container then wrap it like `<Box row><Box text-crop>The..</Box></Box>`)         | implemented |
 | `text-nowrap`  | nowrap the text if it overflows         | implemented |
 | `text-wrap`    | wrap the text if it overflows           | implemented |
 | `small`        | font size small                         | implemented |
@@ -205,7 +205,7 @@ Attributes to add custom CSS/classNames. Priority: higher overwrites lower.
 | `className`    | React standard string with classNames                                                               | implemented     |
 | `css`          | string with regular css properties                                                                  | implemented     |
 | `css_children` | string with regular css properties, to be applied to children                                       | not implemented |
-| `css_parent`   | string with regular css properties, to be applied to the parent. This is :parent selector xD        | implemented     |
+| `css_parent`   | string with regular css properties, to be applied to the parent. This is :parent selector xD        | implemented not tested    |
 
 ### Random Helpers As We See These Fit
 
@@ -268,7 +268,7 @@ var Component = css('class{color:red;}class>a{color:blue;}')
 var Component = css('background:red;', 'span')
 
 // using other components
-function Something(props) {
+function Something_NOTICE_ME(props) {
 	// here className was automatically created
 	return (
 		<div className={props.className}>
@@ -276,9 +276,10 @@ function Something(props) {
 		</div>
 	)
 }
-var Red = css('background:red', Something)
-var Blue = css('background:blue', Something)
+var Red = css('background:red', Something_NOTICE_ME)
+var Blue = css('background:blue', Something_NOTICE_ME)
 
+// Then you just do
 // <Red>the red link!</Red>
 // <Blue>the blue link!</Blue>
 
@@ -291,6 +292,7 @@ var Button = css(
 	'button'
 )
 
+// I believe interpolation does not work. IDK
 var Button = css`
 	display: inline-block;
 	border-radius: 3px;
