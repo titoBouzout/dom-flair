@@ -228,13 +228,6 @@ Attributes to add custom CSS/classNames. Priority: higher overwrites lower.
 | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | `element` | a string telling what kind of element should the Box should be. By default is a `div`, but if you do `<Box element="span"/>`, it should just work and use a `span` instead of a `div`. | implemented |
 
-## Features
-
-- easy to think about layouts
-- some handy default attributes
-- easy to use mobile breakpoints
-- deduplicates css
-
 ## API
 
 ### Globals
@@ -245,6 +238,36 @@ Including this creates four globals:
 - `style` the class instance.
 - `Box` the component `Box`
 - `css` a component factory
+
+### Valid use cases for `Box` component
+
+```html
+
+<Box></Box>
+
+<Box css="background:red"></Box>
+
+<Box css=`
+	class:hover{
+		background:red;
+	}
+	class >a{
+		background:green
+	};
+`></Box>
+
+<Box style={{background:'red'}}></Box>
+
+```
+
+### Invalid use cases for `Box` component. It Will Not Work !
+
+These attributes cannot have a class.
+
+```html
+<Box css_parent="class{background:red;}"></Box>
+<Box css_children="class{background:red}"></Box>
+```
 
 ### Valid use cases for `css` component factory
 
@@ -298,36 +321,6 @@ var Button = css`
 	border-radius: 3px;
 	border: 2px solid white;
 `
-```
-
-### Valid use cases for `Box` component
-
-```html
-
-<Box></Box>
-
-<Box css="background:red"></Box>
-
-<Box css=`
-	class:hover{
-		background:red;
-	}
-	class >a{
-		background:green
-	};
-`></Box>
-
-<Box style={{background:'red'}}></Box>
-
-```
-
-### Invalid use cases for `Box` component. It Will Not Work !
-
-These attributes cannot have a class.
-
-```html
-<Box css_parent="class{background:red;}"></Box>
-<Box css_children="class{background:red}"></Box>
 ```
 
 ### Extending. You can define new attributes for `Box`
@@ -430,6 +423,13 @@ It does not pretend to validate everything, just the annoying things that could 
 It displays an error message if debug is on when:
 
 1. width or height is used with also padding or margin or border without using box-sizing
+
+## Features
+
+- easy to think about layouts
+- some handy default attributes
+- easy to use mobile breakpoints
+- deduplicates css
 
 ## TODO
 
