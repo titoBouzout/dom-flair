@@ -6,6 +6,8 @@ class Style {
 	parent = []
 	parent_counter = 0
 
+	classes = {}
+
 	properties = {}
 	properties_counter = 0
 
@@ -62,7 +64,11 @@ class Style {
 		`,
 		grow: `
 			display: flex;
-			flex: 1;
+
+			flex-grow: 1;
+			flex-shrink: 1;
+			flex-basis: 0%;
+
 			align-self: stretch;
 			min-height: 0;
 			min-width: 0;
@@ -72,6 +78,7 @@ class Style {
 			justify-items: flex-start;
 			align-items: flex-start;
 		`,
+		// box-sizing maybe messing with wrap
 		wrap: `
 			display: flex;
 			flex-wrap: wrap;
@@ -143,7 +150,6 @@ class Style {
 			max-width: 100%;
 			max-height: 100%;
 			overflow: hidden;
-			box-sizing: border-box; // has height/width so border-box
 		`,
 
 		overflow: 'overflow:hidden;',
@@ -187,14 +193,6 @@ class Style {
 		br: 'border-right:',
 		bt: 'border-top:',
 
-		w: 'width:',
-		'max-w': 'max-width:',
-		'min-w': 'min-width:',
-
-		h: 'height:',
-		'max-h': 'max-height:',
-		'min-h': 'min-height:',
-
 		z: 'z-index:',
 
 		align: 'text-align:',
@@ -207,6 +205,38 @@ class Style {
 		this.css_property_fn[name] = fn
 	}
 	css_property_fn = {
+		// width
+		width: function(value, props, style_hp) {
+			return 'width:' + (value !== true ? value : '100%') + ';'
+		},
+		w: function(value, props, style_hp) {
+			return 'width:' + (value !== true ? value : '100%') + ';'
+		},
+		'max-w': function(value, props, style_hp) {
+			return 'max-width:' + (value !== true ? value : '100%') + ';'
+		},
+		'min-w': function(value, props, style_hp) {
+			return 'min-width:' + (value !== true ? value : '100%') + ';'
+		},
+
+		// height
+		height: function(value, props, style_hp) {
+			return 'height:' + (value !== true ? value : '100%') + ';'
+		},
+		h: function(value, props, style_hp) {
+			return 'height:' + (value !== true ? value : '100%') + ';'
+		},
+		'max-h': function(value, props, style_hp) {
+			return 'max-height:' + (value !== true ? value : '100%') + ';'
+		},
+		'min-h': function(value, props, style_hp) {
+			return 'min-height:' + (value !== true ? value : '100%') + ';'
+		},
+
+		radius: function(value, props, style_hp) {
+			return 'border-radius:' + (value !== true ? value : '100%') + ';'
+		},
+
 		// main axis
 		// justify-content space between items
 		// justify-items for the default justify-self
@@ -327,6 +357,38 @@ class Style {
 			`
 			return 'display:flex;'
 		},
+		'space-around-horizontal': function(value, props, style_hp) {
+			if (props.col) {
+				// TODO
+				style_hp.value += `
+					justify-content: space-around;
+					align-content: space-around;
+					justify-items: center;
+					align-items: center;
+				`
+			} else {
+				style_hp.value += `
+					justify-content: space-around;
+				`
+			}
+			return 'display:flex;'
+		},
+		'space-around-vertical': function(value, props, style_hp) {
+			if (props.col) {
+				// TODO
+				style_hp.value += `
+					justify-content: space-around;
+					align-content: space-around;
+					justify-items: center;
+					align-items: center;
+				`
+			} else {
+				style_hp.value += `
+					align-content: space-around;
+				`
+			}
+			return 'display:flex;'
+		},
 		'space-between': function(value, props, style_hp) {
 			style_hp.value += `
 				justify-content: space-between;
@@ -336,6 +398,38 @@ class Style {
 			`
 			return 'display:flex;'
 		},
+		'space-between-horizontal': function(value, props, style_hp) {
+			if (props.col) {
+				// TODO
+				style_hp.value += `
+					justify-content: space-between;
+					align-content: space-between;
+					justify-items: center;
+					align-items: center;
+				`
+			} else {
+				style_hp.value += `
+					justify-content: space-between;
+				`
+			}
+			return 'display:flex;'
+		},
+		'space-between-vertical': function(value, props, style_hp) {
+			if (props.col) {
+				// TODO
+				style_hp.value += `
+					justify-content: space-between;
+					align-content: space-between;
+					justify-items: center;
+					align-items: center;
+				`
+			} else {
+				style_hp.value += `
+					align-content: space-between;
+				`
+			}
+			return 'display:flex;'
+		},
 		'space-evenly': function(value, props, style_hp) {
 			style_hp.value += `
 				justify-content: space-evenly;
@@ -343,6 +437,38 @@ class Style {
 				justify-items: center;
 				align-items: center;
 			`
+			return 'display:flex;'
+		},
+		'space-evenly-horizontal': function(value, props, style_hp) {
+			if (props.col) {
+				// TODO
+				style_hp.value += `
+					justify-content: space-evenly;
+					align-content: space-evenly;
+					justify-items: center;
+					align-items: center;
+				`
+			} else {
+				style_hp.value += `
+					justify-content: space-evenly;
+				`
+			}
+			return 'display:flex;'
+		},
+		'space-evenly-vertical': function(value, props, style_hp) {
+			if (props.col) {
+				// TODO
+				style_hp.value += `
+					justify-content: space-evenly;
+					align-content: space-evenly;
+					justify-items: center;
+					align-items: center;
+				`
+			} else {
+				style_hp.value += `
+					align-content: space-evenly;
+				`
+			}
 			return 'display:flex;'
 		},
 		stretch: function(value, props, style_hp) {
@@ -414,7 +540,7 @@ class Style {
 		this.pre_style = this.process_styles.bind(this, this.pre_style_categories)
 		this.post_style = this.process_styles.bind(this, this.post_style_categories)
 
-		this.validate_css = this.validate_css.bind(this)
+		this.validate_clases = this.validate_clases.bind(this)
 		this.css = this.css.bind(this)
 		this.factory = this.factory.bind(this)
 		this.classNames = this.classNames.bind(this)
@@ -484,7 +610,6 @@ class Style {
 
 	hash_classes(styles, classNames) {
 		//tick('hash_classes')
-
 		styles = styles.split('}')
 		for (var css in styles) {
 			css = (styles[css] + '}').replace(/^\s+/, '')
@@ -505,7 +630,8 @@ class Style {
 		} else {
 			className = ''
 		}
-		this.validate_css(styles)
+		this.classes[className] = styles
+
 		this.sheet_queue.push(styles)
 		this.task(this.sheet_process)
 		//tick('hash_properties')
@@ -555,7 +681,10 @@ class Style {
 					props['data-' + id] = _props[id]
 				}
 			} else if (id == 'style') {
-				class_hp += this.classNames(this.prop_react_styles(_props[id])) + ' '
+				if (typeof _props[id] == 'string')
+					class_hp += this.classNames(_props[id]) + ' '
+				else
+					class_hp += this.classNames(this.prop_react_styles(_props[id])) + ' '
 			} else if (id == 'css') {
 				class_lp += this.classNames(_props[id]) + ' '
 			} else if (id == 'css_parent') {
@@ -573,7 +702,6 @@ class Style {
 		classNames = (classNames + ' ' + class_lp + class_hp).trim()
 
 		styles = (styles + attr_hp.value).trim()
-
 		if (styles == '' && !classNames) {
 			return _props // using same props
 		}
@@ -582,6 +710,9 @@ class Style {
 			styles,
 			props.className ? classNames + ' ' + props.className : classNames
 		)
+
+		if (this.debug && props.className != '')
+			this.validate_clases(props.className)
 
 		return props
 	}
@@ -655,11 +786,11 @@ class Style {
 	normalize_styles(styles) {
 		//tick('normalize_styles')
 
-		styles = (styles.indexOf('{') === -1 ? 'class{' + styles + '}' : styles) // class { style }
+		styles = (styles.indexOf('{') === -1 ? 'class{\n' + styles + '\n}' : styles) // class { style }
 			.replace(/\/\*[^*]+\*\//g, '') // remove comments: /* comment */
 			.replace(/\/\/[^\n]+/g, '') // remove comments //
 			.replace(/\s+/g, ' ') // deduplicate spaces
-
+			.replace(/\s*;\s*/g, ';') // deduplicate spaces
 			.replace(/{([^}]+)}/g, this.normalize_styles_properties)
 			.replace(/}\s+/g, '}') // deduplicate spaces
 			.replace(/\s+{/g, '{') // deduplicate spaces
@@ -668,11 +799,11 @@ class Style {
 			.replace(/}/g, '}\n') // footer
 			.trim()
 		//tick('normalize_styles')
-
 		return styles
 	}
 	normalize_styles_properties(_, properties) {
 		//tick('normalize_styles_properties')
+
 		properties = properties.trim().split(';')
 		for (var id in properties) {
 			if (this.css_property[properties[id]]) {
@@ -741,9 +872,8 @@ class Style {
 				try {
 					this.insertRule('@media{' + styles + '}', this.sheet_rules++)
 				} catch (e) {
-					this.sheet_append.appendChild(document.createTextNode(styles))(
-						error || console.error
-					)(e)
+					this.sheet_append.appendChild(document.createTextNode(styles))
+					;(error || console.error)(e)
 				}
 			} else {
 				this.sheet_append.appendChild(document.createTextNode(styles))
@@ -760,9 +890,7 @@ class Style {
 						element.parentNode.classList.add(parent.className)
 						parent_new.push(parent)
 					} else {
-						if (this.debug) {
-							console.log('element does not exists', element)
-						}
+						console.log('element does not exists', element)
 					}
 				}
 			}
@@ -770,7 +898,25 @@ class Style {
 		}
 	}
 
-	validate_css(css) {
+	validate_clases(classNames) {
+		var styles = classNames + '\n\n'
+		for (var className of classNames.split(' ')) {
+			if (this.classes[className]) {
+				styles += this.classes[className] + '\n'
+			}
+		}
+
+		// validate box-sizing
+		styles = styles.replace(/min-height: 0;/g, '').replace(/min-width: 0;/g, '')
+		if (/width|height/.test(styles)) {
+			if (!/box-sizing/.test(styles) && /margin|border|padding/.test(styles)) {
+				error(
+					'Style: width|height with margin|border|padding declared without declaring a box-sizing'
+				)
+				;(log || console.log)(styles)
+			}
+		}
+
 		/*if (/animation/.test(css) && !/position:/.test(css)) {
 			error('Style: animations should have a position')
 		}
@@ -778,14 +924,6 @@ class Style {
 			error(
 				'Style: animations should have will-change for the animated properties'
 			)
-		}
-
-		if (/width|height/.test(css)) {
-			if (!/box-sizing/.test(css) && /margin|border|padding/.test(css)) {
-				error(
-					'Style: width|height with margin|border|padding declared without declaring a box-sizing'
-				)
-			}
 		}*/
 	}
 	properties_id(properties) {

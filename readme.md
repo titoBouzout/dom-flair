@@ -50,6 +50,7 @@ Has two sidebars, a toolbar, a footer, and grows in the middle content:
 
 1. Rows will not take the full width unless you add to them width="100%"
 2. You need to explicitly tell how stuff is aligned
+3. It does not do any kind of prefixing.
 
 ## Attributes supported by `Box`
 
@@ -65,7 +66,7 @@ When we said `self` it's because we are referring to the `Box` element itself yo
 | --------- | ---------------------------------- | ----------- |
 | `row`     | children will display as a row     | implemented |
 | `col`     | children will display as a column  | implemented |
-| `wrap`    | wraps the children as in flex-wrap | implemented |
+| `wrap`    | wraps the children as in flex-wrap | implemented (this maybe has problems with box-sizing)|
 | `nowrap`  | disables wrapping                  | implemented |
 
 ### Size
@@ -119,16 +120,22 @@ This is semi-implemented. It could be improved like in horizontal-space-around a
 
 | attribute       | description   | status                  |
 | --------------- | ------------- | ----------------------- |
-| `space-around`  | space-around  | semi implemented        |
-| `space-between` | space-between | semi implemented        |
-| `space-evenly`  | space-evenly  | semi implemented        |
+| `space-around`  | space-around  | implemented        |
+| `space-around-horizontal`  | space-around  | implemented (does not work in cols)       |
+| `space-around-vertical`  | space-around  | implemented (does not work in cols)       |
+| `space-between` | space-between | implemented        |
+| `space-between-horizontal` | space-between | implemented (does not work in cols)       |
+| `space-between-vertical` | space-between | implemented (does not work in cols)       |
+| `space-evenly`  | space-evenly  | implemented        |
+| `space-evenly-horizontal`  | space-evenly  | implemented (does not work in cols)       |
+| `space-evenly-vertical`  | space-evenly  | implemented (does not work in cols)       |
 | `stretch`       | stretch       | implemented, not tested |
 
 ### Text
 
 | attribute      | description                             | status      |
 | -------------- | --------------------------------------- | ----------- |
-| `text-crop`    | crops the text if it overflows          | implemented |
+| `text-crop`    | crops the text (ellipsis will only be shown if the container in not display:flex aka not row/col/grow)         | implemented |
 | `text-nowrap`  | nowrap the text if it overflows         | implemented |
 | `text-wrap`    | wrap the text if it overflows           | implemented |
 | `small`        | font size small                         | implemented |
@@ -317,8 +324,8 @@ var Button = css`
 These attributes cannot have a class.
 
 ```html
-<Box css_parent="background:red"></Box>
-<Box css_children="background:red"></Box>
+<Box css_parent="class{background:red;}"></Box>
+<Box css_children="class{background:red}"></Box>
 ```
 
 ### Extending. You can define new attributes for `Box`
@@ -413,16 +420,22 @@ To set debug to true do `style.debug = true`
 
 This will print the attributes in the elements as `data-*`
 
+### Validating
+
+It does not pretend to validate everything, just the annoying things that could cause problems.
+
+It displays an error message if debug is on when:
+
+1. width or height is used with also padding or margin or border without using box-sizing
+
 ## TODO
 
-- Enforce style coupling: if an animation with transform is used, then will-change: transform; should be there
+- Maybe enforce style coupling: if an animation with transform is used, then will-change: transform; should be there
 - Maybe change pixels to em on the fly
-- Maybe add box-sizing automatically
-- Validate css (if there's width and margin then box-sizing must be there)
 - Memoize string processing functions or indicate which functions may be memoize
 - Document mobile features. I still didn't use, so no documentation.
 
 ## Bugs
 
-- If you use template literals, we will just use string.raw[0] without doing any sort of processing. I don't use this.
-- We're appending a default style for the `body`, `html`, and the root `div` inside the `body`, so our css works.
+- We're appending a default style for the `body`, `html`, and the root `div` inside the `body`, so our css works. By doing this we forcing that the body is not supposed to show a scrollbar.
+- If you use interpolation, we will just use string.raw[0] without doing any sort of processing. I don't use this.
