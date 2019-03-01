@@ -412,13 +412,14 @@ function Component() {
 }
 ```
 
-#### How To Debug In The Console
+#### How To Debug
 
-As we are going to create unique classes, we are going to reuse everywhere any class that has the same properties. So if you edit the properties of any class, you're basically editing everything globally. You should test/debug by editing "element style" in the developer console and not the classes.
+As we are going to create unique classes, we are going to reuse everywhere any class that has the same properties. So if you edit the properties of any class, you're basically editing everything globally. You should test/debug by editing `element.style` in the developer console and not the classes.
 
 To set debug to true do `style.debug = true`
 
-This will print the attributes in the elements as `data-*`
+- This will print the attributes in the elements as `data-*`
+- Will turn off memoize for some functions
 
 ### Validating
 
@@ -432,7 +433,6 @@ It displays an error message if debug is on when:
 
 - Maybe enforce style coupling: if an animation with transform is used, then will-change: transform; should be there
 - Maybe change pixels to em on the fly
-- Memoize string processing functions or indicate which functions may be memoize
 - Document mobile features. I still didn't use, so no documentation.
 
 ## Bugs

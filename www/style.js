@@ -136,6 +136,9 @@ class Style {
 
 		// DISPLAY
 
+		'border-box': 'box-sizing:border-box;',
+		'content-box': 'box-sizing:content-box;',
+
 		block: 'display:block;',
 		inline: 'display:inline;',
 		'inline-block': 'display:inline-block;',
@@ -530,7 +533,17 @@ class Style {
 	}
 
 	constructor() {
-		// TODO memoize
+		// memoize setup
+		this.serialize = this.serialize.bind(this)
+		this._serialize = this._serialize.bind(this)
+		this.is_primitive = this.is_primitive.bind(this)
+		// memoize cache has a resolution of 20 seconds
+		this.now = Date.now()
+		setInterval(function() {
+			this.now = Date.now()
+		}, 20000)
+
+		// bind
 		this.sheet_process = this.sheet_process.bind(this)
 		this.normalize_styles = this.normalize_styles.bind(this)
 		this.normalize_styles_properties = this.normalize_styles_properties.bind(
@@ -546,6 +559,30 @@ class Style {
 		this.classNames = this.classNames.bind(this)
 		this.hash_classes = this.hash_classes.bind(this)
 		this.hash_properties = this.hash_properties.bind(this)
+
+		// memoizing
+		// TODO resolve an expiration for the chache
+		this.normalize_styles = this.memo(this.normalize_styles)
+		this.normalize_styles_properties = this.memo(
+			this.normalize_styles_properties
+		)
+		this.normalize_properties = this.memo(this.normalize_properties)
+		this.pre_style = this.memo(
+			this.process_styles.bind(style, this.pre_style_categories)
+		)
+		this.post_style = this.memo(
+			this.process_styles.bind(style, this.post_style_categories)
+		)
+
+		this.validate_css = this.memo(this.validate_css)
+
+		if (!this.debug) {
+			this.css = this.memo(this.css)
+			this.factory = this.memo(this.factory)
+			this.classNames = this.memo(this.classNames)
+			this.hash_classes = this.memo(this.hash_classes)
+			this.hash_properties = this.memo(this.hash_properties)
+		}
 
 		// normalize default properties
 		for (var id in this.css_property) {
@@ -564,6 +601,34 @@ class Style {
 		for (var id in this.sheet_queue) {
 			this.sheet_queue[id] = this.normalize_styles(this.sheet_queue[id])
 		}
+
+		this.to_fast_properties = (function() {
+			let fastProto = null
+
+			// Creates an object with permanently fast properties in V8. See Toon Verwaest's
+			// post https://medium.com/@tverwaes/setting-up-prototypes-in-v8-ec9c9491dfe2#5f62
+			// for more details. Use %HasFastProperties(object) and the Node.js flag
+			// --allow-natives-syntax to check whether an object has fast properties.
+			function FastObject(o) {
+				// A prototype object will have "fast properties" enabled once it is checked
+				// against the inline property cache of a function, e.g. fastProto.property:
+				// https://github.com/v8/v8/blob/6.0.122/test/mjsunit/fast-prototype.js#L48-L63
+				if (fastProto !== null && typeof fastProto.property) {
+					const result = fastProto
+					fastProto = FastObject.prototype = null
+					return result
+				}
+				fastProto = FastObject.prototype = o == null ? Object.create(null) : o
+				return new FastObject()
+			}
+
+			// Initialize the inline property cache of FastObject
+			FastObject()
+
+			return function toFastproperties(o) {
+				return FastObject(o)
+			}
+		})()
 	}
 
 	// returns a component with html tag "element" and given "styles" assigned as the className(s) for that element
@@ -689,6 +754,7 @@ class Style {
 				class_lp += this.classNames(_props[id]) + ' '
 			} else if (id == 'css_parent') {
 				this.append_to_parent(_props[id])
+			} else if (id == 'data-no-validate') {
 			} else {
 				props[id] = _props[id]
 			}
@@ -711,7 +777,7 @@ class Style {
 			props.className ? classNames + ' ' + props.className : classNames
 		)
 
-		if (this.debug && props.className != '')
+		if (this.debug && props.className != '' && !_props['data-no-validate'])
 			this.validate_clases(props.className)
 
 		return props
@@ -907,7 +973,7 @@ class Style {
 		}
 
 		// validate box-sizing
-		styles = styles.replace(/min-height: 0;/g, '').replace(/min-width: 0;/g, '')
+		/*styles = styles.replace(/min-height: 0;/g, '').replace(/min-width: 0;/g, '')
 		if (/width|height/.test(styles)) {
 			if (!/box-sizing/.test(styles) && /margin|border|padding/.test(styles)) {
 				error(
@@ -915,7 +981,7 @@ class Style {
 				)
 				;(log || console.log)(styles)
 			}
-		}
+		}*/
 
 		/*if (/animation/.test(css) && !/position:/.test(css)) {
 			error('Style: animations should have a position')
@@ -945,6 +1011,102 @@ class Style {
 
 	task(fn) {
 		Promise.resolve().then(fn)
+	}
+	// memoize functions
+	serialize(o) {
+		return JSON.stringify(o, this._serialize)
+	}
+	_serialize(k, v) {
+		if (typeof v == 'function') {
+			return v.name
+		} else {
+			return v
+		}
+	}
+	is_primitive(o) {
+		if (!o) return true
+
+		switch (typeof o) {
+			case 'string':
+			case 'boolean':
+			case 'number': {
+				return true
+			}
+			default: {
+				return false
+			}
+		}
+	}
+	memo(fn, expires) {
+		if (!expires) {
+			return function(fn, cache, serialize, is_primitive, ...args) {
+				const k =
+					args.length == 1 && is_primitive(args[0]) ? args[0] : serialize(args)
+
+				return cache[k] !== undefined ? cache[k] : (cache[k] = fn(...args))
+			}.bind(null, fn, {}, this.serialize, this.is_primitive)
+		} else {
+			const f = function(
+				fn,
+				cache,
+				serialize,
+				expires,
+				setInterval,
+				time,
+				is_primitive,
+				...args
+			) {
+				const k =
+					args.length == 1 && is_primitive(args[0]) ? args[0] : serialize(args)
+
+				if (cache[k] !== undefined) {
+					cache[k].n = time.now
+				} else {
+					cache[k] = { v: fn(...args), n: time.now }
+				}
+				expires && !this.timeout && setInterval()
+				return cache[k].v
+			}
+
+			f.cache = {}
+			f.expires = expires
+			f.setInterval = function() {
+				this.timeout = setInterval(this.expire, this.expires)
+			}.bind(f)
+			f.clearInterval = function() {
+				clearInterval(this.timeout)
+				this.timeout = false
+			}.bind(f)
+			f.expire = function(expires, clearInterval, time, to_fast_properties) {
+				const n = time.now
+				var empty = true
+				for (var k in this) {
+					if (this[k] !== undefined) {
+						if (n - this[k].n > expires) {
+							this[k] = undefined
+						} else {
+							empty = false
+						}
+					}
+				}
+				if (empty) {
+					clearInterval()
+				} else {
+					to_fast_properties(this)
+				}
+			}.bind(f.cache, f.expires, f.clearInterval, this, this.to_fast_properties)
+
+			return f.bind(
+				f,
+				fn,
+				f.cache,
+				this.serialize,
+				f.expires,
+				f.setInterval,
+				this,
+				this.is_primitive
+			)
+		}
 	}
 }
 
