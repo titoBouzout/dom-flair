@@ -178,12 +178,12 @@ Useful text stuff.
 Attributes to add custom CSS/classNames. Priority, the ones on top overwrite the ones on bottom:
 
 1. `css_parent` overwrites:
-2.  custom defined function high priority overwrites:
+2.  custom defined high priority functions, overwrites:
 3. `style` (`<Box style={{background:'red';}}/>`) overwrites:
 4. `css` (`<Box css="background:red;"/>`) overwrites:
 5. `attribute definition` (`<Box grow/>`) overwrites:
-component definition (`css('background:red;');`):
-6. `className` is unknown if overwrites or not because depends were you include the className definition.
+6. component definition (`css('background:red;');`):
+7. `className` is unknown if overwrites or not because depends were you include the className definition.
 
 | attribute      | description                                                                                         | status          |
 | -------------- | --------------------------------------------------------------------------------------------------- | --------------- |
