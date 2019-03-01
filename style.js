@@ -11,32 +11,14 @@ class Style {
 	properties = {}
 	properties_counter = 0
 
-	sheet_rules = 0
-	sheet_queue = [
-		// default style for html, body, and root div
-		`
-			html,
-			body {
-				border: 0;
-				margin: 0;
-				padding: 0;
-				overflow: hidden;
-				width: 100%;
-				height: 100%;
-				position: fixed;
-			}
-		`,
-		`
-			body > div {
-				display: flex;
-				width: 100%;
-				height: 100%;
-				position: fixed;
-				z-index: 1;
-			}
-		`,
-	]
+	sheet_rules = [0, 0, 0, 0, 0, 0]
+	sheet_queue = [[], [], [], [], [], []]
 
+	// static values
+	define_attribute(name, string) {
+		this.css_property[name] = string
+		this.index_attributes()
+	}
 	css_property = {
 		// LAYOUT
 
@@ -173,6 +155,26 @@ class Style {
 		'no-underline': 'text-decoration:none;',
 		uppercase: 'text-transform:uppercase;',
 		capitalize: 'text-transform:capitalize;',
+
+		// ALIGNMENT regular priority values
+
+		left: 'display:flex;',
+		right: 'display:flex;',
+		top: 'display:flex;',
+		bottom: 'display:flex;',
+		horizontal: 'display:flex;',
+		vertical: 'display:flex;',
+		center: 'display:flex;',
+		'space-around': 'display:flex;',
+		'space-around-horizontal': 'display:flex;',
+		'space-around-vertical': 'display:flex;',
+		'space-between': 'display:flex;',
+		'space-between-horizontal': 'display:flex;',
+		'space-between-vertical': 'display:flex;',
+		'space-evenly': 'display:flex;',
+		'space-evenly-horizontal': 'display:flex;',
+		'space-evenly-vertical': 'display:flex;',
+		stretch: 'display:flex;',
 	}
 	css_property_value = {
 		padding: 'padding:',
@@ -204,42 +206,58 @@ class Style {
 
 		basis: 'flex-basis:',
 	}
-	define_attribute(name, fn) {
+	// static values high priority
+	define_attribute_high_priority(name, string) {
+		this.css_property_high_priority[name] = string
+		this.index_attributes()
+	}
+	css_property_high_priority = {}
+
+	// dynamic values
+	define_dynamic_attribute(name, fn) {
 		this.css_property_fn[name] = fn
+		this.index_attributes()
 	}
 	css_property_fn = {
 		// width
-		width: function(value, props, style_hp) {
+		width: function(value, props) {
 			return 'width:' + (value !== true ? value : '100%') + ';'
 		},
-		w: function(value, props, style_hp) {
+		w: function(value, props) {
 			return 'width:' + (value !== true ? value : '100%') + ';'
 		},
-		'max-w': function(value, props, style_hp) {
+		'max-w': function(value, props) {
 			return 'max-width:' + (value !== true ? value : '100%') + ';'
 		},
-		'min-w': function(value, props, style_hp) {
+		'min-w': function(value, props) {
 			return 'min-width:' + (value !== true ? value : '100%') + ';'
 		},
 
 		// height
-		height: function(value, props, style_hp) {
+		height: function(value, props) {
 			return 'height:' + (value !== true ? value : '100%') + ';'
 		},
-		h: function(value, props, style_hp) {
+		h: function(value, props) {
 			return 'height:' + (value !== true ? value : '100%') + ';'
 		},
-		'max-h': function(value, props, style_hp) {
+		'max-h': function(value, props) {
 			return 'max-height:' + (value !== true ? value : '100%') + ';'
 		},
-		'min-h': function(value, props, style_hp) {
+		'min-h': function(value, props) {
 			return 'min-height:' + (value !== true ? value : '100%') + ';'
 		},
 
-		radius: function(value, props, style_hp) {
+		radius: function(value, props) {
 			return 'border-radius:' + (value !== true ? value : '100%') + ';'
 		},
+	}
 
+	// dynamic values high priority
+	define_dynamic_attribute_high_priority(name, fn) {
+		this.css_property_fn_high_priority[name] = fn
+		this.index_attributes()
+	}
+	css_property_fn_high_priority = {
 		// main axis
 		// justify-content space between items
 		// justify-items for the default justify-self
@@ -250,241 +268,223 @@ class Style {
 		// align-items for the default align-self
 		// align-self alignment
 
-		left: function(value, props, style_hp) {
+		left: function(value, props) {
 			if (props.col) {
 				// the default not tested
-				style_hp.value += `
+				return `
 					align-content: flex-start;
 					align-items: flex-start;
 				`
 			} else {
 				// the default not tested
-				style_hp.value += `
+				return `
 					justify-content: flex-start;
 					justify-items: flex-start;
 				`
 			}
-			return 'display:flex;'
 		},
 
-		right: function(value, props, style_hp) {
+		right: function(value, props) {
 			if (props.col) {
-				style_hp.value += `
+				return `
 					align-content: flex-end;
 					align-items: flex-end;
 				`
 			} else {
-				style_hp.value += `
+				return `
 					justify-content: flex-end;
 					justify-items: flex-end;
 				`
 			}
-			return 'display:flex;'
 		},
 
-		top: function(value, props, style_hp) {
+		top: function(value, props) {
 			if (props.col) {
 				// the default not tested
-				style_hp.value += `
+				return `
 					justify-content: flex-start;
 					justify-items: flex-start;
 				`
 			} else {
 				// the default not tested
-				style_hp.value += `
+				return `
 					align-content: flex-start;
 					align-items: flex-start;
 				`
 			}
-			return 'display:flex;'
 		},
 
-		bottom: function(value, props, style_hp) {
+		bottom: function(value, props) {
 			if (props.col) {
-				style_hp.value += `
+				return `
 					justify-content: flex-end;
 					justify-items: flex-end;
 				`
 			} else {
-				style_hp.value += `
+				return `
 					align-content: flex-end;
 					align-items: flex-end;
 				`
 			}
-			return 'display:flex;'
 		},
 
-		horizontal: function(value, props, style_hp) {
+		horizontal: function(value, props) {
 			if (props.col) {
-				style_hp.value += `
+				return `
 					align-content: center;
 					align-items: center;
 				`
 			} else {
-				style_hp.value += `
+				return `
 					justify-content: center;
 					justify-items: center;
 				`
 			}
-			return 'display:flex;'
 		},
-		vertical: function(value, props, style_hp) {
+		vertical: function(value, props) {
 			if (props.col) {
-				style_hp.value += `
+				return `
 					justify-content: center;
 					justify-items: center;
 				`
 			} else {
-				style_hp.value += `
+				return `
 					align-content: center;
 					align-items: center;
 				`
 			}
-			return 'display:flex;'
 		},
-		center: function(value, props, style_hp) {
-			style_hp.value += `
+		center: function(value, props) {
+			return `
 				justify-content: center;
 				align-content: center;
 				justify-items: center;
 				align-items: center;
 			`
-			return 'display:flex;'
 		},
-		'space-around': function(value, props, style_hp) {
-			style_hp.value += `
+		'space-around': function(value, props) {
+			return `
 				justify-content: space-around;
 				align-content: space-around;
 				justify-items: center;
 				align-items: center;
 			`
-			return 'display:flex;'
 		},
-		'space-around-horizontal': function(value, props, style_hp) {
+		'space-around-horizontal': function(value, props) {
 			if (props.col) {
 				// TODO
-				style_hp.value += `
+				return `
 					justify-content: space-around;
 					align-content: space-around;
 					justify-items: center;
 					align-items: center;
 				`
 			} else {
-				style_hp.value += `
+				return `
 					justify-content: space-around;
 				`
 			}
-			return 'display:flex;'
 		},
-		'space-around-vertical': function(value, props, style_hp) {
+		'space-around-vertical': function(value, props) {
 			if (props.col) {
 				// TODO
-				style_hp.value += `
+				return `
 					justify-content: space-around;
 					align-content: space-around;
 					justify-items: center;
 					align-items: center;
 				`
 			} else {
-				style_hp.value += `
+				return `
 					align-content: space-around;
 				`
 			}
-			return 'display:flex;'
 		},
-		'space-between': function(value, props, style_hp) {
-			style_hp.value += `
+		'space-between': function(value, props) {
+			return `
 				justify-content: space-between;
 				align-content: space-between;
 				justify-items: center;
 				align-items: center;
 			`
-			return 'display:flex;'
 		},
-		'space-between-horizontal': function(value, props, style_hp) {
+		'space-between-horizontal': function(value, props) {
 			if (props.col) {
 				// TODO
-				style_hp.value += `
+				return `
 					justify-content: space-between;
 					align-content: space-between;
 					justify-items: center;
 					align-items: center;
 				`
 			} else {
-				style_hp.value += `
+				return `
 					justify-content: space-between;
 				`
 			}
-			return 'display:flex;'
 		},
-		'space-between-vertical': function(value, props, style_hp) {
+		'space-between-vertical': function(value, props) {
 			if (props.col) {
 				// TODO
-				style_hp.value += `
+				return `
 					justify-content: space-between;
 					align-content: space-between;
 					justify-items: center;
 					align-items: center;
 				`
 			} else {
-				style_hp.value += `
+				return `
 					align-content: space-between;
 				`
 			}
-			return 'display:flex;'
 		},
-		'space-evenly': function(value, props, style_hp) {
-			style_hp.value += `
+		'space-evenly': function(value, props) {
+			return `
 				justify-content: space-evenly;
 				align-content: space-evenly;
 				justify-items: center;
 				align-items: center;
 			`
-			return 'display:flex;'
 		},
-		'space-evenly-horizontal': function(value, props, style_hp) {
+		'space-evenly-horizontal': function(value, props) {
 			if (props.col) {
 				// TODO
-				style_hp.value += `
+				return `
 					justify-content: space-evenly;
 					align-content: space-evenly;
 					justify-items: center;
 					align-items: center;
 				`
 			} else {
-				style_hp.value += `
+				return `
 					justify-content: space-evenly;
 				`
 			}
-			return 'display:flex;'
 		},
-		'space-evenly-vertical': function(value, props, style_hp) {
+		'space-evenly-vertical': function(value, props) {
 			if (props.col) {
 				// TODO
-				style_hp.value += `
+				return `
 					justify-content: space-evenly;
 					align-content: space-evenly;
 					justify-items: center;
 					align-items: center;
 				`
 			} else {
-				style_hp.value += `
+				return `
 					align-content: space-evenly;
 				`
 			}
-			return 'display:flex;'
 		},
-		stretch: function(value, props, style_hp) {
-			style_hp.value += `
+		stretch: function(value, props) {
+			return `
 				justify-content: stretch;
 				align-content: stretch;
 				justify-items: center;
 				align-items: center;
 			`
-			return 'display:flex;'
 		},
 	}
-
 	// separates the properties in groups for better caching
 	pre_style_categories() {
 		return {
@@ -584,6 +584,8 @@ class Style {
 			this.hash_properties = this.memo(this.hash_properties)
 		}
 
+		this.index_attributes()
+
 		// normalize default properties
 		for (var id in this.css_property) {
 			this.css_property[id] = this.normalize_properties(this.css_property[id])
@@ -597,9 +599,24 @@ class Style {
 				''
 			)
 		}
-		// normalize default classes
-		for (var id in this.sheet_queue) {
-			this.sheet_queue[id] = this.normalize_styles(this.sheet_queue[id])
+
+		// init sheets
+		this.sheet_append = []
+		this.sheet_insert = []
+		this.insert_rule = []
+		for (var id = 0; id < 6; id++) {
+			this.sheet_append[id] = document.createElement('style')
+			this.sheet_append[id].appendChild(document.createTextNode(''))
+			document.head.appendChild(this.sheet_append[id])
+
+			this.sheet_insert[id] = document.createElement('style')
+			this.sheet_insert[id].appendChild(document.createTextNode(''))
+			document.head.appendChild(this.sheet_insert[id])
+
+			if (this.sheet_insert[id].sheet.insertRule)
+				this.insert_rule[id] = this.sheet_insert[id].sheet.insertRule.bind(
+					this.sheet_insert[id].sheet
+				)
 		}
 
 		this.to_fast_properties = (function() {
@@ -650,7 +667,7 @@ class Style {
 		}
 		*/
 
-		return this.factory(element, this.classNames(styles))
+		return this.factory(element, this.classNames(styles, 0))
 	}
 
 	factory(element, classNames) {
@@ -663,30 +680,28 @@ class Style {
 	}
 
 	// from any style transforms that to classNames
-	classNames(styles, classNames) {
-		classNames = classNames ? ' ' + classNames : ''
-
+	classNames(styles, priority) {
 		styles = this.normalize_styles(styles)
 		styles = this.pre_style(styles)
-		classNames = this.hash_classes(styles, classNames)
 
-		return classNames.trim()
+		return this.hash_classes(styles, priority)
 	}
 
-	hash_classes(styles, classNames) {
+	hash_classes(styles, priority) {
 		//tick('hash_classes')
+		var classNames = ''
 		styles = styles.split('}')
 		for (var css in styles) {
 			css = (styles[css] + '}').replace(/^\s+/, '')
 			if (css != '}') {
-				classNames += ' ' + this.hash_properties(css)
+				classNames += this.hash_properties(css, priority) + ' '
 			}
 		}
 		//tick('hash_classes')
 
 		return classNames
 	}
-	hash_properties(styles) {
+	hash_properties(styles, priority) {
 		//tick('hash_properties')
 
 		var className = this.properties_id(styles)
@@ -697,8 +712,8 @@ class Style {
 		}
 		this.classes[className] = styles
 
-		this.sheet_queue.push(styles)
-		this.task(this.sheet_process)
+		this.sheet_queue[priority].push(styles)
+		this.queue_process()
 		//tick('hash_properties')
 
 		return className
@@ -708,76 +723,47 @@ class Style {
 	// return props without our attributes
 	// returns same props if nothing been modified
 	props(_props, classNames) {
-		classNames = classNames || ''
+		const values = {
+			classNames: classNames ? classNames + ' ' : '',
+			styles: '',
+		}
 
 		this.parent_counter++
 
-		var styles = ''
-		var attr_hp = { value: '' }
-		var class_lp = ''
-		var class_hp = ''
-
 		const props = {}
 		for (var id in _props) {
-			if (this.debug) {
-				if (id.indexOf('test') != -1) {
-					id = props[id]
+			if (this.attributes[id]) {
+				for (var i in this.attributes[id]) {
+					this.attributes[id][i](_props[id], _props, values)
 				}
-			}
-
-			if (id == 'children') {
-				props[id] = _props[id]
-			} else if (id in this.css_property) {
-				styles += this.css_property[id]
 				if (this.debug) {
-					props['data-' + id] = _props[id]
+					props['data-' + id] = this.is_primitive(_props[id])
+						? _props[id]
+						: this.serialize(_props[id])
 				}
-			} else if (id in this.css_property_value) {
-				if (_props[id] != '') {
-					styles +=
-						this.css_property_value[id].replace(/;\s*$/, '') + _props[id] + ';'
-					if (this.debug) {
-						props['data-' + id] = _props[id]
-					}
-				}
-			} else if (id in this.css_property_fn) {
-				styles += this.css_property_fn[id](_props[id], _props, attr_hp)
-				if (this.debug) {
-					props['data-' + id] = _props[id]
-				}
-			} else if (id == 'style') {
-				if (typeof _props[id] == 'string')
-					class_hp += this.classNames(_props[id]) + ' '
-				else
-					class_hp += this.classNames(this.prop_react_styles(_props[id])) + ' '
-			} else if (id == 'css') {
-				class_lp += this.classNames(_props[id]) + ' '
-			} else if (id == 'css_parent') {
-				this.append_to_parent(_props[id])
-			} else if (id == 'data-no-validate') {
 			} else {
 				props[id] = _props[id]
 			}
 		}
+		if (values.styles != '') {
+			values.classNames += this.classNames(values.styles, 1) + ' '
+		}
 
 		if (this.appended_to_parent) {
 			this.appended_to_parent = false
-			classNames += 'ch' + this.parent_counter + ' '
+			values.classNames += 'ch' + this.parent_counter + ' '
 		}
 
-		classNames = (classNames + ' ' + class_lp + class_hp).trim()
-
-		styles = (styles + attr_hp.value).trim()
-		if (styles == '' && !classNames) {
+		if (!values.classNames) {
 			return _props // using same props
 		}
 
-		props.className = this.classNames(
-			styles,
-			props.className ? classNames + ' ' + props.className : classNames
-		)
+		props.className = (props.className
+			? props.className + ' ' + values.classNames
+			: values.classNames
+		).trim()
 
-		if (this.debug && props.className != '' && !_props['data-no-validate'])
+		if (this.debug && props.className != '' && _props.novalidate === undefined)
 			this.validate_clases(props.className)
 
 		return props
@@ -903,50 +889,44 @@ class Style {
 	append_to_parent(styles) {
 		var id = this.properties_id(styles)
 		var className = 'p' + id
-		this.classNames('.' + className + '{' + styles + '}')
+		this.classNames('.' + className + '{' + styles + '}', 5)
 		this.parent.push({
 			children: '.ch' + this.parent_counter,
 			className: className,
 		})
 		this.appended_to_parent = true
-		this.task(this.sheet_process)
+		this.queue_process()
 	}
 
 	sheet_process() {
-		if (this.sheet_queue.length) {
-			////tick('sheet_process')
-			if (!this.sheet_append) {
-				this.sheet_append = document.createElement('style')
-				this.sheet_append.appendChild(document.createTextNode(''))
-				document.head.appendChild(this.sheet_append)
+		this.queue_process_added = false
+		////tick('sheet_process')
 
-				this.sheet_insert = document.createElement('style')
-				this.sheet_insert.appendChild(document.createTextNode(''))
-				document.head.appendChild(this.sheet_insert)
-
-				if (this.sheet_insert.sheet.insertRule)
-					this.insertRule = this.sheet_insert.sheet.insertRule.bind(
-						this.sheet_insert.sheet
-					)
-			}
-			var styles = this.sheet_queue.join('\n')
-			this.sheet_queue.length = 0
-			if (styles.indexOf('@') != -1) {
-				styles = this.post_style(styles)
-			}
-			if (!this.debug && this.insertRule) {
-				try {
-					this.insertRule('@media{' + styles + '}', this.sheet_rules++)
-				} catch (e) {
-					this.sheet_append.appendChild(document.createTextNode(styles))
-					;(error || console.error)(e)
+		for (var id = 0; id < 6; id++) {
+			if (this.sheet_queue[id].length) {
+				var styles = this.sheet_queue[id].join('\n')
+				this.sheet_queue[id].length = 0
+				if (styles.indexOf('@') != -1) {
+					styles = this.post_style(styles)
 				}
-			} else {
-				this.sheet_append.appendChild(document.createTextNode(styles))
+				if (!this.debug && this.insert_rule[id]) {
+					try {
+						this.insert_rule[id](
+							'@media{' + styles + '}',
+							this.sheet_rules[id]++
+						)
+					} catch (e) {
+						this.sheet_append[id].appendChild(document.createTextNode(styles))
+						;(error || console.error)(e)
+					}
+				} else {
+					this.sheet_append[id].appendChild(document.createTextNode(styles))
+				}
 			}
-			////tick('sheet_process')
 		}
+		////tick('sheet_process')
 
+		////tick('sheet_process parent')
 		if (this.parent.length) {
 			var parent_new = []
 			for (var parent of this.parent) {
@@ -956,12 +936,13 @@ class Style {
 						element.parentNode.classList.add(parent.className)
 						parent_new.push(parent)
 					} else {
-						console.log('element does not exists', element)
+						;(error || console.error)('element does not exists', element)
 					}
 				}
 			}
 			this.parent = parent_new
 		}
+		////tick('sheet_process parent')
 	}
 
 	validate_clases(classNames) {
@@ -1000,6 +981,84 @@ class Style {
 				: (this.properties[properties] = ++this.properties_counter))
 		)
 	}
+	index_attributes() {
+		this.attributes = {
+			style: [
+				function(attribute_value, _props, values) {
+					if (typeof attribute_value == 'string') {
+						values.classNames += this.classNames(attribute_value, 3) + ' '
+					} else {
+						values.classNames +=
+							this.classNames(this.prop_react_styles(attribute_value), 3) + ' '
+					}
+				}.bind(this),
+			],
+			css: [
+				function(attribute_value, _props, values) {
+					values.classNames += this.classNames(attribute_value, 2) + ' '
+				}.bind(this),
+			],
+			css_parent: [
+				function(attribute_value, _props, values) {
+					this.append_to_parent(attribute_value)
+				}.bind(this),
+			],
+			novalidate: [function() {}],
+		}
+
+		for (var id in this.css_property) {
+			if (!this.attributes[id]) this.attributes[id] = []
+			this.attributes[id].push(
+				function(id, attribute_value, _props, values) {
+					values.styles += this.css_property[id]
+				}.bind(this, id)
+			)
+		}
+		for (var id in this.css_property_high_priority) {
+			if (!this.attributes[id]) this.attributes[id] = []
+			this.attributes[id].push(
+				function(id, attribute_value, _props, values) {
+					values.styles += this.css_property_high_priority[id]
+				}.bind(this, id)
+			)
+		}
+		for (var id in this.css_property_value) {
+			if (!this.attributes[id]) this.attributes[id] = []
+			this.attributes[id].push(
+				function(id, attribute_value, _props, values) {
+					if (attribute_value != '') {
+						values.styles += this.css_property_value[id] + attribute_value + ';'
+					}
+				}.bind(this, id)
+			)
+		}
+		for (var id in this.css_property_fn) {
+			if (!this.attributes[id]) this.attributes[id] = []
+			this.attributes[id].push(
+				function(id, attribute_value, _props, values) {
+					values.styles += this.css_property_fn[id](attribute_value, _props)
+				}.bind(this, id)
+			)
+		}
+		for (var id in this.css_property_fn_high_priority) {
+			if (!this.attributes[id]) this.attributes[id] = []
+			this.attributes[id].push(
+				function(id, attribute_value, _props, values) {
+					values.classNames +=
+						this.classNames(
+							this.css_property_fn_high_priority[id](attribute_value, _props),
+							4
+						) + ' '
+				}.bind(this, id)
+			)
+		}
+	}
+	queue_process() {
+		if (!this.queue_process_added) {
+			this.queue_process_added = true
+			this.task(this.sheet_process)
+		}
+	}
 	// helpers
 	unique(b) {
 		var a = []
@@ -1008,7 +1067,6 @@ class Style {
 		}
 		return a
 	}
-
 	task(fn) {
 		Promise.resolve().then(fn)
 	}

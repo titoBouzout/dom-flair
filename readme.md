@@ -51,6 +51,8 @@ Has two sidebars, a toolbar, a footer, and grows in the middle content:
 1. Rows will not take the full width unless you add to them width="100%"
 2. You need to explicitly tell how stuff is aligned
 3. It does not do any kind of prefixing.
+4. If you use interpolation, we will just use `string.raw[0]` without doing any sort of processing.
+5. You are responsible of defining `html`, `body` or `body > div` so the styles of this library work properly. (example, if you use `<Box grow/>` and it does not work then maybe the parent is preventing the Box from growing.
 
 ## Attributes supported by `Box`
 
@@ -66,7 +68,7 @@ When we said `self` it's because we are referring to the `Box` element itself yo
 | --------- | ---------------------------------- | ----------- |
 | `row`     | children will display as a row     | implemented |
 | `col`     | children will display as a column  | implemented |
-| `wrap`    | wraps the children as in flex-wrap | implemented (this maybe has problems with box-sizing)|
+| `wrap`    | wraps the children as in flex-wrap, | implemented (this maybe has problems with box-sizing)|
 | `nowrap`  | disables wrapping                  | implemented |
 
 ### Size
@@ -191,13 +193,16 @@ I'm not sure if this is a good idea.
 
 ### CSS
 
-Attributes to add custom CSS/classNames. Priority: higher overwrites lower.
+Attributes to add custom CSS/classNames. Priority, the ones on top overwrite the ones on bottom:
 
-1. css_children (attribute)
-2. Box className
-3. Box (attributes)
-4. Box.style (the react standard style object)
-5. css_parent (attribute)
+`css_parent` overwrites:
+custom defined function high priority overwrites:
+`style` (`<Box style={{background:'red';}}/>`) overwrites:
+`css` (`<Box css="background:red;"/>`) overwrites:
+`attribute definition` (`<Box grow/>`) overwrites:
+component definition (`css('background:red;');`):
+
+`className` is unknown if overwrites or not because depends were you include the className definition.
 
 | attribute      | description                                                                                         | status          |
 | -------------- | --------------------------------------------------------------------------------------------------- | --------------- |
@@ -323,12 +328,36 @@ var Button = css`
 `
 ```
 
-### Extending. You can define new attributes for `Box`
+### Extending. You can define new static and dynamic attributes for `Box`
 
-Lets say we add a new attribute named random_margin
+#### Static argument
+
+Lets say we add a new static attribute named fancy_margin
 
 ```javascript
-style.define_attribute('random_margin', function(value, props, style_hp) {
+style.define_attribute('fancy_margin', 'margin:0 auto;')
+
+// You now can use as <Box fancy_margin></Box>
+
+```
+
+Sometimes the attributes you add get overwritten by something else. In that case you can assign to your attributes a higher priority by defining it as high priority instead.
+
+
+
+```javascript
+style.define_attribute_high_priority('fancy_margin', 'margin:0 auto;')
+
+// You now can use as <Box fancy_margin></Box>
+
+```
+
+#### Dynamic argument
+
+Lets say we add a new dynamic attribute named random_margin. This is a function that gets called.
+
+```javascript
+style.define_dynamic_attribute('random_margin', function(value, props) {
 	return 'margin:' + ((Math.random() * 10) | 0) + 'px;padding:5px;'
 })
 
@@ -336,50 +365,31 @@ style.define_attribute('random_margin', function(value, props, style_hp) {
 
 ```
 
-Your custom function will receive three arguments. It should return a string with css properties, NOT classes.
+Your custom function will receive two arguments. It should return a string with css properties, NOT classes.
 
 The arguments:
 
-#### `value`
+##### `value`
 
-Is the value of the attribute. Lets say you create a new attribute named random_margin. So if you do `<Box random_margin="false"></Box>` Then the value will be "false"
+Is the value of the attribute. If you do `<Box random_margin="false"></Box>` Then the value will be "false"
 
 #### `props`
 
 The react props object. This is handy so you can look up other attributes.
 
-`if(props.margin) { /* as has a defined margin do not add a random margin */ }`
+`if(props.margin) { /* as has a defined margin do not add a random margin! */ }`
 
-#### `style_hp` style high priority
-
-Sometimes the attributes you add get overwritten by something else. In that case you can assign to your attributes a higher priority by defining the properties in `style_hp.value`. IMPORTANT PLEASE READ WHAT TO RETURN
-
-#### What to `return`
-
-Should return a string with css properties, NOT classes. It could also return an empty string.
-
-In the case your custom attribute gets overwritten by something else, you should return an empty string and then `append` your css properties to the argument `style_hp.value`
-
-Please note you should use `style_hp.value +=` to `append` to it. If you don't `append`, then you're going to discard any already defined high priority property.
+You can also define a high priority dynamic attribute.
 
 ```javascript
 
-// defining a regular attribute
-style.define_attribute('random_margin', function(value, props, style_hp) {
+// defining a dynamic attribute with high priority
+style.define_dynamic_attribute_high_priority('random_margin', function(value, props) {
 	// we avoid adding a random margin to something that already has a margin defined
 	if (props.margin)
 		return ''
+	// yeah!
 	return 'margin:' + ((Math.random() * 10) | 0) + 'px;'
-})
-
-// defining a high priority attribute (will overwrite other attributes
-style.define_attribute('dont_overwrite_my_margin', function(
-	value,
-	props,
-	style_hp
-) {
-	style_hp.value += 'margin:' + ((Math.random() * 10) | 0) + 'px;'
-	return ''
 })
 
 ```
@@ -407,16 +417,12 @@ It displays an error message if debug is on when:
 - some handy default attributes
 - easy to use mobile breakpoints
 - deduplicates css
+- is very efficient
 
 ## TODO
 
 - Maybe enforce style coupling: if an animation with transform is used, then will-change: transform; should be there
 - Maybe change pixels to em on the fly
 - Document mobile features. I still didn't use, so no documentation.
+- define an expiration for the memoize functions.
 
-## Bugs
-
-- We're appending a default style for the `body`, `html`, and the root `div` inside the `body`, so our css works. By doing this we forcing that the body is not supposed to show a scrollbar.
-- If you use interpolation, we will just use `string.raw[0]` without doing any sort of processing. I don't use this.
-- priority of the different css attributes is messed up
-- the api for defining an attribute and the high priority is confusing
