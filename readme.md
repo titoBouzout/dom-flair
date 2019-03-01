@@ -185,6 +185,8 @@ Attributes to add custom CSS/classNames. Priority, the ones on top overwrite the
 6. component definition (`css('background:red;');`):
 7. `className` is unknown if overwrites or not because depends were you include the className definition.
 
+Please Note: if you set an attribute as `!important` same thing applies (if you mark all of them `!important`).
+
 | attribute      | description                                                                                         | status          |
 | -------------- | --------------------------------------------------------------------------------------------------- | --------------- |
 | `style`        | React standard object for styles. Please note these get added as classes, not as a style attribute. | implemented     |
@@ -387,6 +389,10 @@ To set debug to true do `style.debug = true`
 ### Validating
 
 It does not pretend to validate everything, just the annoying things that could cause problems.
+
+It has defined a function to validate complete classes attached to an element togheter, but currenly does not validate anything.
+
+Outdated stuff:
 
 It displays an error message if debug is on when:
 
