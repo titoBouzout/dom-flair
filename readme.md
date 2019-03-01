@@ -331,6 +331,9 @@ Lets say we add a new attribute named random_margin
 style.define_attribute('random_margin', function(value, props, style_hp) {
 	return 'margin:' + ((Math.random() * 10) | 0) + 'px;padding:5px;'
 })
+
+// You then can use as <Box random_margin></Box>
+
 ```
 
 Your custom function will receive three arguments. It should return a string with css properties, NOT classes.
@@ -345,7 +348,7 @@ Is the value of the attribute. Lets say you create a new attribute named random_
 
 The react props object. This is handy so you can look up other attributes.
 
-`if(props.margin) { /* do not use random margin */ }`
+`if(props.margin) { /* as has a defined margin do not add a random margin */ }`
 
 #### `style_hp` style high priority
 
@@ -360,28 +363,16 @@ In the case your custom attribute gets overwritten by something else, you should
 Please note you should use `style_hp.value +=` to `append` to it. If you don't `append`, then you're going to discard any already defined high priority property.
 
 ```javascript
+
+// defining a regular attribute
 style.define_attribute('random_margin', function(value, props, style_hp) {
+	// we avoid adding a random margin to something that already has a margin defined
 	if (props.margin)
-		// we avoid adding a random margin to something that already has a margin defined
 		return ''
 	return 'margin:' + ((Math.random() * 10) | 0) + 'px;'
 })
 
-function Component() {
-	const Blue = css(`color: blue;`)
-
-	return (
-		<Box>
-			<Blue random_margin margin="2px">
-				Im blue
-				<Box row grow random_margin>
-					mt margin is random
-				</Box>
-			</Blue>
-		</Box>
-	)
-}
-
+// defining a high priority attribute (will overwrite other attributes
 style.define_attribute('dont_overwrite_my_margin', function(
 	value,
 	props,
@@ -391,20 +382,6 @@ style.define_attribute('dont_overwrite_my_margin', function(
 	return ''
 })
 
-function Component() {
-	const Blue = css(`color: blue;`)
-
-	return (
-		<Box>
-			<Blue dont_overwrite_my_margin margin="2px">
-				Im blue
-				<Box row grow dont_overwrite_my_margin>
-					mt margin is random
-				</Box>
-			</Blue>
-		</Box>
-	)
-}
 ```
 
 #### How To Debug
@@ -440,4 +417,6 @@ It displays an error message if debug is on when:
 ## Bugs
 
 - We're appending a default style for the `body`, `html`, and the root `div` inside the `body`, so our css works. By doing this we forcing that the body is not supposed to show a scrollbar.
-- If you use interpolation, we will just use string.raw[0] without doing any sort of processing. I don't use this.
+- If you use interpolation, we will just use `string.raw[0]` without doing any sort of processing. I don't use this.
+- priority of the different css attributes is messed up
+- the api for defining an attribute and the high priority is confusing
