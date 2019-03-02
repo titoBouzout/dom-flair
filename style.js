@@ -229,7 +229,13 @@ class Style {
 		'max-w': function(value, props) {
 			return 'max-width:' + (value !== true ? value : '100%') + ';'
 		},
+		'max-width': function(value, props) {
+			return 'max-width:' + (value !== true ? value : '100%') + ';'
+		},
 		'min-w': function(value, props) {
+			return 'min-width:' + (value !== true ? value : '100%') + ';'
+		},
+		'min-width': function(value, props) {
 			return 'min-width:' + (value !== true ? value : '100%') + ';'
 		},
 
@@ -243,7 +249,13 @@ class Style {
 		'max-h': function(value, props) {
 			return 'max-height:' + (value !== true ? value : '100%') + ';'
 		},
+		'max-height': function(value, props) {
+			return 'max-height:' + (value !== true ? value : '100%') + ';'
+		},
 		'min-h': function(value, props) {
+			return 'min-height:' + (value !== true ? value : '100%') + ';'
+		},
+		'min-height': function(value, props) {
 			return 'min-height:' + (value !== true ? value : '100%') + ';'
 		},
 

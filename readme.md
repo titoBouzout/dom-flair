@@ -76,13 +76,17 @@ The size of the `Box` and NOT the size of the children.
 | `grow`    | grow `self` as much as it can without growing the children                         | implemented                                                                     |
 | `basis`   | sets the flex-basis value                             | buggy, we're forcing `align-self:stretch;` to `grow`, so flex-basis is ignored. |
 | `width`   | sets the width value(if empty defaults to 100%)       | implemented                                                                     |
+| `min-width`   | sets the min-width value (if empty defaults to 100%)  | implemented                                                                     |
+| `max-width`   | sets the max-width value (if empty defaults to 100%)  | implemented                                                                     |
 | `w`       | sets the width value(if empty defaults to 100%)       | implemented                                                                     |
-| `max-w`   | sets the max-width value (if empty defaults to 100%)  | implemented                                                                     |
 | `min-w`   | sets the min-width value (if empty defaults to 100%)  | implemented                                                                     |
+| `max-w`   | sets the max-width value (if empty defaults to 100%)  | implemented                                                                     |
 | `height`  | sets the height value (if empty defaults to 100%)     | implemented                                                                     |
+| `min-height`   | sets the min-height value (if empty defaults to 100%) | implemented                                                                     |
+| `max-height`   | sets the max-height value (if empty defaults to 100%) | implemented                                                                     |
 | `h`       | sets the height value (if empty defaults to 100%)     | implemented                                                                     |
-| `max-h`   | sets the max-height value (if empty defaults to 100%) | implemented                                                                     |
 | `min-h`   | sets the min-height value (if empty defaults to 100%) | implemented                                                                     |
+| `max-h`   | sets the max-height value (if empty defaults to 100%) | implemented                                                                     |
 
 ### Children Alignment
 
