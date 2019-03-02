@@ -11,6 +11,9 @@ class Style {
 	properties = {}
 	properties_counter = 0
 
+	sheet_append = []
+	sheet_insert = []
+	sheet_insert_rule = []
 	sheet_rules = [0, 0, 0, 0, 0, 0]
 	sheet_queue = [[], [], [], [], [], []]
 
@@ -612,25 +615,6 @@ class Style {
 			)
 		}
 
-		// init sheets
-		this.sheet_append = []
-		this.sheet_insert = []
-		this.insert_rule = []
-		for (var id = 0; id < 6; id++) {
-			this.sheet_append[id] = document.createElement('style')
-			this.sheet_append[id].appendChild(document.createTextNode(''))
-			document.head.appendChild(this.sheet_append[id])
-
-			this.sheet_insert[id] = document.createElement('style')
-			this.sheet_insert[id].appendChild(document.createTextNode(''))
-			document.head.appendChild(this.sheet_insert[id])
-
-			if (this.sheet_insert[id].sheet.insertRule)
-				this.insert_rule[id] = this.sheet_insert[id].sheet.insertRule.bind(
-					this.sheet_insert[id].sheet
-				)
-		}
-
 		this.to_fast_properties = (function() {
 			let fastProto = null
 
@@ -921,17 +905,33 @@ class Style {
 				if (styles.indexOf('@') != -1) {
 					styles = this.post_style(styles)
 				}
-				if (!this.debug && this.insert_rule[id]) {
-					try {
-						this.insert_rule[id](
-							'@media{' + styles + '}',
-							this.sheet_rules[id]++
-						)
-					} catch (e) {
+				if (!this.debug) {
+					if (!this.sheet_insert[id]) {
+						this.sheet_create_insert(id)
+					}
+					if (this.sheet_insert_rule[id]) {
+						try {
+							this.sheet_insert_rule[id](
+								'@media{' + styles + '}',
+								this.sheet_rules[id]++
+							)
+						} catch (e) {
+							if (!this.sheet_append[id]) {
+								this.sheet_create_append(id)
+							}
+							this.sheet_append[id].appendChild(document.createTextNode(styles))
+							;(error || console.error)(e)
+						}
+					} else {
+						if (!this.sheet_append[id]) {
+							this.sheet_create_append(id)
+						}
 						this.sheet_append[id].appendChild(document.createTextNode(styles))
-						;(error || console.error)(e)
 					}
 				} else {
+					if (!this.sheet_append[id]) {
+						this.sheet_create_append(id)
+					}
 					this.sheet_append[id].appendChild(document.createTextNode(styles))
 				}
 			}
@@ -956,7 +956,25 @@ class Style {
 		}
 		////tick('sheet_process parent')
 	}
+	sheet_create_insert(id) {
+		if (!this.sheet_insert[id]) {
+			this.sheet_insert[id] = document.createElement('style')
+			this.sheet_insert[id].appendChild(document.createTextNode(''))
+			document.head.appendChild(this.sheet_insert[id])
 
+			if (this.sheet_insert[id].sheet.insertRule)
+				this.sheet_insert_rule[id] = this.sheet_insert[
+					id
+				].sheet.insertRule.bind(this.sheet_insert[id].sheet)
+		}
+	}
+	sheet_create_append(id) {
+		if (!this.sheet_append[id]) {
+			this.sheet_append[id] = document.createElement('style')
+			this.sheet_append[id].appendChild(document.createTextNode(''))
+			document.head.appendChild(this.sheet_append[id])
+		}
+	}
 	validate_clases(classNames) {
 		var styles = classNames + '\n\n'
 		for (var className of classNames.split(' ')) {
