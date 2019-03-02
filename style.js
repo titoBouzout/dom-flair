@@ -559,45 +559,39 @@ class Style {
 		}, 20000)
 
 		// bind
-		this.sheet_process = this.sheet_process.bind(this)
+		this.classNames = this.classNames.bind(this)
+		this.hash_classes = this.hash_classes.bind(this)
+		this.hash_properties = this.hash_properties.bind(this)
+		this.prop_react_styles = this.prop_react_styles.bind(this)
+		this.process_styles = this.process_styles.bind(this)
 		this.normalize_styles = this.normalize_styles.bind(this)
 		this.normalize_styles_properties = this.normalize_styles_properties.bind(
 			this
 		)
 		this.normalize_properties = this.normalize_properties.bind(this)
-		this.pre_style = this.process_styles.bind(this, this.pre_style_categories)
-		this.post_style = this.process_styles.bind(this, this.post_style_categories)
 
+		this.sheet_process = this.sheet_process.bind(this)
 		this.validate_clases = this.validate_clases.bind(this)
 		this.css = this.css.bind(this)
-		this.factory = this.factory.bind(this)
-		this.classNames = this.classNames.bind(this)
-		this.hash_classes = this.hash_classes.bind(this)
-		this.hash_properties = this.hash_properties.bind(this)
 
 		// memoizing
 		// TODO resolve an expiration for the chache
+		this.classNames = this.memo(this.classNames)
+		this.hash_classes = this.memo(this.hash_classes)
+		this.hash_properties = this.memo(this.hash_properties)
+		this.prop_react_styles = this.memo(this.prop_react_styles)
+		this.process_styles = this.memo(this.process_styles)
 		this.normalize_styles = this.memo(this.normalize_styles)
 		this.normalize_styles_properties = this.memo(
 			this.normalize_styles_properties
 		)
 		this.normalize_properties = this.memo(this.normalize_properties)
-		this.pre_style = this.memo(
-			this.process_styles.bind(style, this.pre_style_categories)
-		)
-		this.post_style = this.memo(
-			this.process_styles.bind(style, this.post_style_categories)
-		)
 
-		this.validate_css = this.memo(this.validate_css)
+		this.validate_clases = this.memo(this.validate_clases)
 
-		if (!this.debug) {
-			this.css = this.memo(this.css)
-			this.factory = this.memo(this.factory)
-			this.classNames = this.memo(this.classNames)
-			this.hash_classes = this.memo(this.hash_classes)
-			this.hash_properties = this.memo(this.hash_properties)
-		}
+		// The following functions cannot be memoize
+		//this.css = this.memo(this.css)
+		//this.factory = this.memo(this.factory)
 
 		this.index_attributes()
 
@@ -678,7 +672,7 @@ class Style {
 	// from any style transforms that to classNames
 	classNames(styles, priority) {
 		styles = this.normalize_styles(styles)
-		styles = this.pre_style(styles)
+		styles = this.process_styles(this.pre_style_categories, styles)
 
 		return this.hash_classes(styles, priority)
 	}
@@ -768,7 +762,8 @@ class Style {
 	prop_react_styles(style) {
 		var styles = ''
 		for (var id in style) {
-			styles += this.prop_hyphenate_style_name(id) + ':' + style[id] + ';'
+			if (style[id] != '')
+				styles += this.prop_hyphenate_style_name(id) + ':' + style[id] + ';'
 		}
 		return styles
 	}
@@ -903,7 +898,7 @@ class Style {
 				var styles = this.sheet_queue[id].join('\n')
 				this.sheet_queue[id].length = 0
 				if (styles.indexOf('@') != -1) {
-					styles = this.post_style(styles)
+					styles = this.process_styles(this.post_style_categories, styles)
 				}
 				if (!this.debug) {
 					if (!this.sheet_insert[id]) {
@@ -920,7 +915,7 @@ class Style {
 								this.sheet_create_append(id)
 							}
 							this.sheet_append[id].appendChild(document.createTextNode(styles))
-							;(error || console.error)(e)
+							this.error(e)
 						}
 					} else {
 						if (!this.sheet_append[id]) {
@@ -948,7 +943,10 @@ class Style {
 						element.parentNode.classList.add(parent.className)
 						parent_new.push(parent)
 					} else {
-						;(error || console.error)('element does not exists', element)
+						this.error(
+							'Style: looking for parent, the element does not exists.',
+							element
+						)
 					}
 				}
 			}
@@ -987,18 +985,18 @@ class Style {
 		/*styles = styles.replace(/min-height: 0;/g, '').replace(/min-width: 0;/g, '')
 		if (/width|height/.test(styles)) {
 			if (!/box-sizing/.test(styles) && /margin|border|padding/.test(styles)) {
-				error(
+				this.error(
 					'Style: width|height with margin|border|padding declared without declaring a box-sizing'
 				)
-				;(log || console.log)(styles)
+				this.log(styles)
 			}
 		}*/
 
 		/*if (/animation/.test(css) && !/position:/.test(css)) {
-			error('Style: animations should have a position')
+			this.error('Style: animations should have a position')
 		}
 		if (/animation/.test(css) && !/will-change/.test(css)) {
-			error(
+			this.error(
 				'Style: animations should have will-change for the animated properties'
 			)
 		}*/
@@ -1126,6 +1124,9 @@ class Style {
 		}
 	}
 	memo(fn, expires) {
+		if (!fn) {
+			this.error('function to memoize is undefined')
+		}
 		if (!expires) {
 			return function(fn, cache, serialize, is_primitive, ...args) {
 				const k =
@@ -1194,6 +1195,20 @@ class Style {
 				this,
 				this.is_primitive
 			)
+		}
+	}
+	error() {
+		if (typeof error != 'undefined') {
+			error(arguments)
+		} else {
+			console.error(arguments)
+		}
+	}
+	log() {
+		if (typeof log != 'undefined') {
+			log(arguments)
+		} else {
+			console.log(arguments)
 		}
 	}
 }
