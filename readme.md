@@ -189,7 +189,7 @@ This is the alignment of the children, NOT the alignment of the content of these
 
 #### Bugs
 
-- `space-around` and `space-evenly` does not work if the content overflows vertically as it seems to be centered.  https://codepen.io/titoBouzout/pen/ZPWjyb but kspade discovered that you can change it to `space-between` works.
+- `space-around` and `space-evenly` does not work if the content overflows vertically as it seems to be centered not considering the scrollbar.  https://codepen.io/titoBouzout/pen/ZPWjyb kspade discovered that this is not reproducible when `space-between` is used.
 
 ### Text
 
@@ -261,7 +261,7 @@ Attributes to add custom CSS/classNames. Priority, the ones on top overwrite the
 4. `<Box css="background:red;"/>` overwrites:
 5. `<Box grow/>` overwrites:
 6. `css('background:red;');`
-7. `className` is unknown if overwrites or not because depends were you include stylesheet.
+7. `className` is unknown if overwrites or not because depends were you include style sheet.
 
 Please Note: if you set an attribute as `!important` same thing order will apply but `!important` values will still be important.
 
@@ -470,7 +470,7 @@ To set debug to true do `style.debug = true`
 
 It does not pretend to validate everything, just the annoying things that could cause problems.
 
-It has defined a function to validate complete classes attached to an element togheter, but currenly does not validate anything.
+It has defined a function to validate complete classes attached to an element together, but currently does not validate anything.
 
 Outdated stuff:
 
@@ -493,3 +493,7 @@ It displays an error message if debug is on when:
 - Document mobile features. I still didn't use, so no documentation.
 - define an expiration for the memoize functions.
 
+## Authors
+
+- Tito Bouzout https://github.com/titoBouzout
+- Kilo https://github.com/kspade
