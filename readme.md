@@ -46,6 +46,76 @@ Has two sidebars, a toolbar, a footer, and grows in the middle content:
 </Box>
 ```
 
+### Full Working Example:
+
+Notice `html` and `body` should be full width/height for the flex elements to work.
+
+Also the element you mount to should be `display:flex;flex:1;`
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+	<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+	<script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+	<!-- you should include this -->
+	<script src="style.js"></script>
+
+	<style type="text/css">
+		html, body, #root {
+			margin: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		#root {
+			display: flex;
+			flex: 1;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+	</style>
+</head>
+<body>
+	<div id="root"></div>
+	<script type="text/jsx">
+		function Component(){
+			return (
+				<Box grow>
+					<Box col grow max-width="210px" horizontal>
+						left sidebar
+					</Box>
+					<Box col grow>
+						<Box row width="100%" right>
+							toolbar
+						</Box>
+						<Box row grow center>
+							content
+						</Box>
+						<Box row width="100%" left>
+							footer
+						</Box>
+					</Box>
+					<Box col grow max-width="210px" vertical>
+						right sidebar
+					</Box>
+				</Box>
+			)
+		}
+
+		ReactDOM.render(
+			React.createElement(Component),
+			document.querySelector('#root')
+		)
+	</script>
+</body>
+</html>
+
+```
+
 ## Caveats / Surprises
 
 1. Rows will not take the full width unless you add to them width="100%"
@@ -328,7 +398,7 @@ style.define_attribute('fancy_margin', 'margin:0 auto;')
 
 ```
 
-Sometimes the attributes you add get overwritten by something else. In that case you can assign to your attributes a higher priority by defining it as high priority instead.
+Sometimes the attributes you add get overwritten by something else. In that case you can assign to the attributes a higher priority by defining it as high priority instead.
 
 
 
@@ -352,7 +422,7 @@ style.define_dynamic_attribute('random_margin', function(value, props) {
 
 ```
 
-Your custom function will receive two arguments. It should return a string with css properties, NOT classes.
+The custom function will receive two arguments. It should return a string with css properties, NOT classes.
 
 The arguments:
 
