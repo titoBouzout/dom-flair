@@ -176,16 +176,20 @@ This is the alignment of the children, NOT the alignment of the content of these
 
 | attribute       | description   | status                  |
 | --------------- | ------------- | ----------------------- |
-| `space-around`  | space-around  | implemented        |
+| `space-around`  | space-around  | implemented, see also Bugs       |
 | `space-around-horizontal`  | space-around  | semi implemented (does not work in cols)       |
 | `space-around-vertical`  | space-around  | semi implemented (does not work in cols)       |
 | `space-between` | space-between | implemented        |
 | `space-between-horizontal` | space-between | semi implemented (does not work in cols)       |
 | `space-between-vertical` | space-between | semi implemented (does not work in cols)       |
-| `space-evenly`  | space-evenly  | implemented        |
+| `space-evenly`  | space-evenly  | implemented, see also Bugs       |
 | `space-evenly-horizontal`  | space-evenly  | semi implemented (does not work in cols)       |
 | `space-evenly-vertical`  | space-evenly  | semi implemented (does not work in cols)       |
 | `stretch`       | stretch       | implemented, not tested |
+
+#### Bugs
+
+- `space-around` and `space-evenly` does not work if the content overflows vertically as it seems to be centered.  https://codepen.io/titoBouzout/pen/ZPWjyb but kspade discovered that you can change it to `space-between` works.
 
 ### Text
 
