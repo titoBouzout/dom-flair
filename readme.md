@@ -119,10 +119,10 @@ Also the element you mount to should be `display:flex;flex:1;`
 ## Caveats / Surprises
 
 1. Rows will not take the full width unless you add to them width="100%"
-2. You need to explicitly tell how stuff is aligned. (this for me is a feature)
-3. It does not do any kind of prefixing. (stop prefixing!)
-4. If you use interpolation, we will just use `string.raw[0]` without doing any sort of processing. (I dont use interpolation)
-5. You are responsible of defining `html`, `body` or `body > div` so the styles of this library work properly. (example, if you use `<Box grow/>` and it does not work then maybe the parent is preventing the Box from growing.
+2. You need to explicitly tell how stuff is aligned. (this is a feature)
+3. It does not do any kind of prefixing.
+4. If you use interpolation, we will just use `string.raw[0]` without doing any sort of processing.
+5. You are responsible of defining `html`, `body` or `body > div` so the styles of this library work properly. (example, if you use `<Box grow/>` and it does not work then maybe the parent is preventing the Box from growing. See section "Full Working Example"
 
 ## Attributes supported by `Box`
 
@@ -252,14 +252,14 @@ Useful text stuff.
 Attributes to add custom CSS/classNames. Priority, the ones on top overwrite the ones on bottom:
 
 1. `css_parent` overwrites:
-2.  custom defined high priority functions, overwrites:
-3. `style` (`<Box style={{background:'red';}}/>`) overwrites:
-4. `css` (`<Box css="background:red;"/>`) overwrites:
-5. `attribute definition` (`<Box grow/>`) overwrites:
-6. component definition (`css('background:red;');`):
-7. `className` is unknown if overwrites or not because depends were you include the className definition.
+2. `define_attribute_high_priority` functions, overwrites:
+3. `<Box style={{background:'red';}}/>` overwrites:
+4. `<Box css="background:red;"/>` overwrites:
+5. `<Box grow/>` overwrites:
+6. `css('background:red;');`
+7. `className` is unknown if overwrites or not because depends were you include stylesheet.
 
-Please Note: if you set an attribute as `!important` same thing applies (if you mark all of them `!important`).
+Please Note: if you set an attribute as `!important` same thing order will apply but `!important` values will still be important.
 
 | attribute      | description                                                                                         | status          |
 | -------------- | --------------------------------------------------------------------------------------------------- | --------------- |
@@ -267,7 +267,7 @@ Please Note: if you set an attribute as `!important` same thing applies (if you 
 | `className`    | React standard string with classNames                                                               | implemented     |
 | `css`          | string with regular css properties                                                                  | implemented     |
 | `css_children` | string with regular css properties, to be applied to children                                       | not implemented |
-| `css_parent`   | string with regular css properties, to be applied to the parent. This is :parent selector xD        | implemented not tested    |
+| `css_parent`   | string with regular css properties, to be applied to the parent. This is :parent selector           | implemented not tested    |
 
 ### Random Helpers As We See These Fit
 
@@ -352,8 +352,8 @@ var Component = css('class{color:red;}class>a{color:blue;}')
 // the default element is a div, you can change it
 var Component = css('background:red;', 'span')
 
-// using other components
-function Something_NOTICE_ME(props) {
+// using other components in a simple way
+function Component_NOTICE_ME(props) {
 	// here className was automatically created
 	return (
 		<div className={props.className}>
@@ -364,8 +364,10 @@ function Something_NOTICE_ME(props) {
 var Red = css('background:red', Something_NOTICE_ME)
 var Blue = css('background:blue', Something_NOTICE_ME)
 
+
 // Then you just do
 // <Red>the red link!</Red>
+// <Red padding="5px">the red link!</Red>
 // <Blue>the blue link!</Blue>
 
 // sort styled-components
