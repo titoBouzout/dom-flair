@@ -120,7 +120,7 @@ Also the element you mount to should be `display:flex;flex:1;`
 
 1. Rows will not take the full width unless you add to them width="100%"
 2. You need to explicitly tell how stuff is aligned. (this is a feature)
-3. It does not do any kind of prefixing.
+3. It does not do any kind of prefixing. But you can add a custom function `define_processor` for prefixing before appending to the document.
 4. If you use interpolation, we will just use `string.raw[0]` without doing any sort of processing.
 5. You are responsible of defining `html`, `body` or `body > div` so the styles of this library work properly. (example, if you use `<Box grow/>` and it does not work then maybe the parent is preventing the Box from growing. See section "Full Working Example"
 
@@ -384,7 +384,7 @@ var Button = css(
 	'button'
 )
 
-// I believe interpolation does not work. IDK
+// I believe interpolation does not work.
 var Button = css`
 	display: inline-block;
 	border-radius: 3px;
@@ -396,7 +396,7 @@ var Button = css`
 
 #### Static argument
 
-Lets say we add a new static attribute named fancy_margin
+We add a new static attribute named fancy_margin
 
 ```javascript
 style.define_attribute('fancy_margin', 'margin:0 auto;')
@@ -418,7 +418,7 @@ style.define_attribute_high_priority('fancy_margin', 'margin:0 auto;')
 
 #### Dynamic argument
 
-Lets say we add a new dynamic attribute named random_margin. This is a function that gets called.
+Lets say we add a new dynamic attribute named random_margin. This is a function that gets called, it should return a string with css properties, NOT classes.
 
 ```javascript
 style.define_dynamic_attribute('random_margin', function(value, props) {
@@ -428,8 +428,6 @@ style.define_dynamic_attribute('random_margin', function(value, props) {
 // You then can use as <Box random_margin></Box>
 
 ```
-
-The custom function will receive two arguments. It should return a string with css properties, NOT classes.
 
 The arguments:
 
@@ -443,6 +441,8 @@ The react props object. This is handy so you can look up other attributes.
 
 `if(props.margin) { /* as has a defined margin do not add a random margin! */ }`
 
+#### High Priority
+
 You can also define a high priority dynamic attribute.
 
 ```javascript
@@ -454,6 +454,22 @@ style.define_dynamic_attribute_high_priority('random_margin', function(value, pr
 		return ''
 	// yeah!
 	return 'margin:' + ((Math.random() * 10) | 0) + 'px;'
+})
+
+```
+
+#### Processor
+
+You can hook just before the styles are appended to the document to do some processing.
+
+```javascript
+
+// here we change all margins and paddings to use calc and multiply for --density var
+style.define_processor(function(styles) {
+	return styles.replace(
+		/(margin|padding)(-left|-right|-top|-bottom)?:([^;]+);/g,
+		'$1$2:calc($3 * var(--density));'
+	)
 })
 
 ```

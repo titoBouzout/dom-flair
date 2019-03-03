@@ -916,7 +916,11 @@ Style.prototype.append_to_parent = function(styles) {
 	this.appended_to_parent = true
 	this.queue_process()
 }
-
+// run a user defined function before appending
+Style.prototype.css_processors = []
+Style.prototype.define_processor = function(fn) {
+	this.css_processors.push(fn)
+}
 Style.prototype.sheet_process = function() {
 	this.queue_process_added = false
 	////tick('sheet_process')
@@ -927,6 +931,9 @@ Style.prototype.sheet_process = function() {
 			this.sheet_queue[id].length = 0
 			if (styles.indexOf('@') != -1) {
 				styles = this.process_styles(this.post_style_categories, styles)
+			}
+			for (var i in this.css_processors) {
+				styles = this.css_processors[i](styles)
 			}
 			if (!this.debug) {
 				if (!this.sheet_insert[id]) {
