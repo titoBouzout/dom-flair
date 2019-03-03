@@ -434,11 +434,15 @@ Style.prototype.css_property_fn_high_priority = {
 			return `
 				align-content: center;
 				align-items: center;
+				align-content: safe center;
+				align-items: safe center;
 			`
 		} else {
 			return `
 				justify-content: center;
 				justify-items: center;
+				justify-content: safe center;
+				justify-items: safe center;
 			`
 		}
 	},
@@ -447,11 +451,15 @@ Style.prototype.css_property_fn_high_priority = {
 			return `
 				justify-content: center;
 				justify-items: center;
+				justify-content: safe center;
+				justify-items: safe center;
 			`
 		} else {
 			return `
 				align-content: center;
 				align-items: center;
+				align-content: safe center;
+				align-items: safe center;
 			`
 		}
 	},
@@ -461,14 +469,21 @@ Style.prototype.css_property_fn_high_priority = {
 			align-content: center;
 			justify-items: center;
 			align-items: center;
+			justify-content: safe center;
+			align-content: safe center;
+			justify-items: safe center;
+			align-items: safe center;
 		`
 	},
 	'space-around': function(value, props) {
 		return `
 			justify-content: space-around;
-			align-content: space-around;
+			align-content: initial; // this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content
+
 			justify-items: center;
 			align-items: center;
+			justify-items: safe center;
+			align-items: safe center;
 		`
 	},
 	'space-around-horizontal': function(value, props) {
@@ -479,6 +494,8 @@ Style.prototype.css_property_fn_high_priority = {
 				align-content: space-around;
 				justify-items: center;
 				align-items: center;
+				justify-items: safe center;
+				align-items: safe center;
 			`
 		} else {
 			return `
@@ -494,6 +511,8 @@ Style.prototype.css_property_fn_high_priority = {
 				align-content: space-around;
 				justify-items: center;
 				align-items: center;
+				justify-items: safe center;
+				align-items: safe center;
 			`
 		} else {
 			return `
@@ -504,9 +523,11 @@ Style.prototype.css_property_fn_high_priority = {
 	'space-between': function(value, props) {
 		return `
 			justify-content: space-between;
-			align-content: space-between;
+			align-content: initial; // this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content
 			justify-items: center;
 			align-items: center;
+			justify-items: safe center;
+			align-items: safe center;
 		`
 	},
 	'space-between-horizontal': function(value, props) {
@@ -517,6 +538,8 @@ Style.prototype.css_property_fn_high_priority = {
 				align-content: space-between;
 				justify-items: center;
 				align-items: center;
+				justify-items: safe center;
+				align-items: safe center;
 			`
 		} else {
 			return `
@@ -532,6 +555,8 @@ Style.prototype.css_property_fn_high_priority = {
 				align-content: space-between;
 				justify-items: center;
 				align-items: center;
+				justify-items: safe center;
+				align-items: safe center;
 			`
 		} else {
 			return `
@@ -542,9 +567,11 @@ Style.prototype.css_property_fn_high_priority = {
 	'space-evenly': function(value, props) {
 		return `
 			justify-content: space-evenly;
-			align-content: space-evenly;
+			align-content: initial; // this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content
 			justify-items: center;
 			align-items: center;
+			justify-items: safe center;
+			align-items: safe center;
 		`
 	},
 	'space-evenly-horizontal': function(value, props) {
@@ -555,6 +582,8 @@ Style.prototype.css_property_fn_high_priority = {
 				align-content: space-evenly;
 				justify-items: center;
 				align-items: center;
+				justify-items: safe center;
+				align-items: safe center;
 			`
 		} else {
 			return `
@@ -570,6 +599,8 @@ Style.prototype.css_property_fn_high_priority = {
 				align-content: space-evenly;
 				justify-items: center;
 				align-items: center;
+				justify-items: safe center;
+				align-items: safe center;
 			`
 		} else {
 			return `
@@ -583,6 +614,8 @@ Style.prototype.css_property_fn_high_priority = {
 			align-content: stretch;
 			justify-items: center;
 			align-items: center;
+			justify-items: safe center;
+			align-items: safe center;
 		`
 	},
 }

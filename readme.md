@@ -176,20 +176,21 @@ This is the alignment of the children, NOT the alignment of the content of these
 
 | attribute       | description   | status                  |
 | --------------- | ------------- | ----------------------- |
-| `space-around`  | space-around  | implemented, see also Bugs       |
+| `space-around`  | space-around  | implemented      |
 | `space-around-horizontal`  | space-around  | semi implemented (does not work in cols)       |
 | `space-around-vertical`  | space-around  | semi implemented (does not work in cols)       |
 | `space-between` | space-between | implemented        |
 | `space-between-horizontal` | space-between | semi implemented (does not work in cols)       |
 | `space-between-vertical` | space-between | semi implemented (does not work in cols)       |
-| `space-evenly`  | space-evenly  | implemented, see also Bugs       |
+| `space-evenly`  | space-evenly  | implemented      |
 | `space-evenly-horizontal`  | space-evenly  | semi implemented (does not work in cols)       |
 | `space-evenly-vertical`  | space-evenly  | semi implemented (does not work in cols)       |
 | `stretch`       | stretch       | implemented, not tested |
 
 #### Bugs
 
-- `space-around` and `space-evenly` does not work if the content overflows vertically as it seems to be centered not considering the scrollbar.  https://codepen.io/titoBouzout/pen/ZPWjyb kspade discovered that this is not reproducible when `space-between` is used.
+- `space-around`, `space-between` and `space-evenly` use `align-content: initial;` to workaround "Can't scroll to top of flex item that is overflowing container"
+- "safe center" values looks like it does not work correctly in browsers....
 
 ### Text
 
