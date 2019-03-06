@@ -33,28 +33,13 @@ function Style() {
 	this.normalize_styles = this.memo(this.normalize_styles)
 	this.normalize_styles_properties = this.memo(this.normalize_styles_properties)
 	this.normalize_properties = this.memo(this.normalize_properties)
+	this.interpolation = this.memo(this.interpolation)
 
 	this.validate_clases = this.memo(this.validate_clases)
 
 	// The following functions cannot be memoize
 	//this.css = this.memo(this.css)
 	//this.factory = this.memo(this.factory)
-
-	this.index_attributes()
-
-	// normalize default properties
-	for (var id in this.css_property) {
-		this.css_property[id] = this.normalize_properties(this.css_property[id])
-	}
-
-	// if you use template literals in css_property_value
-	// then the editor adds a ; when it gets formatted on save
-	for (var id in this.css_property_value) {
-		this.css_property_value[id] = this.css_property_value[id].replace(
-			/;\s*$/,
-			''
-		)
-	}
 
 	this.to_fast_properties = (function() {
 		let fastProto = null
@@ -83,6 +68,22 @@ function Style() {
 			return FastObject(o)
 		}
 	})()
+
+	this.index_attributes()
+
+	// normalize default properties
+	for (var id in this.css_property) {
+		this.css_property[id] = this.normalize_properties(this.css_property[id])
+	}
+
+	// if you use template literals in css_property_value
+	// then the editor adds a ; when it gets formatted on save
+	for (var id in this.css_property_value) {
+		this.css_property_value[id] = this.css_property_value[id].replace(
+			/;\s*$/,
+			''
+		)
+	}
 }
 
 Style.prototype.debug = false
@@ -740,13 +741,10 @@ Style.prototype.props = function(_props, classNames, interpolation) {
 	}
 
 	if (interpolation) {
-		values.styles = interpolation[1].reduce((r, expr, i) => {
-			return (
-				r +
-				(typeof expr === 'function' ? expr(_props) : expr) +
-				interpolation[0][i + 1]
-			)
-		}, interpolation[0][0])
+		values.styles = this.interpolation(interpolation, {
+			..._props,
+			children: null,
+		})
 	}
 
 	this.parent_counter++
@@ -910,6 +908,15 @@ Style.prototype.normalize_properties = function(properties) {
 
 	//tick('normalize_css')
 	return properties
+}
+Style.prototype.interpolation = function(interpolation, props) {
+	return interpolation[1].reduce(function(r, expr, i) {
+		return (
+			r +
+			(typeof expr === 'function' ? expr(props) : expr) +
+			interpolation[0][i + 1]
+		)
+	}, interpolation[0][0])
 }
 
 Style.prototype.append_to_parent = function(styles) {
