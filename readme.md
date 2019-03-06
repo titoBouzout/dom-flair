@@ -159,13 +159,11 @@ The size of the `Box` and NOT the size of the children.
 | `width`      | sets the width value(if empty defaults to 100%)            |
 | `min-width`  | sets the min-width value (if empty defaults to 100%)       |
 | `max-width`  | sets the max-width value (if empty defaults to 100%)       |
-| `w`          | sets the width value(if empty defaults to 100%)            |
 | `min-w`      | sets the min-width value (if empty defaults to 100%)       |
 | `max-w`      | sets the max-width value (if empty defaults to 100%)       |
 | `height`     | sets the height value (if empty defaults to 100%)          |
 | `min-height` | sets the min-height value (if empty defaults to 100%)      |
 | `max-height` | sets the max-height value (if empty defaults to 100%)      |
-| `h`          | sets the height value (if empty defaults to 100%)          |
 | `min-h`      | sets the min-height value (if empty defaults to 100%)      |
 | `max-h`      | sets the max-height value (if empty defaults to 100%)      |
 
@@ -250,27 +248,24 @@ Useful text stuff.
 
 ### Padding / Margin / Border
 
-| attribute | description                               |
-| --------- | ----------------------------------------- |
-| `padding` | padding                                   |
-| `p`       | padding                                   |
-| `pb`      | padding bottom                            |
-| `pl`      | padding left                              |
-| `pr`      | padding right                             |
-| `pt`      | padding top                               |
-| `margin`  | margin                                    |
-| `m`       | margin                                    |
-| `mb`      | margin bottom                             |
-| `ml`      | margin left                               |
-| `mr`      | margin right                              |
-| `mt`      | margin top                                |
-| `border`  | border                                    |
-| `b`       | border                                    |
-| `bb`      | border bottom                             |
-| `bl`      | border left                               |
-| `br`      | border right                              |
-| `bt`      | border top                                |
-| `radius`  | border-radius (if empty defaults to 100%) |
+| attribute        | description                               |
+| ---------------- | ----------------------------------------- |
+| `padding`        | padding                                   |
+| `padding-bottom` | padding bottom                            |
+| `padding-left`   | padding left                              |
+| `padding-right`  | padding right                             |
+| `padding-top`    | padding top                               |
+| `margin`         | margin                                    |
+| `margin-bottom`  | margin bottom                             |
+| `margin-left`    | margin left                               |
+| `margin-right`   | margin right                              |
+| `margin-top`     | margin top                                |
+| `border`         | border                                    |
+| `border-bottom`  | border bottom                             |
+| `border-left`    | border left                               |
+| `border-right`   | border right                              |
+| `border-top`     | border top                                |
+| `radius`         | border-radius (if empty defaults to 100%) |
 
 ### CSS
 

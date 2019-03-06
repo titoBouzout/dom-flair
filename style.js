@@ -267,25 +267,22 @@ Style.prototype.css_property = {
 }
 Style.prototype.css_property_value = {
 	padding: 'padding:',
-	p: 'padding:',
-	pb: 'padding-bottom:',
-	pl: 'padding-left:',
-	pr: 'padding-right:',
-	pt: 'padding-top:',
+	'padding-bottom': 'padding-bottom:',
+	'padding-left': 'padding-left:',
+	'padding-right': 'padding-right:',
+	'padding-top': 'padding-top:',
 
 	margin: 'margin:',
-	m: 'margin:',
-	mb: 'margin-bottom:',
-	ml: 'margin-left:',
-	mr: 'margin-right:',
-	mt: 'margin-top:',
+	'margin-bottom': 'margin-bottom:',
+	'margin-left': 'margin-left:',
+	'margin-right': 'margin-right:',
+	'margin-top': 'margin-top:',
 
 	border: 'border:',
-	b: 'border:',
-	bb: 'border-bottom:',
-	bl: 'border-left:',
-	br: 'border-right:',
-	bt: 'border-top:',
+	'border-bottom': 'border-bottom:',
+	'border-left': 'border-left:',
+	'border-right': 'border-right:',
+	'border-top': 'border-top:',
 
 	z: 'z-index:',
 
@@ -312,9 +309,7 @@ Style.prototype.css_property_fn = {
 	width: function(value, props) {
 		return 'width:' + (value !== true ? value : '100%') + ';'
 	},
-	w: function(value, props) {
-		return 'width:' + (value !== true ? value : '100%') + ';'
-	},
+
 	'max-w': function(value, props) {
 		return 'max-width:' + (value !== true ? value : '100%') + ';'
 	},
@@ -332,9 +327,7 @@ Style.prototype.css_property_fn = {
 	height: function(value, props) {
 		return 'height:' + (value !== true ? value : '100%') + ';'
 	},
-	h: function(value, props) {
-		return 'height:' + (value !== true ? value : '100%') + ';'
-	},
+
 	'max-h': function(value, props) {
 		return 'max-height:' + (value !== true ? value : '100%') + ';'
 	},
@@ -1129,6 +1122,7 @@ Style.prototype.index_attributes = function() {
 			}.bind(this, id)
 		)
 	}
+	this.to_fast_properties(this.attributes)
 }
 Style.prototype.queue_process = function() {
 	if (!this.queue_process_added) {
