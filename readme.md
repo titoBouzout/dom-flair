@@ -206,7 +206,7 @@ This is the alignment of the children, NOT the alignment of the content of these
 #### Bugs
 
 - `space-around`, `space-between` and `space-evenly` use `align-content: initial;` to workaround "Can't scroll to top of flex item that is overflowing container"
-- `safe center` values looks like it does not work correctly in browsers....
+- `safe center` values looks like it does not work correctly in browsers..
 - `space-*` seem to have problems with columns maybe
 
 ### Text
@@ -298,18 +298,18 @@ Please Note: if you set an attribute as `!important` same order will apply but `
 
 ### Random Helpers As We See These Fit
 
-| attribute      | description                                                         |
-| -------------- | ------------------------------------------------------------------- |
-| `block`        | display block                                                       |
-| `inline`       | display inline                                                      |
-| `inline-block` | display inline-block                                                |
-| `relative`     | position relative                                                   |
-| `absolute`     | position absolute                                                   |
-| `fixed`        | position fixed top 0 left 0                                         |
-| `full`         | full width and height with overflow hidden                          |
-| `overflow`     | overflow hidden                                                     |
-| `layer`        | forces the browser to create a layer using transform:translateZ(0); |
-| `z`            | z-index                                                             |
+| attribute      | description                                                           |
+| -------------- | --------------------------------------------------------------------- |
+| `block`        | display block                                                         |
+| `inline`       | display inline                                                        |
+| `inline-block` | display inline-block                                                  |
+| `relative`     | position relative                                                     |
+| `absolute`     | position absolute                                                     |
+| `fixed`        | position fixed top 0 left 0                                           |
+| `full`         | full width and height with overflow hidden                            |
+| `overflow`     | overflow hidden                                                       |
+| `layer`        | forces the browser to create a layer using `transform:translateZ(0);` |
+| `z`            | z-index                                                               |
 
 ### Core
 
@@ -510,15 +510,7 @@ To set debug to true do `style.debug = true`
 
 ### Validating
 
-It does not pretend to validate everything, just the annoying things that could cause problems.
-
-It has defined a function to validate complete classes attached to an element together, but currently does not validate anything.
-
-Outdated stuff:
-
-It displays an error message if debug is on when:
-
-1. width or height is used with also padding or margin or border without using box-sizing
+It has defined a function to validate complete classes attached to an element together, but currently does not validate anything. It does not pretend to validate everything, just the annoying things that could cause problems.
 
 ## Features
 
@@ -526,7 +518,7 @@ It displays an error message if debug is on when:
 - some handy default attributes
 - easy to use mobile breakpoints
 - deduplicates css
-- is very efficient
+- is efficient
 
 ## TODO
 
@@ -534,6 +526,7 @@ It displays an error message if debug is on when:
 - Maybe change pixels to em on the fly
 - Document mobile features. I still didn't use, so no documentation.
 - define an expiration for the memoize functions.
+- make interpolation work with props as with `styled-components`.
 
 ## Authors
 
