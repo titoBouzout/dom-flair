@@ -55,65 +55,75 @@ Also the element you mount to should be `display:flex;flex:1;`
 ```html
 <!DOCTYPE html>
 <html>
-<head>
-	<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-	<script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-	<!-- you should include this -->
-	<script src="style.js"></script>
+	<head>
+		<script
+			crossorigin
+			src="https://unpkg.com/react@16/umd/react.development.js"
+		></script>
+		<script
+			crossorigin
+			src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+		></script>
+		<script
+			crossorigin
+			src="https://unpkg.com/babel-standalone@6/babel.min.js"
+		></script>
+		<!-- you should include this -->
+		<script src="style.js"></script>
 
-	<style type="text/css">
-		html, body, #root {
-			margin: 0;
-			width: 100%;
-			height: 100%;
-		}
+		<style type="text/css">
+			html,
+			body,
+			#root {
+				margin: 0;
+				width: 100%;
+				height: 100%;
+			}
 
-		#root {
-			display: flex;
-			flex: 1;
-		}
+			#root {
+				display: flex;
+				flex: 1;
+			}
 
-		* {
-			box-sizing: border-box;
-		}
-	</style>
-</head>
-<body>
-	<div id="root"></div>
-	<script type="text/jsx">
-		function Component(){
-			return (
-				<Box grow>
-					<Box col grow max-width="210px" horizontal>
-						left sidebar
-					</Box>
-					<Box col grow>
-						<Box row width="100%" right>
-							toolbar
+			* {
+				box-sizing: border-box;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="root"></div>
+		<script type="text/jsx">
+			function Component(){
+				return (
+					<Box grow>
+						<Box col grow max-width="210px" horizontal>
+							left sidebar
 						</Box>
-						<Box row grow center>
-							content
+						<Box col grow>
+							<Box row width="100%" right>
+								toolbar
+							</Box>
+							<Box row grow center>
+								content
+							</Box>
+							<Box row width="100%" left>
+								footer
+							</Box>
 						</Box>
-						<Box row width="100%" left>
-							footer
+						<Box col grow max-width="210px" vertical>
+							right sidebar
 						</Box>
 					</Box>
-					<Box col grow max-width="210px" vertical>
-						right sidebar
-					</Box>
-				</Box>
+				)
+			}
+
+			ReactDOM.render(
+				React.createElement(Component),
+				document.querySelector('#root')
 			)
-		}
-
-		ReactDOM.render(
-			React.createElement(Component),
-			document.querySelector('#root')
-		)
-	</script>
-</body>
+		</script>
+	</body>
 </html>
-
 ```
 
 ## Caveats / Surprises
@@ -121,7 +131,7 @@ Also the element you mount to should be `display:flex;flex:1;`
 1. Rows will not take the full width unless you add to them width="100%"
 2. You need to explicitly tell how stuff is aligned. (this is a feature)
 3. It does not do any kind of prefixing. But you can add a custom function `define_processor` for prefixing before appending to the document.
-4. If you use interpolation, we will just use `string.raw[0]` without doing any sort of processing.
+4. If you use interpolation, we will just use `string.raw[0]` without doing any sort of processing, you will not receive props. To be fixed.
 5. You are responsible of defining `html`, `body` or `body > div` so the styles of this library work properly. (example, if you use `<Box grow/>` and it does not work then maybe the parent is preventing the Box from growing. See section "Full Working Example"
 
 ## Attributes supported by `Box`
@@ -134,29 +144,29 @@ The element is `<Box></Box>`, and you can just add attributes to it without any 
 | --------- | ---------------------------------- | ----------- |
 | `row`     | children will display as a row     | implemented |
 | `col`     | children will display as a column  | implemented |
-| `wrap`    | wraps the children as in flex-wrap, | implemented (this maybe has problems with box-sizing)|
+| `wrap`    | wraps the children as in flex-wrap | implemented |
 | `nowrap`  | disables wrapping                  | implemented |
 
 ### Size
 
 The size of the `Box` and NOT the size of the children.
 
-| attribute | description                                           | status                                                                          |
-| --------- | ----------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `grow`    | grow `self` as much as it can without growing the children                         | implemented                                                                     |
-| `basis`   | sets the flex-basis value                             | buggy, we're forcing `align-self:stretch;` to `grow`, so flex-basis is ignored. |
-| `width`   | sets the width value(if empty defaults to 100%)       | implemented                                                                     |
-| `min-width`   | sets the min-width value (if empty defaults to 100%)  | implemented                                                                     |
-| `max-width`   | sets the max-width value (if empty defaults to 100%)  | implemented                                                                     |
-| `w`       | sets the width value(if empty defaults to 100%)       | implemented                                                                     |
-| `min-w`   | sets the min-width value (if empty defaults to 100%)  | implemented                                                                     |
-| `max-w`   | sets the max-width value (if empty defaults to 100%)  | implemented                                                                     |
-| `height`  | sets the height value (if empty defaults to 100%)     | implemented                                                                     |
-| `min-height`   | sets the min-height value (if empty defaults to 100%) | implemented                                                                     |
-| `max-height`   | sets the max-height value (if empty defaults to 100%) | implemented                                                                     |
-| `h`       | sets the height value (if empty defaults to 100%)     | implemented                                                                     |
-| `min-h`   | sets the min-height value (if empty defaults to 100%) | implemented                                                                     |
-| `max-h`   | sets the max-height value (if empty defaults to 100%) | implemented                                                                     |
+| attribute    | description                                                | status                                                                          |
+| ------------ | ---------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `grow`       | grow `self` as much as it can without growing the children | implemented                                                                     |
+| `basis`      | sets the flex-basis value                                  | buggy, we're forcing `align-self:stretch;` to `grow`, so flex-basis is ignored. |
+| `width`      | sets the width value(if empty defaults to 100%)            | implemented                                                                     |
+| `min-width`  | sets the min-width value (if empty defaults to 100%)       | implemented                                                                     |
+| `max-width`  | sets the max-width value (if empty defaults to 100%)       | implemented                                                                     |
+| `w`          | sets the width value(if empty defaults to 100%)            | implemented                                                                     |
+| `min-w`      | sets the min-width value (if empty defaults to 100%)       | implemented                                                                     |
+| `max-w`      | sets the max-width value (if empty defaults to 100%)       | implemented                                                                     |
+| `height`     | sets the height value (if empty defaults to 100%)          | implemented                                                                     |
+| `min-height` | sets the min-height value (if empty defaults to 100%)      | implemented                                                                     |
+| `max-height` | sets the max-height value (if empty defaults to 100%)      | implemented                                                                     |
+| `h`          | sets the height value (if empty defaults to 100%)          | implemented                                                                     |
+| `min-h`      | sets the min-height value (if empty defaults to 100%)      | implemented                                                                     |
+| `max-h`      | sets the max-height value (if empty defaults to 100%)      | implemented                                                                     |
 
 ### Children Alignment
 
@@ -174,18 +184,18 @@ This is the alignment of the children, NOT the alignment of the content of these
 
 ### Space Between Children Elements
 
-| attribute       | description   | status                  |
-| --------------- | ------------- | ----------------------- |
-| `space-around`  | space-around  | implemented      |
-| `space-around-horizontal`  | space-around  | semi implemented (does not work in cols)       |
-| `space-around-vertical`  | space-around  | semi implemented (does not work in cols)       |
-| `space-between` | space-between | implemented        |
-| `space-between-horizontal` | space-between | semi implemented (does not work in cols)       |
-| `space-between-vertical` | space-between | semi implemented (does not work in cols)       |
-| `space-evenly`  | space-evenly  | implemented      |
-| `space-evenly-horizontal`  | space-evenly  | semi implemented (does not work in cols)       |
-| `space-evenly-vertical`  | space-evenly  | semi implemented (does not work in cols)       |
-| `stretch`       | stretch       | implemented, not tested |
+| attribute                  | description   | status                                   |
+| -------------------------- | ------------- | ---------------------------------------- |
+| `space-around`             | space-around  | implemented                              |
+| `space-around-horizontal`  | space-around  | semi implemented (does not work in cols) |
+| `space-around-vertical`    | space-around  | semi implemented (does not work in cols) |
+| `space-between`            | space-between | implemented                              |
+| `space-between-horizontal` | space-between | semi implemented (does not work in cols) |
+| `space-between-vertical`   | space-between | semi implemented (does not work in cols) |
+| `space-evenly`             | space-evenly  | implemented                              |
+| `space-evenly-horizontal`  | space-evenly  | semi implemented (does not work in cols) |
+| `space-evenly-vertical`    | space-evenly  | semi implemented (does not work in cols) |
+| `stretch`                  | stretch       | implemented, not tested                  |
 
 #### Bugs
 
@@ -196,21 +206,21 @@ This is the alignment of the children, NOT the alignment of the content of these
 
 Useful text stuff.
 
-| attribute      | description                             | status      |
-| -------------- | --------------------------------------- | ----------- |
-| `text-crop`    | crops the text (ellipsis will only be shown if the container in not display:flex aka not row/col/grow, if you want to show ellipsis in a flex container then wrap it like `<Box row><Box text-crop>The..</Box></Box>`)         | implemented |
-| `text-nowrap`  | nowrap the text if it overflows         | implemented |
-| `text-wrap`    | wrap the text if it overflows           | implemented |
-| `small`        | font size small                         | implemented |
-| `bold`         | bold font                               | implemented |
-| `no-bold`      | no bold font                            | implemented |
-| `underline`    | underline                               | implemented |
-| `no-underline` | do not underline                        | implemented |
-| `uppercase`    | uppercase                               | implemented |
-| `capitalize`   | capitalize                              | implemented |
-| `size`         | font size                               | implemented |
-| `text`         | sets line-height:1.4;                   | implemented |
-| `align`        | text-align could be left, center, right | implemented |
+| attribute      | description                                                                                                                                                                                                            | status      |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `text-crop`    | crops the text (ellipsis will only be shown if the container in not display:flex aka not row/col/grow, if you want to show ellipsis in a flex container then wrap it like `<Box row><Box text-crop>The..</Box></Box>`) | implemented |
+| `text-nowrap`  | nowrap the text if it overflows                                                                                                                                                                                        | implemented |
+| `text-wrap`    | wrap the text if it overflows                                                                                                                                                                                          | implemented |
+| `small`        | font size small                                                                                                                                                                                                        | implemented |
+| `bold`         | bold font                                                                                                                                                                                                              | implemented |
+| `no-bold`      | no bold font                                                                                                                                                                                                           | implemented |
+| `underline`    | underline                                                                                                                                                                                                              | implemented |
+| `no-underline` | do not underline                                                                                                                                                                                                       | implemented |
+| `uppercase`    | uppercase                                                                                                                                                                                                              | implemented |
+| `capitalize`   | capitalize                                                                                                                                                                                                             | implemented |
+| `size`         | font size                                                                                                                                                                                                              | implemented |
+| `text`         | sets line-height:1.4;                                                                                                                                                                                                  | implemented |
+| `align`        | text-align could be left, center, right                                                                                                                                                                                | implemented |
 
 ### Scroll
 
@@ -266,13 +276,13 @@ Attributes to add custom CSS/classNames. Priority, the ones on top overwrite the
 
 Please Note: if you set an attribute as `!important` same thing order will apply but `!important` values will still be important.
 
-| attribute      | description                                                                                         | status          |
-| -------------- | --------------------------------------------------------------------------------------------------- | --------------- |
-| `style`        | React standard object for styles. Please note these get added as classes, not as a style attribute. | implemented     |
-| `className`    | React standard string with classNames                                                               | implemented     |
-| `css`          | string with regular css properties                                                                  | implemented     |
-| `css_children` | string with regular css properties, to be applied to children                                       | not implemented |
-| `css_parent`   | string with regular css properties, to be applied to the parent. This is :parent selector           | implemented not tested    |
+| attribute      | description                                                                                         | status                 |
+| -------------- | --------------------------------------------------------------------------------------------------- | ---------------------- |
+| `style`        | React standard object for styles. Please note these get added as classes, not as a style attribute. | implemented            |
+| `className`    | React standard string with classNames                                                               | implemented            |
+| `css`          | string with regular css properties                                                                  | implemented            |
+| `css_children` | string with regular css properties, to be applied to children                                       | not implemented        |
+| `css_parent`   | string with regular css properties, to be applied to the parent. This is :parent selector           | implemented not tested |
 
 ### Random Helpers As We See These Fit
 
@@ -369,7 +379,6 @@ function Component_NOTICE_ME(props) {
 var Red = css('background:red', Something_NOTICE_ME)
 var Blue = css('background:blue', Something_NOTICE_ME)
 
-
 // Then you just do
 // <Red>the red link!</Red>
 // <Red padding="5px">the red link!</Red>
@@ -378,13 +387,13 @@ var Blue = css('background:blue', Something_NOTICE_ME)
 // sort styled-components
 var Button = css(
 	`
-	display: inline-block;
-	border-radius: 3px;
-`,
+		display: inline-block;
+		border-radius: 3px;
+	`,
 	'button'
 )
 
-// I believe interpolation does not work.
+// Interpolation with props does not work. We not passing props.
 var Button = css`
 	display: inline-block;
 	border-radius: 3px;
@@ -402,18 +411,14 @@ We add a new static attribute named fancy_margin
 style.define_attribute('fancy_margin', 'margin:0 auto;')
 
 // You now can use as <Box fancy_margin></Box>
-
 ```
 
 Sometimes the attributes you add get overwritten by something else. In that case you can assign to the attributes a higher priority by defining it as high priority instead.
-
-
 
 ```javascript
 style.define_attribute_high_priority('fancy_margin', 'margin:0 auto;')
 
 // You now can use as <Box fancy_margin></Box>
-
 ```
 
 #### Dynamic argument
@@ -426,7 +431,6 @@ style.define_dynamic_attribute('random_margin', function(value, props) {
 })
 
 // You then can use as <Box random_margin></Box>
-
 ```
 
 The arguments:
@@ -446,16 +450,16 @@ The react props object. This is handy so you can look up other attributes.
 You can also define a high priority dynamic attribute.
 
 ```javascript
-
 // defining a dynamic attribute with high priority
-style.define_dynamic_attribute_high_priority('random_margin', function(value, props) {
+style.define_dynamic_attribute_high_priority('random_margin', function(
+	value,
+	props
+) {
 	// we avoid adding a random margin to something that already has a margin defined
-	if (props.margin)
-		return ''
+	if (props.margin) return ''
 	// yeah!
 	return 'margin:' + ((Math.random() * 10) | 0) + 'px;'
 })
-
 ```
 
 #### Processor
@@ -463,7 +467,6 @@ style.define_dynamic_attribute_high_priority('random_margin', function(value, pr
 You can hook just before the styles are appended to the document to do some processing.
 
 ```javascript
-
 // here we change all margins and paddings to use calc and multiply for --density var
 style.define_processor(function(styles) {
 	return styles.replace(
@@ -471,7 +474,6 @@ style.define_processor(function(styles) {
 		'$1$2:calc($3 * var(--density));'
 	)
 })
-
 ```
 
 #### How To Debug
