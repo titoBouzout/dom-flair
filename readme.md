@@ -131,8 +131,7 @@ Also the element you mount to should be `display:flex;flex:1;`
 1. Rows will not take the full width unless you add to them width="100%"
 2. You need to explicitly tell how stuff is aligned. (this is a feature)
 3. It does not do any kind of prefixing. But you can add a custom function `define_processor` for prefixing before appending to the document.
-4. If you use interpolation, we will just use `string.raw[0]` without doing any sort of processing, you will not receive props. To be fixed.
-5. You are responsible of defining `html`, `body` or `body > div` so the styles of this library work properly. (example, if you use `<Box grow/>` and it does not work then maybe the parent is preventing the Box from growing. See section "Full Working Example"
+4. You are responsible of defining `html`, `body` or `body > div` so the styles of this library work properly. (example, if you use `<Box grow/>` and it does not work then maybe the parent is preventing the Box from growing. See section "Full Working Example"
 
 ## Attributes supported by `Box`
 
@@ -416,11 +415,11 @@ var Button = css(
 	'button'
 )
 
-// Interpolation with props does not work. We not passing props.
+// Interpolation. We pass props object to functions declared.
 var Button = css`
 	display: inline-block;
 	border-radius: 3px;
-	border: 2px solid white;
+	margin-bottom: ${({ margin }) => (margin ? margin : '20px')};
 `
 ```
 
@@ -524,9 +523,8 @@ It has defined a function to validate complete classes attached to an element to
 
 - Maybe enforce style coupling: if an animation with transform is used, then will-change: transform; should be there
 - Maybe change pixels to em on the fly
-- Document mobile features. I still didn't use, so no documentation.
+- Document mobile features. Still didn't use, so no documentation.
 - define an expiration for the memoize functions.
-- make interpolation work with props as with `styled-components`.
 
 ## Authors
 

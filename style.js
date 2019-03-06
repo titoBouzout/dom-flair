@@ -667,34 +667,34 @@ Style.prototype.post_style_categories = function() {
 }
 
 // returns a component with html tag "element" and given "styles" assigned as the className(s) for that element
-Style.prototype.css = function(styles, element) {
+Style.prototype.css = function(styles, ...element) {
 	if (styles && styles.raw) {
-		styles = styles.raw[0]
+		var interpolation = [styles, element]
+		styles = ''
+		element = this.element
 	} else if (typeof styles !== 'string') {
 		element = styles || this.element
 		styles = ''
+	} else {
+		element = element[0] || this.element
 	}
-	element = element || this.element
 	/*
 		if (typeof element == 'function') {
-
-			warn(
-				'Style: consider wrapping the function/class as React.memo(f)',
-				element
-			)
+			warn('Style: consider wrapping the function/class as React.memo(f)',
+				element)
 		}
-		*/
+	*/
 
-	return this.factory(element, this.classNames(styles, 0))
+	return this.factory(element, this.classNames(styles, 0), interpolation)
 }
 
-Style.prototype.factory = function(element, classNames) {
-	return function(style, element, classNames, props) {
+Style.prototype.factory = function(element, classNames, interpolation) {
+	return function(style, element, classNames, interpolation, props) {
 		return React.createElement(
 			props.element || element,
-			style.props(props, classNames)
+			style.props(props, classNames, interpolation)
 		)
-	}.bind(null, this, element, classNames)
+	}.bind(null, this, element, classNames, interpolation)
 }
 
 // from any style transforms that to classNames
@@ -740,10 +740,20 @@ Style.prototype.hash_properties = function(styles, priority) {
 // from any react props (row col align etc) transforms that to classNames
 // return props without our attributes
 // returns same props if nothing been modified
-Style.prototype.props = function(_props, classNames) {
+Style.prototype.props = function(_props, classNames, interpolation) {
 	const values = {
 		classNames: classNames ? classNames + ' ' : '',
 		styles: '',
+	}
+
+	if (interpolation) {
+		values.styles = interpolation[1].reduce((r, expr, i) => {
+			return (
+				r +
+				(typeof expr === 'function' ? expr(_props) : expr) +
+				interpolation[0][i + 1]
+			)
+		}, interpolation[0][0])
 	}
 
 	this.parent_counter++
@@ -754,6 +764,7 @@ Style.prototype.props = function(_props, classNames) {
 			for (var i in this.attributes[id]) {
 				this.attributes[id][i](_props[id], _props, values)
 			}
+
 			if (this.debug) {
 				props['data-' + id] = this.is_primitive(_props[id])
 					? _props[id]
@@ -781,8 +792,11 @@ Style.prototype.props = function(_props, classNames) {
 		: values.classNames
 	).trim()
 
-	if (this.debug && props.className != '' && _props.novalidate === undefined)
-		this.validate_clases(props.className)
+	if (this.debug) {
+		if (props.className != '' && _props.novalidate === undefined) {
+			this.validate_clases(props.className)
+		}
+	}
 
 	return props
 }
