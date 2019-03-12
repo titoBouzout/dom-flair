@@ -370,6 +370,13 @@ function Component_NOTICE_ME(props) {
 ;<Box grow col element={Component_NOTICE_ME}>
 	Hola!
 </Box>
+
+const Button = css(
+	`
+		color: black;
+	`,
+	Component_NOTICE_ME
+)
 ```
 
 ## API
