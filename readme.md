@@ -340,9 +340,37 @@ const Button = css(`
 
 ### Core
 
-| attribute | description                                                                                                                                                                            |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `element` | a string telling what kind of element should the Box should be. By default is a `div`, but if you do `<Box element="span"/>`, it should just work and use a `span` instead of a `div`. |
+| attribute | description                                                                                                                                                                                            |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `element` | `string`, `class` or `function` telling what kind of element the Box should be. By default is a `div`, but if you do `<Box element="span"/>`, it should just work and use a `span` instead of a `div`. |
+
+#### Examples
+
+```jsx
+// plain jsx
+
+;<Box element="span">Hola!</Box>
+
+// using the component factory
+
+const Button = css(
+	`
+		color: black;
+	`,
+	'span'
+)
+
+// using any other component
+
+function Component_NOTICE_ME(props) {
+	// props.className will contain all the classes for "grow col"
+	return <div className={props.className} />
+}
+
+;<Box grow col element={Component_NOTICE_ME}>
+	Hola!
+</Box>
+```
 
 ## API
 
