@@ -128,10 +128,9 @@ Also the element you mount to should be `display:flex;flex:1;`
 
 ## Caveats / Surprises
 
-1. Rows will not take the full width unless you add to them width="100%"
-2. You need to explicitly tell how stuff is aligned. (this is a feature)
+1. You are responsible of defining `html`, `body` or `body > div` so the styles of this library work properly. (example, if you use `<Box grow/>` and it does not work then maybe the parent is preventing the `Box` from growing. See section "Full Working Example"
+2. Rows will not take the full width unless you add to them `width="100%"`
 3. It does not do any kind of prefixing. But you can add a custom function `define_processor` for prefixing before appending to the document.
-4. You are responsible of defining `html`, `body` or `body > div` so the styles of this library work properly. (example, if you use `<Box grow/>` and it does not work then maybe the parent is preventing the Box from growing. See section "Full Working Example"
 
 ## Attributes supported by `Box`
 
@@ -159,13 +158,9 @@ The size of the `Box` and NOT the size of the children.
 | `width`      | sets the width value(if empty defaults to 100%)            |
 | `min-width`  | sets the min-width value (if empty defaults to 100%)       |
 | `max-width`  | sets the max-width value (if empty defaults to 100%)       |
-| `min-w`      | sets the min-width value (if empty defaults to 100%)       |
-| `max-w`      | sets the max-width value (if empty defaults to 100%)       |
 | `height`     | sets the height value (if empty defaults to 100%)          |
 | `min-height` | sets the min-height value (if empty defaults to 100%)      |
 | `max-height` | sets the max-height value (if empty defaults to 100%)      |
-| `min-h`      | sets the min-height value (if empty defaults to 100%)      |
-| `max-h`      | sets the max-height value (if empty defaults to 100%)      |
 
 #### Bugs
 
@@ -288,7 +283,45 @@ Please Note: if you set an attribute as `!important` same order will apply but `
 | `css`        | string with regular css properties                                                                  |
 | `css_parent` | string with regular css properties, to be applied to the parent. This is :parent selector           |
 
+#### Bugs
+
 - `css_parent` wasnt tested
+
+### breakpoints
+
+By prefixing any css attribute with the following keywords you can apply media query styles.
+
+| attribute | description                     |
+| --------- | ------------------------------- |
+| `@mobile` | screens that are 768px or less  |
+| `@tablet` | screens that are 1023px or less |
+| `@small`  | screens that are 1366px or less |
+
+#### Examples
+
+```html
+
+<Box css=`
+	@mobile background:red;
+	@mobile padding:10px;
+	@tablet background:blue;
+	@tablet padding:10px;
+	@small background:orange;
+	background:violet;
+	color: black;
+`>Hola!</Box>
+
+const Button = css(`
+	@mobile background:red;
+	@mobile padding:10px;
+	@tablet background:blue;
+	@tablet padding:10px;
+	@small background:orange;
+	background:violet;
+	color: black;
+`)
+
+```
 
 ### Random Helpers As We See These Fit
 
@@ -367,22 +400,22 @@ These attributes cannot have a class.
 
 ```javascript
 // this is basically the same as Box
-var Component = css()
+const Component = css()
 
 // defining a default css for the component
-var Component = css('background:red;')
+const Component = css('background:red;')
 
 // class gets automatically replaced for a unique name
-var Component = css('class{background:red;}')
+const Component = css('class{background:red;}')
 
 // this is why class is handy
-var Component = css('class:hover{background:red;}')
+const Component = css('class:hover{background:red;}')
 
 // as many classes as you want
-var Component = css('class{color:red;}class>a{color:blue;}')
+const Component = css('class{color:red;}class>a{color:blue;}')
 
 // the default element is a div, you can change it
-var Component = css('background:red;', 'span')
+const Component = css('background:red;', 'span')
 
 // using other components in a simple way
 function Component_NOTICE_ME(props) {
@@ -393,8 +426,8 @@ function Component_NOTICE_ME(props) {
 		</div>
 	)
 }
-var Red = css('background:red', Something_NOTICE_ME)
-var Blue = css('background:blue', Something_NOTICE_ME)
+const Red = css('background:red', Something_NOTICE_ME)
+const Blue = css('background:blue', Something_NOTICE_ME)
 
 // Then you just do
 // <Red>the red link!</Red>
@@ -402,7 +435,7 @@ var Blue = css('background:blue', Something_NOTICE_ME)
 // <Blue>the blue link!</Blue>
 
 // sort styled-components
-var Button = css(
+const Button = css(
 	`
 		display: inline-block;
 		border-radius: 3px;
@@ -411,7 +444,7 @@ var Button = css(
 )
 
 // Interpolation. We pass props object to functions declared.
-var Button = css`
+const Button = css`
 	display: inline-block;
 	border-radius: 3px;
 	margin-bottom: ${({ margin }) => (margin ? margin : '20px')};
@@ -518,7 +551,6 @@ It has defined a function to validate complete classes attached to an element to
 
 - Maybe enforce style coupling: if an animation with transform is used, then will-change: transform; should be there
 - Maybe change pixels to em on the fly
-- Document mobile features. Still didn't use, so no documentation.
 - define an expiration for the memoize functions.
 
 ## Authors

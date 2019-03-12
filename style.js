@@ -310,15 +310,8 @@ Style.prototype.css_property_fn = {
 	width: function(value, props) {
 		return 'width:' + (value !== true ? value : '100%') + ';'
 	},
-
-	'max-w': function(value, props) {
-		return 'max-width:' + (value !== true ? value : '100%') + ';'
-	},
 	'max-width': function(value, props) {
 		return 'max-width:' + (value !== true ? value : '100%') + ';'
-	},
-	'min-w': function(value, props) {
-		return 'min-width:' + (value !== true ? value : '100%') + ';'
 	},
 	'min-width': function(value, props) {
 		return 'min-width:' + (value !== true ? value : '100%') + ';'
@@ -328,15 +321,8 @@ Style.prototype.css_property_fn = {
 	height: function(value, props) {
 		return 'height:' + (value !== true ? value : '100%') + ';'
 	},
-
-	'max-h': function(value, props) {
-		return 'max-height:' + (value !== true ? value : '100%') + ';'
-	},
 	'max-height': function(value, props) {
 		return 'max-height:' + (value !== true ? value : '100%') + ';'
-	},
-	'min-h': function(value, props) {
-		return 'min-height:' + (value !== true ? value : '100%') + ';'
 	},
 	'min-height': function(value, props) {
 		return 'min-height:' + (value !== true ? value : '100%') + ';'
@@ -624,7 +610,8 @@ Style.prototype.pre_style_categories = function() {
 		size: { exp: /width|height|basis/, buffer: '' },
 		color: { exp: /color|rgb|#/, buffer: '' },
 		//layer: { exp: /animation|transform|opacity/, buffer: '' },
-		//display: { exp: /display|flex|position|top:|right:|bottom:|left:/, buffer: '' },
+		display: { exp: /display|position|top:|right:|bottom:|left:/, buffer: '' },
+		flex: { exp: /flex|align|justify/, buffer: '' },
 		unknown: { buffer: '' },
 	}
 }
@@ -643,18 +630,18 @@ Style.prototype.post_style_categories = function() {
 		},
 		'@tablet': {
 			exp: /@tablet/,
-			pre: '@media (max-width:1030px){', // screens that are 1030px or less
+			pre: '@media (max-width:1023px){', // screens that are 1023px or less
 			buffer: '',
 			post: '}\n',
 			replace: /@tablet\s+/g,
 			replacement: '',
 		},
-		'@phone': {
-			exp: /@phone/,
+		'@mobile': {
+			exp: /@mobile/,
 			pre: '@media (max-width:768px){', // screens that are 768px or less
 			buffer: '',
 			post: '}\n',
-			replace: /@phone\s+/g,
+			replace: /@mobile\s+/g,
 			replacement: '',
 		},
 	}
@@ -757,7 +744,7 @@ Style.prototype.props = function(_props, classNames, interpolation) {
 			}
 
 			if (this.debug) {
-				props['data-' + id] = this.is_primitive(_props[id])
+				props['data-style-' + id] = this.is_primitive(_props[id])
 					? _props[id]
 					: this.serialize(_props[id])
 			}
