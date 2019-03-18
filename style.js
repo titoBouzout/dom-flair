@@ -3,11 +3,6 @@ function Style() {
 	this.serialize = this.serialize.bind(this)
 	this._serialize = this._serialize.bind(this)
 	this.is_primitive = this.is_primitive.bind(this)
-	// memoize cache has a resolution of 20 seconds
-	this.now = Date.now()
-	setInterval(function() {
-		this.now = Date.now()
-	}, 20000)
 
 	// bind
 	this.classNames = this.classNames.bind(this)
@@ -24,6 +19,11 @@ function Style() {
 	this.css = this.css.bind(this)
 
 	// memoizing
+	// memoize cache has a resolution of 20 seconds
+	this.now = Date.now()
+	setInterval(function() {
+		this.now = Date.now()
+	}, 20000)
 	// TODO resolve an expiration for the chache
 	this.classNames = this.memo(this.classNames)
 	this.hash_classes = this.memo(this.hash_classes)
@@ -750,6 +750,53 @@ Style.prototype.props = function(_props, classNames, interpolation) {
 			}
 		} else {
 			props[id] = _props[id]
+
+			// TODO!
+			if (this.debug) {
+				switch (id) {
+					case 'children':
+					case 'onClick':
+					case 'className':
+					case 'change':
+					case 'l':
+					case 'holder':
+					case 'multiple':
+					case 'complete':
+					case 'progress':
+					case 'limit':
+					case 'title':
+					case 'accept':
+					case 'name':
+					case 'label':
+					case 'checked':
+					case 'length':
+					case 'value':
+					case 'focus':
+					case 'disabled':
+					case 'onKeyUp':
+					case 'onMouseDown':
+					case 'tabIndex':
+					case 'spell':
+					case 'type':
+					case 'id':
+					case 'checked':
+					case 'checked':
+					case 'checked':
+					case 'checked':
+					case 'checked':
+					case 'checked':
+					case 'checked':
+					case 'checked':
+					case 'checked':
+					case 'checked':
+					case 'checked':
+						break
+					default:
+						if (id.indexOf('data-') == -1) {
+							;(typeof trace != undefined ? trace : console.trace)(id)
+						}
+				}
+			}
 		}
 	}
 	if (values.styles != '') {
@@ -951,7 +998,7 @@ Style.prototype.sheet_process = function() {
 							this.sheet_create_append(id)
 						}
 						this.sheet_append[id].appendChild(document.createTextNode(styles))
-						this.error(e)
+						;(typeof error != undefined ? error : console.error)(e)
 					}
 				} else {
 					if (!this.sheet_append[id]) {
@@ -979,7 +1026,7 @@ Style.prototype.sheet_process = function() {
 					element.parentNode.classList.add(parent.className)
 					parent_new.push(parent)
 				} else {
-					this.error(
+					;(typeof error != undefined ? error : console.error)(
 						'Style: looking for parent, the element does not exists.',
 						element
 					)
@@ -1021,18 +1068,18 @@ Style.prototype.validate_clases = function(classNames) {
 	/*styles = styles.replace(/min-height: 0;/g, '').replace(/min-width: 0;/g, '')
 		if (/width|height/.test(styles)) {
 			if (!/box-sizing/.test(styles) && /margin|border|padding/.test(styles)) {
-				this.error(
+				;(typeof error != undefined ? error : console.error)(
 					'Style: width|height with margin|border|padding declared without declaring a box-sizing'
 				)
-				this.log(styles)
+				;(typeof log != undefined ? log : console.log)(styles)
 			}
 		}*/
 
 	/*if (/animation/.test(css) && !/position:/.test(css)) {
-			this.error('Style: animations should have a position')
+			;(typeof error != undefined ? error : console.error)('Style: animations should have a position')
 		}
 		if (/animation/.test(css) && !/will-change/.test(css)) {
-			this.error(
+			;(typeof error != undefined ? error : console.error)(
 				'Style: animations should have will-change for the animated properties'
 			)
 		}*/
@@ -1162,7 +1209,9 @@ Style.prototype.is_primitive = function(o) {
 }
 Style.prototype.memo = function(fn, expires) {
 	if (!fn) {
-		this.error('function to memoize is undefined')
+		;(typeof error != undefined ? error : console.error)(
+			'function to memoize is undefined'
+		)
 	}
 	if (!expires) {
 		return function(fn, cache, serialize, is_primitive, ...args) {
@@ -1232,20 +1281,6 @@ Style.prototype.memo = function(fn, expires) {
 			this,
 			this.is_primitive
 		)
-	}
-}
-Style.prototype.error = function() {
-	if (typeof error != 'undefined') {
-		error(arguments)
-	} else {
-		console.error(arguments)
-	}
-}
-Style.prototype.log = function() {
-	if (typeof log != 'undefined') {
-		log(arguments)
-	} else {
-		console.log(arguments)
 	}
 }
 
