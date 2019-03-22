@@ -176,8 +176,8 @@ Style.prototype.css_property = {
 	`,
 
 	'text-wrap': `
-		overflow-wrap: break-word;
 		word-break: break-word;
+		overflow-wrap: anywhere;
 		min-height: 0;
 		min-width: 0;
 	`,
