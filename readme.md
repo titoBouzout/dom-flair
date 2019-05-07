@@ -4,7 +4,7 @@ The goal of this project is to have just one React "meta component" named `Box`.
 
 It could also help with trivial CSS that can be just named in an attribute, For example `<Box capitalize></Box>` to capitalize the `Box` contents. It could also be used similar to styled-components.
 
-You must include `style.js` like in `<script src='style.js'></script>`. Please note React is required.
+You must include `style.js` like in `<script crossorigin src="https://cdn.jsdelivr.net/gh/titoBouzout/crippling-sorrow-styling/style.js"></script>`. Please note React is required.
 
 ## Examples
 
@@ -56,21 +56,13 @@ Also the element you mount to should be `display:flex;flex:1;`
 <!DOCTYPE html>
 <html>
 	<head>
+		<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+		<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+		<script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 		<script
 			crossorigin
-			src="https://unpkg.com/react@16/umd/react.development.js"
+			src="https://cdn.jsdelivr.net/gh/titoBouzout/crippling-sorrow-styling/style.js"
 		></script>
-		<script
-			crossorigin
-			src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
-		></script>
-		<script
-			crossorigin
-			src="https://unpkg.com/babel-standalone@6/babel.min.js"
-		></script>
-		<!-- you should include this -->
-		<script src="style.js"></script>
-
 		<style type="text/css">
 			html,
 			body,
@@ -94,33 +86,33 @@ Also the element you mount to should be `display:flex;flex:1;`
 		<div id="root"></div>
 		<script type="text/jsx">
 			function Component(){
-				return (
-					<Box grow>
-						<Box col grow max-width="210px" horizontal>
-							left sidebar
-						</Box>
-						<Box col grow>
-							<Box row width="100%" right>
-								toolbar
+						return (
+							<Box grow>
+								<Box col grow max-width="210px" horizontal>
+									left sidebar
+								</Box>
+								<Box col grow>
+									<Box row width="100%" right>
+										toolbar
+									</Box>
+									<Box row grow center>
+										content
+									</Box>
+									<Box row width="100%" left>
+										footer
+									</Box>
+								</Box>
+								<Box col grow max-width="210px" vertical>
+									right sidebar
+								</Box>
 							</Box>
-							<Box row grow center>
-								content
-							</Box>
-							<Box row width="100%" left>
-								footer
-							</Box>
-						</Box>
-						<Box col grow max-width="210px" vertical>
-							right sidebar
-						</Box>
-					</Box>
-				)
-			}
+						)
+					}
 
-			ReactDOM.render(
-				React.createElement(Component),
-				document.querySelector('#root')
-			)
+					ReactDOM.render(
+						React.createElement(Component),
+						document.querySelector('#root')
+					)
 		</script>
 	</body>
 </html>
@@ -357,7 +349,7 @@ const Button = css(
 	`
 		color: black;
 	`,
-	'span'
+	'span',
 )
 
 // using any other component
@@ -375,7 +367,7 @@ const Button = css(
 	`
 		color: black;
 	`,
-	Component_NOTICE_ME
+	Component_NOTICE_ME,
 )
 ```
 
@@ -475,7 +467,7 @@ const Button = css(
 		display: inline-block;
 		border-radius: 3px;
 	`,
-	'button'
+	'button',
 )
 
 // Interpolation. We pass props object to functions declared.
@@ -536,10 +528,7 @@ You can also define a high priority dynamic attribute.
 
 ```javascript
 // defining a dynamic attribute with high priority
-style.define_dynamic_attribute_high_priority('random_margin', function(
-	value,
-	props
-) {
+style.define_dynamic_attribute_high_priority('random_margin', function(value, props) {
 	// we avoid adding a random margin to something that already has a margin defined
 	if (props.margin) return ''
 	// yeah!
@@ -556,7 +545,7 @@ You can hook just before the styles are appended to the document to do some proc
 style.define_processor(function(styles) {
 	return styles.replace(
 		/(margin|padding)(-left|-right|-top|-bottom)?:([^;]+);/g,
-		'$1$2:calc($3 * var(--density));'
+		'$1$2:calc($3 * var(--density));',
 	)
 })
 ```
