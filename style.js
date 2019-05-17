@@ -33,7 +33,6 @@ function Style() {
 	this.normalize_styles = this.memo(this.normalize_styles)
 	this.normalize_styles_properties = this.memo(this.normalize_styles_properties)
 	this.normalize_properties = this.memo(this.normalize_properties)
-	this.interpolation = this.memo(this.interpolation)
 
 	this.validate_clases = this.memo(this.validate_clases)
 
@@ -79,10 +78,7 @@ function Style() {
 	// if you use template literals in css_property_value
 	// then the editor adds a ; when it gets formatted on save
 	for (var id in this.css_property_value) {
-		this.css_property_value[id] = this.css_property_value[id].replace(
-			/;\s*$/,
-			''
-		)
+		this.css_property_value[id] = this.css_property_value[id].replace(/;\s*$/, '')
 	}
 }
 
@@ -103,6 +99,8 @@ Style.prototype.sheet_insert = []
 Style.prototype.sheet_insert_rule = []
 Style.prototype.sheet_rules = [0, 0, 0, 0, 0, 0]
 Style.prototype.sheet_queue = [[], [], [], [], [], []]
+
+Style.prototype.warned = {}
 
 // static values
 Style.prototype.define_attribute = function(name, string) {
@@ -292,6 +290,8 @@ Style.prototype.css_property_value = {
 	size: 'font-size:',
 
 	basis: 'flex-basis:',
+	background: 'background:',
+	color: 'color:',
 }
 // static values high priority
 Style.prototype.define_attribute_high_priority = function(name, string) {
@@ -650,9 +650,8 @@ Style.prototype.post_style_categories = function() {
 // returns a component with html tag "element" and given "styles" assigned as the className(s) for that element
 Style.prototype.css = function(styles, ...element) {
 	if (styles && styles.raw) {
-		var interpolation = [styles, element]
-		styles = ''
-		element = this.element
+		styles = styles.raw
+		element = element[0] || this.element
 	} else if (typeof styles !== 'string') {
 		element = styles || this.element
 		styles = ''
@@ -666,16 +665,13 @@ Style.prototype.css = function(styles, ...element) {
 		}
 	*/
 
-	return this.factory(element, this.classNames(styles, 0), interpolation)
+	return this.factory(element, this.classNames(styles, 0))
 }
 
-Style.prototype.factory = function(element, classNames, interpolation) {
-	return function(style, element, classNames, interpolation, props) {
-		return React.createElement(
-			props.element || element,
-			style.props(props, classNames, interpolation)
-		)
-	}.bind(null, this, element, classNames, interpolation)
+Style.prototype.factory = function(element, classNames) {
+	return function(React, style, element, classNames, props) {
+		return React.createElement(props.element || element, style.props(props, classNames))
+	}.bind(null, React, this, element, classNames)
 }
 
 // from any style transforms that to classNames
@@ -718,20 +714,18 @@ Style.prototype.hash_properties = function(styles, priority) {
 	return className
 }
 
+// from any react props (row col align etc) returns just the className
+Style.prototype.className = function(_props, classNames) {
+	return this.props(_props, classNames).className
+}
+
 // from any react props (row col align etc) transforms that to classNames
 // return props without our attributes
 // returns same props if nothing been modified
-Style.prototype.props = function(_props, classNames, interpolation) {
+Style.prototype.props = function(_props, classNames) {
 	const values = {
 		classNames: classNames ? classNames + ' ' : '',
 		styles: '',
-	}
-
-	if (interpolation) {
-		values.styles = this.interpolation(interpolation, {
-			..._props,
-			children: null,
-		})
 	}
 
 	this.parent_counter++
@@ -748,6 +742,8 @@ Style.prototype.props = function(_props, classNames, interpolation) {
 					? _props[id]
 					: this.serialize(_props[id])
 			}
+		} else if (id == 'reference') {
+			props['ref'] = _props[id]
 		} else {
 			props[id] = _props[id]
 
@@ -779,7 +775,7 @@ Style.prototype.props = function(_props, classNames, interpolation) {
 					case 'spell':
 					case 'type':
 					case 'id':
-					case 'checked':
+					case 'blank':
 					case 'checked':
 					case 'checked':
 					case 'checked':
@@ -792,7 +788,8 @@ Style.prototype.props = function(_props, classNames, interpolation) {
 					case 'checked':
 						break
 					default:
-						if (id.indexOf('data-') == -1) {
+						if (id.indexOf('data-') == -1 && this.warned[id] === undefined) {
+							this.warned[id] = null
 							;(typeof trace != undefined ? trace : console.trace)(id)
 						}
 				}
@@ -829,16 +826,13 @@ Style.prototype.props = function(_props, classNames, interpolation) {
 Style.prototype.prop_react_styles = function(style) {
 	var styles = ''
 	for (var id in style) {
-		if (style[id] != '')
-			styles += this.prop_hyphenate_style_name(id) + ':' + style[id] + ';'
+		if (style[id] != '') styles += this.prop_hyphenate_style_name(id) + ':' + style[id] + ';'
 	}
 	return styles
 }
 Style.prototype.prop_hyphenate_style_name_uppercase_pattern = /([A-Z])/g
 Style.prototype.prop_hyphenate_style_name = function(name) {
-	return name
-		.replace(this.prop_hyphenate_style_name_uppercase_pattern, '-$1')
-		.toLowerCase()
+	return name.replace(this.prop_hyphenate_style_name_uppercase_pattern, '-$1').toLowerCase()
 }
 Style.prototype.process_styles = function(_categories, _styles) {
 	//tick('process_styles')
@@ -864,10 +858,7 @@ Style.prototype.process_styles = function(_categories, _styles) {
 						'\n' +
 						(!category.replace
 							? category.buffer
-							: category.buffer.replace(
-									category.replace,
-									category.replacement
-							  )) +
+							: category.buffer.replace(category.replace, category.replacement)) +
 						'}\n' +
 						(category.post || '')
 				}
@@ -877,12 +868,14 @@ Style.prototype.process_styles = function(_categories, _styles) {
 			continue
 		} else {
 			found = false
-			for (id in categories) {
-				category = categories[id]
-				if (category.exp && category.exp.test(property)) {
-					category.buffer += property + '\n'
-					found = true
-					break
+			if (header.indexOf(':after') === -1 && header.indexOf(':before') === -1) {
+				for (id in categories) {
+					category = categories[id]
+					if (category.exp && category.exp.test(property)) {
+						category.buffer += property + '\n'
+						found = true
+						break
+					}
 				}
 			}
 			if (!found) categories.unknown.buffer += property + '\n'
@@ -943,15 +936,6 @@ Style.prototype.normalize_properties = function(properties) {
 	//tick('normalize_css')
 	return properties
 }
-Style.prototype.interpolation = function(interpolation, props) {
-	return interpolation[1].reduce(function(r, expr, i) {
-		return (
-			r +
-			(typeof expr === 'function' ? expr(props) : expr) +
-			interpolation[0][i + 1]
-		)
-	}, interpolation[0][0])
-}
 
 Style.prototype.append_to_parent = function(styles) {
 	var id = this.properties_id(styles)
@@ -989,10 +973,7 @@ Style.prototype.sheet_process = function() {
 				}
 				if (this.sheet_insert_rule[id]) {
 					try {
-						this.sheet_insert_rule[id](
-							'@media{' + styles + '}',
-							this.sheet_rules[id]++
-						)
+						this.sheet_insert_rule[id]('@media{' + styles + '}', this.sheet_rules[id]++)
 					} catch (e) {
 						if (!this.sheet_append[id]) {
 							this.sheet_create_append(id)
@@ -1028,7 +1009,7 @@ Style.prototype.sheet_process = function() {
 				} else {
 					;(typeof error != undefined ? error : console.error)(
 						'Style: looking for parent, the element does not exists.',
-						element
+						element,
 					)
 				}
 			}
@@ -1045,7 +1026,7 @@ Style.prototype.sheet_create_insert = function(id) {
 
 		if (this.sheet_insert[id].sheet.insertRule)
 			this.sheet_insert_rule[id] = this.sheet_insert[id].sheet.insertRule.bind(
-				this.sheet_insert[id].sheet
+				this.sheet_insert[id].sheet,
 			)
 	}
 }
@@ -1099,8 +1080,7 @@ Style.prototype.index_attributes = function() {
 				if (typeof attribute_value == 'string') {
 					values.classNames += this.classNames(attribute_value, 3) + ' '
 				} else {
-					values.classNames +=
-						this.classNames(this.prop_react_styles(attribute_value), 3) + ' '
+					values.classNames += this.classNames(this.prop_react_styles(attribute_value), 3) + ' '
 				}
 			}.bind(this),
 		],
@@ -1122,7 +1102,7 @@ Style.prototype.index_attributes = function() {
 		this.attributes[id].push(
 			function(id, attribute_value, _props, values) {
 				values.styles += this.css_property[id]
-			}.bind(this, id)
+			}.bind(this, id),
 		)
 	}
 	for (var id in this.css_property_high_priority) {
@@ -1130,17 +1110,17 @@ Style.prototype.index_attributes = function() {
 		this.attributes[id].push(
 			function(id, attribute_value, _props, values) {
 				values.styles += this.css_property_high_priority[id]
-			}.bind(this, id)
+			}.bind(this, id),
 		)
 	}
 	for (var id in this.css_property_value) {
 		if (!this.attributes[id]) this.attributes[id] = []
 		this.attributes[id].push(
 			function(id, attribute_value, _props, values) {
-				if (attribute_value != '') {
+				if (attribute_value != undefined) {
 					values.styles += this.css_property_value[id] + attribute_value + ';'
 				}
-			}.bind(this, id)
+			}.bind(this, id),
 		)
 	}
 	for (var id in this.css_property_fn) {
@@ -1148,7 +1128,7 @@ Style.prototype.index_attributes = function() {
 		this.attributes[id].push(
 			function(id, attribute_value, _props, values) {
 				values.styles += this.css_property_fn[id](attribute_value, _props)
-			}.bind(this, id)
+			}.bind(this, id),
 		)
 	}
 	for (var id in this.css_property_fn_high_priority) {
@@ -1156,11 +1136,8 @@ Style.prototype.index_attributes = function() {
 		this.attributes[id].push(
 			function(id, attribute_value, _props, values) {
 				values.classNames +=
-					this.classNames(
-						this.css_property_fn_high_priority[id](attribute_value, _props),
-						4
-					) + ' '
-			}.bind(this, id)
+					this.classNames(this.css_property_fn_high_priority[id](attribute_value, _props), 4) + ' '
+			}.bind(this, id),
 		)
 	}
 	this.to_fast_properties(this.attributes)
@@ -1209,30 +1186,17 @@ Style.prototype.is_primitive = function(o) {
 }
 Style.prototype.memo = function(fn, expires) {
 	if (!fn) {
-		;(typeof error != undefined ? error : console.error)(
-			'function to memoize is undefined'
-		)
+		;(typeof error != undefined ? error : console.error)('function to memoize is undefined')
 	}
 	if (!expires) {
 		return function(fn, cache, serialize, is_primitive, ...args) {
-			const k =
-				args.length == 1 && is_primitive(args[0]) ? args[0] : serialize(args)
+			const k = args.length == 1 && is_primitive(args[0]) ? args[0] : serialize(args)
 
 			return cache[k] !== undefined ? cache[k] : (cache[k] = fn(...args))
 		}.bind(null, fn, {}, this.serialize, this.is_primitive)
 	} else {
-		const f = function(
-			fn,
-			cache,
-			serialize,
-			expires,
-			setInterval,
-			time,
-			is_primitive,
-			...args
-		) {
-			const k =
-				args.length == 1 && is_primitive(args[0]) ? args[0] : serialize(args)
+		const f = function(fn, cache, serialize, expires, setInterval, time, is_primitive, ...args) {
+			const k = args.length == 1 && is_primitive(args[0]) ? args[0] : serialize(args)
 
 			if (cache[k] !== undefined) {
 				cache[k].n = time.now
@@ -1271,21 +1235,12 @@ Style.prototype.memo = function(fn, expires) {
 			}
 		}.bind(f.cache, f.expires, f.clearInterval, this, this.to_fast_properties)
 
-		return f.bind(
-			f,
-			fn,
-			f.cache,
-			this.serialize,
-			f.expires,
-			f.setInterval,
-			this,
-			this.is_primitive
-		)
+		return f.bind(f, fn, f.cache, this.serialize, f.expires, f.setInterval, this, this.is_primitive)
 	}
 }
 
 const style = new Style()
 const css = style.css
-const Box = function(style, props) {
+const Box = function(React, style, props) {
 	return React.createElement(props.element || style.element, style.props(props))
-}.bind(null, style)
+}.bind(null, React, style)

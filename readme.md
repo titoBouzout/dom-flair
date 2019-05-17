@@ -176,15 +176,15 @@ This is the alignment of the children, NOT the alignment of the content of these
 
 | attribute                  | description   |
 | -------------------------- | ------------- |
-| `space-around`             | space-around  |
 | `space-around-horizontal`  | space-around  |
 | `space-around-vertical`    | space-around  |
-| `space-between`            | space-between |
+| `space-around`             | space-around  |
 | `space-between-horizontal` | space-between |
 | `space-between-vertical`   | space-between |
-| `space-evenly`             | space-evenly  |
+| `space-between`            | space-between |
 | `space-evenly-horizontal`  | space-evenly  |
 | `space-evenly-vertical`    | space-evenly  |
+| `space-evenly`             | space-evenly  |
 | `stretch`                  | stretch       |
 
 #### Bugs
@@ -199,19 +199,19 @@ Useful text stuff.
 
 | attribute      | description                             |
 | -------------- | --------------------------------------- |
+| `align`        | text-align could be left, center, right |
+| `bold`         | bold font                               |
+| `capitalize`   | capitalize                              |
+| `no-bold`      | no bold font                            |
+| `no-underline` | do not underline                        |
+| `size`         | font size                               |
+| `small`        | font size small                         |
 | `text-crop`    | crops the text                          |
 | `text-nowrap`  | nowrap the text if it overflows         |
 | `text-wrap`    | wrap the text if it overflows           |
-| `small`        | font size small                         |
-| `bold`         | bold font                               |
-| `no-bold`      | no bold font                            |
-| `underline`    | underline                               |
-| `no-underline` | do not underline                        |
-| `uppercase`    | uppercase                               |
-| `capitalize`   | capitalize                              |
-| `size`         | font size                               |
 | `text`         | sets line-height:1.4;                   |
-| `align`        | text-align could be left, center, right |
+| `underline`    | underline                               |
+| `uppercase`    | uppercase                               |
 
 #### Bugs
 
@@ -237,21 +237,21 @@ Useful text stuff.
 
 | attribute        | description                               |
 | ---------------- | ----------------------------------------- |
-| `padding`        | padding                                   |
-| `padding-bottom` | padding bottom                            |
-| `padding-left`   | padding left                              |
-| `padding-right`  | padding right                             |
-| `padding-top`    | padding top                               |
-| `margin`         | margin                                    |
-| `margin-bottom`  | margin bottom                             |
-| `margin-left`    | margin left                               |
-| `margin-right`   | margin right                              |
-| `margin-top`     | margin top                                |
-| `border`         | border                                    |
 | `border-bottom`  | border bottom                             |
 | `border-left`    | border left                               |
 | `border-right`   | border right                              |
 | `border-top`     | border top                                |
+| `border`         | border                                    |
+| `margin-bottom`  | margin bottom                             |
+| `margin-left`    | margin left                               |
+| `margin-right`   | margin right                              |
+| `margin-top`     | margin top                                |
+| `margin`         | margin                                    |
+| `padding-bottom` | padding bottom                            |
+| `padding-left`   | padding left                              |
+| `padding-right`  | padding right                             |
+| `padding-top`    | padding top                               |
+| `padding`        | padding                                   |
 | `radius`         | border-radius (if empty defaults to 100%) |
 
 ### CSS
@@ -319,15 +319,17 @@ const Button = css(`
 
 | attribute      | description                                                           |
 | -------------- | --------------------------------------------------------------------- |
-| `block`        | display block                                                         |
-| `inline`       | display inline                                                        |
-| `inline-block` | display inline-block                                                  |
-| `relative`     | position relative                                                     |
 | `absolute`     | position absolute                                                     |
+| `background`   | background css property                                               |
+| `block`        | display block                                                         |
+| `color`        | color css property                                                    |
 | `fixed`        | position fixed top 0 left 0                                           |
 | `full`         | full width and height with overflow hidden                            |
-| `overflow`     | overflow hidden                                                       |
+| `inline-block` | display inline-block                                                  |
+| `inline`       | display inline                                                        |
 | `layer`        | forces the browser to create a layer using `transform:translateZ(0);` |
+| `overflow`     | overflow hidden                                                       |
+| `relative`     | position relative                                                     |
 | `z`            | z-index                                                               |
 
 ### Core
@@ -469,13 +471,6 @@ const Button = css(
 	`,
 	'button',
 )
-
-// Interpolation. We pass props object to functions declared.
-const Button = css`
-	display: inline-block;
-	border-radius: 3px;
-	margin-bottom: ${({ margin }) => (margin ? margin : '20px')};
-`
 ```
 
 ### Extending. You can define new static and dynamic attributes for `Box`
