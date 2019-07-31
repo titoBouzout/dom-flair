@@ -1,10 +1,10 @@
 function Style() {
-	// memoize setup
+	// bind
+
 	this.serialize = this.serialize.bind(this)
 	this._serialize = this._serialize.bind(this)
 	this.is_primitive = this.is_primitive.bind(this)
 
-	// bind
 	this.classNames = this.classNames.bind(this)
 	this.hash_classes = this.hash_classes.bind(this)
 	this.hash_properties = this.hash_properties.bind(this)
@@ -18,13 +18,8 @@ function Style() {
 	this.validate_clases = this.validate_clases.bind(this)
 	this.css = this.css.bind(this)
 
-	// memoizing
-	// memoize cache has a resolution of 20 seconds
-	this.now = Date.now()
-	setInterval(function() {
-		this.now = Date.now()
-	}, 20000)
-	// TODO resolve an expiration for the chache
+	// memoize/cache
+
 	this.classNames = this.memo(this.classNames)
 	this.hash_classes = this.memo(this.hash_classes)
 	this.hash_properties = this.memo(this.hash_properties)
@@ -33,12 +28,11 @@ function Style() {
 	this.normalize_styles = this.memo(this.normalize_styles)
 	this.normalize_styles_properties = this.memo(this.normalize_styles_properties)
 	this.normalize_properties = this.memo(this.normalize_properties)
-
 	this.validate_clases = this.memo(this.validate_clases)
 
 	// The following functions cannot be memoize
-	//this.css = this.memo(this.css)
-	//this.factory = this.memo(this.factory)
+	// this.css = this.memo(this.css)
+	// this.factory = this.memo(this.factory)
 
 	this.to_fast_properties = (function() {
 		let fastProto = null
@@ -76,7 +70,7 @@ function Style() {
 	}
 
 	// if you use template literals in css_property_value
-	// then the editor adds a ; when it gets formatted on save
+	// then the editor may adds a ; when it gets formatted on save
 	for (var id in this.css_property_value) {
 		this.css_property_value[id] = this.css_property_value[id].replace(/;\s*$/, '')
 	}
@@ -113,8 +107,8 @@ Style.prototype.css_property = {
 	row: `
 		display: flex;
 		flex-direction: row;
-		min-height: 0;
-		min-width: 0;
+		//min-height: 0;
+		//min-width: 0;
 
 		align-content: flex-start;
 		justify-content: flex-start;
@@ -124,8 +118,8 @@ Style.prototype.css_property = {
 	col: `
 		display: flex;
 		flex-direction: column;
-		min-height: 0;
-		min-width: 0;
+		//min-height: 0;
+		//min-width: 0;
 
 		align-content: flex-start;
 		justify-content: flex-start;
@@ -152,7 +146,9 @@ Style.prototype.css_property = {
 	wrap: `
 		display: flex;
 		flex-wrap: wrap;
+		//min-height: auto !important;
 	`,
+	// here maybe we should add min-height: 0 !important;
 	nowrap: `
 		flex-wrap: nowrap;
 	`,
@@ -225,14 +221,17 @@ Style.prototype.css_property = {
 		overflow: hidden;
 	`,
 
+	stretch: 'display:flex;',
+
 	overflow: 'overflow:hidden;',
 	layer: 'transform:translateZ(0);',
+	'collapse': 'visibility:collapse;',
 
 	// CURSOR
 
 	hand: 'cursor:pointer;',
 	ignore: 'pointer-events:none;',
-	'no-select': 'user-select:none;',
+	'no-select': '-moz-user-select: none;user-select:none;',
 
 	// FONT
 
@@ -253,6 +252,7 @@ Style.prototype.css_property = {
 	horizontal: 'display:flex;',
 	vertical: 'display:flex;',
 	center: 'display:flex;',
+
 	'space-around': 'display:flex;',
 	'space-around-horizontal': 'display:flex;',
 	'space-around-vertical': 'display:flex;',
@@ -262,7 +262,6 @@ Style.prototype.css_property = {
 	'space-evenly': 'display:flex;',
 	'space-evenly-horizontal': 'display:flex;',
 	'space-evenly-vertical': 'display:flex;',
-	stretch: 'display:flex;',
 }
 Style.prototype.css_property_value = {
 	padding: 'padding:',
@@ -287,11 +286,14 @@ Style.prototype.css_property_value = {
 
 	align: 'text-align:',
 
-	size: 'font-size:',
+	'font-size': 'font-size:',
 
-	basis: 'flex-basis:',
+	// basis: 'flex-basis:',
+
 	background: 'background:',
 	color: 'color:',
+
+	'text-shadow': 'text-shadow:',
 }
 // static values high priority
 Style.prototype.define_attribute_high_priority = function(name, string) {
@@ -308,28 +310,39 @@ Style.prototype.define_dynamic_attribute = function(name, fn) {
 Style.prototype.css_property_fn = {
 	// width
 	width: function(value, props) {
-		return 'width:' + (value !== true ? value : '100%') + ';'
+		if (value) return 'width:' + (value !== true ? value : '100%') + ';'
+		else return ''
 	},
 	'max-width': function(value, props) {
-		return 'max-width:' + (value !== true ? value : '100%') + ';'
+		if (value) return 'max-width:' + (value !== true ? value : '100%') + ';'
+		else return ''
 	},
 	'min-width': function(value, props) {
-		return 'min-width:' + (value !== true ? value : '100%') + ';'
+		if (value) return 'min-width:' + (value !== true ? value : '100%') + ';'
+		else return ''
 	},
 
 	// height
 	height: function(value, props) {
-		return 'height:' + (value !== true ? value : '100%') + ';'
+		if (value) return 'height:' + (value !== true ? value : '100%') + ';'
+		else return ''
 	},
 	'max-height': function(value, props) {
-		return 'max-height:' + (value !== true ? value : '100%') + ';'
+		if (value) return 'max-height:' + (value !== true ? value : '100%') + ';'
+		else return ''
 	},
 	'min-height': function(value, props) {
-		return 'min-height:' + (value !== true ? value : '100%') + ';'
+		if (value) return 'min-height:' + (value !== true ? value : '100%') + ';'
+		else return ''
 	},
 
 	radius: function(value, props) {
-		return 'border-radius:' + (value !== true ? value : '100%') + ';'
+		if (value) return 'border-radius:' + (value !== true ? value : '100%') + ';'
+		else return ''
+	},
+	'drop-shadow': function(value, props) {
+		if (value) return 'filter: drop-shadow(' + value + ');'
+		else return ''
 	},
 }
 
@@ -414,15 +427,15 @@ Style.prototype.css_property_fn_high_priority = {
 			return `
 				align-content: center;
 				align-items: center;
-				align-content: safe center;
-				align-items: safe center;
+				// align-content: safe center;
+				// align-items: safe center;
 			`
 		} else {
 			return `
 				justify-content: center;
 				justify-items: center;
-				justify-content: safe center;
-				justify-items: safe center;
+				// justify-content: safe center;
+				// justify-items: safe center;
 			`
 		}
 	},
@@ -431,15 +444,15 @@ Style.prototype.css_property_fn_high_priority = {
 			return `
 				justify-content: center;
 				justify-items: center;
-				justify-content: safe center;
-				justify-items: safe center;
+				// justify-content: safe center;
+				// justify-items: safe center;
 			`
 		} else {
 			return `
 				align-content: center;
 				align-items: center;
-				align-content: safe center;
-				align-items: safe center;
+				// align-content: safe center;
+				// align-items: safe center;
 			`
 		}
 	},
@@ -449,10 +462,10 @@ Style.prototype.css_property_fn_high_priority = {
 			align-content: center;
 			justify-items: center;
 			align-items: center;
-			justify-content: safe center;
-			align-content: safe center;
-			justify-items: safe center;
-			align-items: safe center;
+			// justify-content: safe center;
+			// align-content: safe center;
+			// justify-items: safe center;
+			// align-items: safe center;
 		`
 	},
 	'space-around': function(value, props) {
@@ -462,8 +475,8 @@ Style.prototype.css_property_fn_high_priority = {
 
 			justify-items: center;
 			align-items: center;
-			justify-items: safe center;
-			align-items: safe center;
+			// justify-items: safe center;
+			// align-items: safe center;
 		`
 	},
 	'space-around-horizontal': function(value, props) {
@@ -474,8 +487,8 @@ Style.prototype.css_property_fn_high_priority = {
 				align-content: space-around;
 				justify-items: center;
 				align-items: center;
-				justify-items: safe center;
-				align-items: safe center;
+				// justify-items: safe center;
+				// align-items: safe center;
 			`
 		} else {
 			return `
@@ -491,8 +504,8 @@ Style.prototype.css_property_fn_high_priority = {
 				align-content: space-around;
 				justify-items: center;
 				align-items: center;
-				justify-items: safe center;
-				align-items: safe center;
+				// justify-items: safe center;
+				// align-items: safe center;
 			`
 		} else {
 			return `
@@ -506,8 +519,8 @@ Style.prototype.css_property_fn_high_priority = {
 			align-content: initial; // this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content
 			justify-items: center;
 			align-items: center;
-			justify-items: safe center;
-			align-items: safe center;
+			// justify-items: safe center;
+			// align-items: safe center;
 		`
 	},
 	'space-between-horizontal': function(value, props) {
@@ -518,8 +531,8 @@ Style.prototype.css_property_fn_high_priority = {
 				align-content: space-between;
 				justify-items: center;
 				align-items: center;
-				justify-items: safe center;
-				align-items: safe center;
+				// justify-items: safe center;
+				// align-items: safe center;
 			`
 		} else {
 			return `
@@ -535,8 +548,8 @@ Style.prototype.css_property_fn_high_priority = {
 				align-content: space-between;
 				justify-items: center;
 				align-items: center;
-				justify-items: safe center;
-				align-items: safe center;
+				// justify-items: safe center;
+				// align-items: safe center;
 			`
 		} else {
 			return `
@@ -550,8 +563,8 @@ Style.prototype.css_property_fn_high_priority = {
 			align-content: initial; // this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content
 			justify-items: center;
 			align-items: center;
-			justify-items: safe center;
-			align-items: safe center;
+			// justify-items: safe center;
+			// align-items: safe center;
 		`
 	},
 	'space-evenly-horizontal': function(value, props) {
@@ -562,8 +575,8 @@ Style.prototype.css_property_fn_high_priority = {
 				align-content: space-evenly;
 				justify-items: center;
 				align-items: center;
-				justify-items: safe center;
-				align-items: safe center;
+				// justify-items: safe center;
+				// align-items: safe center;
 			`
 		} else {
 			return `
@@ -579,8 +592,8 @@ Style.prototype.css_property_fn_high_priority = {
 				align-content: space-evenly;
 				justify-items: center;
 				align-items: center;
-				justify-items: safe center;
-				align-items: safe center;
+				// justify-items: safe center;
+				// align-items: safe center;
 			`
 		} else {
 			return `
@@ -594,8 +607,35 @@ Style.prototype.css_property_fn_high_priority = {
 			align-content: stretch;
 			justify-items: center;
 			align-items: center;
-			justify-items: safe center;
-			align-items: safe center;
+			// justify-items: safe center;
+			// align-items: safe center;
+		`
+	},
+
+	// scroll
+
+	'scroll-thin': function(value, props) {
+		return `
+			class::-webkit-scrollbar {
+				width: 8px;
+			}
+			class {
+				scrollbar-width: thin;
+			}
+		`
+	},
+	'scroll-color': function(value, props) {
+		return `
+			class::-webkit-scrollbar-track {
+				background-color: ${value[0]};
+			}
+
+			class::-webkit-scrollbar-thumb {
+				background-color: ${value[1]};
+			}
+			class {
+				scrollbar-color: ${value[1]} ${value[0]};
+			}
 		`
 	},
 }
@@ -669,9 +709,11 @@ Style.prototype.css = function(styles, ...element) {
 }
 
 Style.prototype.factory = function(element, classNames) {
-	return function(React, style, element, classNames, props) {
-		return React.createElement(props.element || element, style.props(props, classNames))
-	}.bind(null, React, this, element, classNames)
+	return React.memo(
+		function(React, style, element, classNames, props) {
+			return React.createElement(props.element || element, style.props(props, classNames))
+		}.bind(null, React, this, element, classNames),
+	)
 }
 
 // from any style transforms that to classNames
@@ -738,7 +780,7 @@ Style.prototype.props = function(_props, classNames) {
 			}
 
 			if (this.debug) {
-				props['data-style-' + id] = this.is_primitive(_props[id])
+				props['data-styled-' + id] = this.is_primitive(_props[id])
 					? _props[id]
 					: this.serialize(_props[id])
 			}
@@ -776,16 +818,31 @@ Style.prototype.props = function(_props, classNames) {
 					case 'type':
 					case 'id':
 					case 'blank':
-					case 'checked':
-					case 'checked':
-					case 'checked':
-					case 'checked':
-					case 'checked':
-					case 'checked':
-					case 'checked':
-					case 'checked':
-					case 'checked':
-					case 'checked':
+					case 'dangerouslySetInnerHTML':
+					case 'selected':
+					case 'category':
+					case 'element':
+					case 'maxLength':
+					case 'spellCheck':
+					case 'autoComplete':
+					case 'placeholder':
+					case 'defaultValue':
+					case 'onChange':
+					case 'onKeyPress':
+					case 'onPaste':
+					case 'onFocus':
+					case 'rows':
+					case 'onPointerDown':
+					case 'onBlur':
+					case 'onPointerUp':
+					case 'onPointerOut':
+					case 'onLoad':
+					case 'send':
+					case 'data':
+					case 'src':
+					case 'txt':
+					case 'default':
+					case 'r':
 						break
 					default:
 						if (id.indexOf('data-') == -1 && this.warned[id] === undefined) {
@@ -836,7 +893,7 @@ Style.prototype.prop_hyphenate_style_name = function(name) {
 }
 Style.prototype.process_styles = function(_categories, _styles) {
 	//tick('process_styles')
-
+	//console.log(_styles)
 	var header
 	var categories = _categories()
 
@@ -1184,63 +1241,21 @@ Style.prototype.is_primitive = function(o) {
 		}
 	}
 }
-Style.prototype.memo = function(fn, expires) {
+Style.prototype.memo = function(fn) {
 	if (!fn) {
 		;(typeof error != undefined ? error : console.error)('function to memoize is undefined')
 	}
-	if (!expires) {
-		return function(fn, cache, serialize, is_primitive, ...args) {
-			const k = args.length == 1 && is_primitive(args[0]) ? args[0] : serialize(args)
+	return function(fn, cache, serialize, is_primitive, ...args) {
+		const k = args.length == 1 && is_primitive(args[0]) ? args[0] : serialize(args)
 
-			return cache[k] !== undefined ? cache[k] : (cache[k] = fn(...args))
-		}.bind(null, fn, {}, this.serialize, this.is_primitive)
-	} else {
-		const f = function(fn, cache, serialize, expires, setInterval, time, is_primitive, ...args) {
-			const k = args.length == 1 && is_primitive(args[0]) ? args[0] : serialize(args)
-
-			if (cache[k] !== undefined) {
-				cache[k].n = time.now
-			} else {
-				cache[k] = { v: fn(...args), n: time.now }
-			}
-			expires && !this.timeout && setInterval()
-			return cache[k].v
-		}
-
-		f.cache = {}
-		f.expires = expires
-		f.setInterval = function() {
-			this.timeout = setInterval(this.expire, this.expires)
-		}.bind(f)
-		f.clearInterval = function() {
-			clearInterval(this.timeout)
-			this.timeout = false
-		}.bind(f)
-		f.expire = function(expires, clearInterval, time, to_fast_properties) {
-			const n = time.now
-			var empty = true
-			for (var k in this) {
-				if (this[k] !== undefined) {
-					if (n - this[k].n > expires) {
-						this[k] = undefined
-					} else {
-						empty = false
-					}
-				}
-			}
-			if (empty) {
-				clearInterval()
-			} else {
-				to_fast_properties(this)
-			}
-		}.bind(f.cache, f.expires, f.clearInterval, this, this.to_fast_properties)
-
-		return f.bind(f, fn, f.cache, this.serialize, f.expires, f.setInterval, this, this.is_primitive)
-	}
+		return cache[k] !== undefined ? cache[k] : (cache[k] = fn(...args))
+	}.bind(null, fn, {}, this.serialize, this.is_primitive)
 }
 
 const style = new Style()
 const css = style.css
-const Box = function(React, style, props) {
-	return React.createElement(props.element || style.element, style.props(props))
-}.bind(null, React, style)
+const Box = React.memo(
+	function(React, style, props) {
+		return React.createElement(props.element || style.element, style.props(props))
+	}.bind(null, React, style),
+)
