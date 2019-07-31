@@ -146,17 +146,12 @@ The size of the `Box` and NOT the size of the children.
 | attribute    | description                                                |
 | ------------ | ---------------------------------------------------------- |
 | `grow`       | grow `self` as much as it can without growing the children |
-| `basis`      | sets the flex-basis value                                  |
 | `width`      | sets the width value(if empty defaults to 100%)            |
 | `min-width`  | sets the min-width value (if empty defaults to 100%)       |
 | `max-width`  | sets the max-width value (if empty defaults to 100%)       |
 | `height`     | sets the height value (if empty defaults to 100%)          |
 | `min-height` | sets the min-height value (if empty defaults to 100%)      |
 | `max-height` | sets the max-height value (if empty defaults to 100%)      |
-
-#### Bugs
-
-- `basis` we're forcing `align-self:stretch;` to `grow`, so flex-basis is ignored.
 
 ### Children Alignment
 
@@ -185,12 +180,11 @@ This is the alignment of the children, NOT the alignment of the content of these
 | `space-evenly-horizontal`  | space-evenly  |
 | `space-evenly-vertical`    | space-evenly  |
 | `space-evenly`             | space-evenly  |
-| `stretch`                  | stretch       |
 
 #### Bugs
 
 - `space-around`, `space-between` and `space-evenly` use `align-content: initial;` to workaround "Can't scroll to top of flex item that is overflowing container"
-- `safe center` values looks like it does not work correctly in browsers..
+- `safe center` values looks like it does not work correctly
 - `space-*` seem to have problems with columns maybe
 
 ### Text
@@ -202,12 +196,13 @@ Useful text stuff.
 | `align`        | text-align could be left, center, right |
 | `bold`         | bold font                               |
 | `capitalize`   | capitalize                              |
+| `font-size`    | font size                               |
 | `no-bold`      | no bold font                            |
 | `no-underline` | do not underline                        |
-| `size`         | font size                               |
 | `small`        | font size small                         |
 | `text-crop`    | crops the text                          |
 | `text-nowrap`  | nowrap the text if it overflows         |
+| `text-shadow`  | text-shadow                             |
 | `text-wrap`    | wrap the text if it overflows           |
 | `text`         | sets line-height:1.4;                   |
 | `underline`    | underline                               |
@@ -219,11 +214,13 @@ Useful text stuff.
 
 ### Scroll
 
-| attribute  | description                                             |
-| ---------- | ------------------------------------------------------- |
-| `scroll`   | scrolls both vertically and horizontally when overflows |
-| `scroll-x` | scrolls horizontally when overflows                     |
-| `scroll-y` | scrolls vertically when overflows                       |
+| attribute      | description                                                      |
+| -------------- | ---------------------------------------------------------------- |
+| `scroll`       | scrolls both vertically and horizontally when overflows          |
+| `scroll-x`     | scrolls horizontally when overflows                              |
+| `scroll-y`     | scrolls vertically when overflows                                |
+| `scroll-thin`  | to set the size of the scrollbar to thin                         |
+| `scroll-color` | an array [background, thumb], like scroll-color={['red', 'blue]} |
 
 ### Cursor
 
@@ -317,26 +314,29 @@ const Button = css(`
 
 ### Random Helpers As We See These Fit
 
-| attribute      | description                                                           |
-| -------------- | --------------------------------------------------------------------- |
-| `absolute`     | position absolute                                                     |
-| `background`   | background css property                                               |
-| `block`        | display block                                                         |
-| `color`        | color css property                                                    |
-| `fixed`        | position fixed top 0 left 0                                           |
-| `full`         | full width and height with overflow hidden                            |
-| `inline-block` | display inline-block                                                  |
-| `inline`       | display inline                                                        |
-| `layer`        | forces the browser to create a layer using `transform:translateZ(0);` |
-| `overflow`     | overflow hidden                                                       |
-| `relative`     | position relative                                                     |
-| `z`            | z-index                                                               |
+| attribute      | description                                                                   |
+| -------------- | ----------------------------------------------------------------------------- |
+| `absolute`     | position absolute                                                             |
+| `background`   | background css property                                                       |
+| `block`        | display block                                                                 |
+| `color`        | color css property                                                            |
+| `collapse`     | sets the visibility to collapsed                                              |
+| `fixed`        | position fixed top 0 left 0                                                   |
+| `full`         | full width and height with overflow hidden                                    |
+| `inline-block` | display inline-block                                                          |
+| `inline`       | display inline                                                                |
+| `layer`        | forces the browser to create a layer using `transform:translateZ(0);`         |
+| `overflow`     | overflow hidden                                                               |
+| `relative`     | position relative                                                             |
+| `drop-shadow`  | sets the filter to drop-shadow and expects a value in unit, drop-shadow='4px' |
+| `z`            | z-index                                                                       |
 
 ### Core
 
-| attribute | description                                                                                                                                                                                            |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `element` | `string`, `class` or `function` telling what kind of element the Box should be. By default is a `div`, but if you do `<Box element="span"/>`, it should just work and use a `span` instead of a `div`. |
+| attribute   | description                                                                                                                                                                                            |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `element`   | `string`, `class` or `function` telling what kind of element the Box should be. By default is a `div`, but if you do `<Box element="span"/>`, it should just work and use a `span` instead of a `div`. |
+| `reference` | as `ref` is forbidden as props of custom elements, we forward ref to the html element using `reference` instead                                                                                        |
 
 #### Examples
 
@@ -552,7 +552,7 @@ As we are going to create unique classes, we are going to reuse everywhere any c
 To set debug to true do `style.debug = true`
 
 - This will print the attributes in the elements as `data-*`
-- Will turn off memoize for some functions
+- Will allow edit the css in the developer console, because when you arent debuging the css is injected using sheet.insertRule and that way isnt editable
 
 ### Validating
 
