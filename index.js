@@ -74,6 +74,12 @@ function Style() {
 	for (var id in this.css_property_value) {
 		this.css_property_value[id] = this.css_property_value[id].replace(/;\s*$/, '')
 	}
+
+	this.Box =    window.React.memo(
+	function(React, style, props) {
+		return React.createElement(props.element || style.element, style.props(props))
+	}.bind(null, window.React, style),
+)
 }
 
 Style.prototype.debug = false
@@ -709,10 +715,10 @@ Style.prototype.css = function(styles, ...element) {
 }
 
 Style.prototype.factory = function(element, classNames) {
-	return React.memo(
+	return window.React.memo(
 		function(React, style, element, classNames, props) {
 			return React.createElement(props.element || element, style.props(props, classNames))
-		}.bind(null, React, this, element, classNames),
+		}.bind(null, window.React, this, element, classNames),
 	)
 }
 
@@ -1252,10 +1258,7 @@ Style.prototype.memo = function(fn) {
 	}.bind(null, fn, {}, this.serialize, this.is_primitive)
 }
 
-const style = new Style()
-const css = style.css
-const Box = React.memo(
-	function(React, style, props) {
-		return React.createElement(props.element || style.element, style.props(props))
-	}.bind(null, React, style),
-)
+
+
+
+export default new Style()

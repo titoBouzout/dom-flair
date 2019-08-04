@@ -4,11 +4,11 @@ The goal of this project is to have just one React "meta component" named `Box`.
 
 It could also help with trivial CSS that can be just named in an attribute, For example `<Box capitalize></Box>` to capitalize the `Box` contents. It could also be used similar to styled-components.
 
-You must include `style.js` like in `<script crossorigin src="https://cdn.jsdelivr.net/gh/titoBouzout/crippling-sorrow-styling/style.js"></script>`. Please note React is required.
+You must include `index.js` like in `<script crossorigin src="https://cdn.jsdelivr.net/gh/titoBouzout/crippling-sorrow-styling/index.js"></script>`. Please note React is required.
 
 ## Examples
 
-You may try the codepen directly https://codepen.io/anon/pen/YoMOML
+You may try the codepen directly https://codepen.io/anon/pen/ZgabXx
 
 ### The "Holy Grail Layout":
 
@@ -63,7 +63,7 @@ Also the element you mount to should be `display:flex;flex:1;`
 		<script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 		<script
 			crossorigin
-			src="https://cdn.jsdelivr.net/gh/titoBouzout/crippling-sorrow-styling/style.js"
+			src="https://cdn.jsdelivr.net/gh/titoBouzout/crippling-sorrow-styling/index.js"
 		></script>
 		<style type="text/css">
 			html,
