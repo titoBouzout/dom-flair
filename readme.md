@@ -50,13 +50,13 @@ Has two sidebars, a toolbar, a footer, and grows in the middle content:
 		left sidebar
 	</Box>
 	<Box col grow>
-		<Box row width="100%" right>
+		<Box row width right>
 			toolbar
 		</Box>
 		<Box row grow center>
 			content
 		</Box>
-		<Box row width="100%" left>
+		<Box row width left>
 			footer
 		</Box>
 	</Box>
@@ -112,13 +112,13 @@ Also the element you mount to should be `display:flex;flex:1;`
 									left sidebar
 								</Box>
 								<Box col grow>
-									<Box row width="100%" right>
+									<Box row width right>
 										toolbar
 									</Box>
 									<Box row grow center>
 										content
 									</Box>
-									<Box row width="100%" left>
+									<Box row width left>
 										footer
 									</Box>
 								</Box>
