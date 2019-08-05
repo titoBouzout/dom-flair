@@ -1,3 +1,6 @@
+import React from 'react' 
+
+
 function Style() {
 	// bind
 
@@ -75,10 +78,11 @@ function Style() {
 		this.css_property_value[id] = this.css_property_value[id].replace(/;\s*$/, '')
 	}
 
-	this.Box =    window.React.memo(
+
+ 	this.Box =    React.memo(
 	function(React, style, props) {
 		return React.createElement(props.element || style.element, style.props(props))
-	}.bind(null, window.React, style),
+	}.bind(null, React, this)
 )
 }
 
@@ -715,10 +719,10 @@ Style.prototype.css = function(styles, ...element) {
 }
 
 Style.prototype.factory = function(element, classNames) {
-	return window.React.memo(
+	return React.memo(
 		function(React, style, element, classNames, props) {
 			return React.createElement(props.element || element, style.props(props, classNames))
-		}.bind(null, window.React, this, element, classNames),
+		}.bind(null, React, this, element, classNames),
 	)
 }
 
@@ -853,7 +857,7 @@ Style.prototype.props = function(_props, classNames) {
 					default:
 						if (id.indexOf('data-') == -1 && this.warned[id] === undefined) {
 							this.warned[id] = null
-							;(typeof trace != undefined ? trace : console.trace)(id)
+							console.trace(id)
 						}
 				}
 			}
@@ -1042,7 +1046,7 @@ Style.prototype.sheet_process = function() {
 							this.sheet_create_append(id)
 						}
 						this.sheet_append[id].appendChild(document.createTextNode(styles))
-						;(typeof error != undefined ? error : console.error)(e)
+						console.error(e)
 					}
 				} else {
 					if (!this.sheet_append[id]) {
@@ -1070,7 +1074,7 @@ Style.prototype.sheet_process = function() {
 					element.parentNode.classList.add(parent.className)
 					parent_new.push(parent)
 				} else {
-					;(typeof error != undefined ? error : console.error)(
+					console.error(
 						'Style: looking for parent, the element does not exists.',
 						element,
 					)
@@ -1112,18 +1116,18 @@ Style.prototype.validate_clases = function(classNames) {
 	/*styles = styles.replace(/min-height: 0;/g, '').replace(/min-width: 0;/g, '')
 		if (/width|height/.test(styles)) {
 			if (!/box-sizing/.test(styles) && /margin|border|padding/.test(styles)) {
-				;(typeof error != undefined ? error : console.error)(
+				console.error(
 					'Style: width|height with margin|border|padding declared without declaring a box-sizing'
 				)
-				;(typeof log != undefined ? log : console.log)(styles)
+				console.log(styles)
 			}
 		}*/
 
 	/*if (/animation/.test(css) && !/position:/.test(css)) {
-			;(typeof error != undefined ? error : console.error)('Style: animations should have a position')
+			console.error('Style: animations should have a position')
 		}
 		if (/animation/.test(css) && !/will-change/.test(css)) {
-			;(typeof error != undefined ? error : console.error)(
+			console.error(
 				'Style: animations should have will-change for the animated properties'
 			)
 		}*/
@@ -1249,7 +1253,7 @@ Style.prototype.is_primitive = function(o) {
 }
 Style.prototype.memo = function(fn) {
 	if (!fn) {
-		;(typeof error != undefined ? error : console.error)('function to memoize is undefined')
+		console.error('function to memoize is undefined')
 	}
 	return function(fn, cache, serialize, is_primitive, ...args) {
 		const k = args.length == 1 && is_primitive(args[0]) ? args[0] : serialize(args)
@@ -1258,7 +1262,11 @@ Style.prototype.memo = function(fn) {
 	}.bind(null, fn, {}, this.serialize, this.is_primitive)
 }
 
+Style = new Style
+const css = Style.css
+const Box = Style.Box
 
 
 
-export default new Style()
+
+export default Style;exports.css = css;exports.Box = Box; 
