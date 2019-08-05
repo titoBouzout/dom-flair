@@ -1,4 +1,4 @@
-import React from 'react' 
+import React from 'react'
 
 
 function Style() {
@@ -1269,4 +1269,4 @@ const Box = Style.Box
 
 
 
-export default Style;exports.css = css;exports.Box = Box; 
+export default Style;exports.css = css;exports.Box = Box;

@@ -8,15 +8,21 @@ It could also help with trivial CSS that can be just named in an attribute, For 
 
 Please note React is required.
 
-### As a ES module
+### ES module
+
 `npm install crippling-sorrow-styling`
 
-usage
+Import it where you gonna use is
+
 `import { css, Box } from 'crippling-sorrow-styling'`
 
-### As a regular js file
+The element you mount to should be `display:flex;flex:1;`
+
+### Regular js file
 
 `<script crossorigin src="https://cdn.jsdelivr.net/gh/titoBouzout/crippling-sorrow-styling/style.js"></script>`.
+
+The element you mount to should be `display:flex;flex:1;`
 
 ## Examples
 
