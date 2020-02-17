@@ -138,6 +138,17 @@ Style.prototype.css_property = {
 		justify-items: flex-start;
 		align-items: flex-start;
 	`,
+	column: `
+		display: flex;
+		flex-direction: column;
+		//min-height: 0;
+		//min-width: 0;
+
+		align-content: flex-start;
+		justify-content: flex-start;
+		justify-items: flex-start;
+		align-items: flex-start;
+	`,
 	grow: `
 		display: flex;
 
@@ -161,13 +172,13 @@ Style.prototype.css_property = {
 		//min-height: auto !important;
 	`,
 	// here maybe we should add min-height: 0 !important;
-	nowrap: `
+	'no-wrap': `
 		flex-wrap: nowrap;
 	`,
 
 	// TEXT
 
-	text: 'line-height:1.4;',
+	'text-multiline': 'line-height:1.4;',
 
 	'text-crop': `
 		text-overflow: ellipsis;
@@ -177,7 +188,7 @@ Style.prototype.css_property = {
 		min-height: 0;
 	`,
 
-	'text-nowrap': `
+	'text-no-wrap': `
 		white-space: nowrap;
 	`,
 
@@ -242,19 +253,22 @@ Style.prototype.css_property = {
 
 	// CURSOR
 
-	hand: 'cursor:pointer;',
-	ignore: 'pointer-events:none;',
-	'no-select': '-moz-user-select: none;user-select:none;',
+	'cursor-hand': 'cursor:pointer;',
+	'cursor-ignore': 'pointer-events:none;',
+
+	// SELECTION
+
+	'selection-none': '-moz-user-select: none;user-select:none;',
 
 	// FONT
 
-	small: 'font-size:small;',
-	bold: 'font-weight:bold;',
-	'no-bold': 'font-weight:normal;',
-	underline: 'text-decoration:underline;',
-	'no-underline': 'text-decoration:none;',
-	uppercase: 'text-transform:uppercase;',
-	capitalize: 'text-transform:capitalize;',
+	'text-bold': 'font-weight:bold;',
+	'text-capitalize': 'text-transform:capitalize;',
+	'text-no-underline': 'text-decoration:none;',
+	'text-regular': 'font-weight:normal;',
+	'text-small': 'font-size:small;',
+	'text-underline': 'text-decoration:underline;',
+	'text-uppercase': 'text-transform:uppercase;',
 
 	// ALIGNMENT regular priority values
 
@@ -297,14 +311,15 @@ Style.prototype.css_property_value = {
 
 	z: 'z-index:',
 
-	align: 'text-align:',
+	'text-align': 'text-align:',
 
+	'text-size': 'font-size:',
 	'font-size': 'font-size:',
 
 	// basis: 'flex-basis:',
 
 	background: 'background:',
-	color: 'color:',
+	'text-color': 'color:',
 
 	'text-shadow': 'text-shadow:',
 }
@@ -376,7 +391,7 @@ Style.prototype.css_property_fn_high_priority = {
 	// align-self alignment
 
 	left: function(value, props) {
-		if (props.col) {
+		if (props.col || props.column) {
 			// the default not tested
 			return `
 				align-content: flex-start;
@@ -392,7 +407,7 @@ Style.prototype.css_property_fn_high_priority = {
 	},
 
 	right: function(value, props) {
-		if (props.col) {
+		if (props.col || props.column) {
 			return `
 				align-content: flex-end;
 				align-items: flex-end;
@@ -406,7 +421,7 @@ Style.prototype.css_property_fn_high_priority = {
 	},
 
 	top: function(value, props) {
-		if (props.col) {
+		if (props.col || props.column) {
 			// the default not tested
 			return `
 				justify-content: flex-start;
@@ -422,7 +437,7 @@ Style.prototype.css_property_fn_high_priority = {
 	},
 
 	bottom: function(value, props) {
-		if (props.col) {
+		if (props.col || props.column) {
 			return `
 				justify-content: flex-end;
 				justify-items: flex-end;
@@ -436,7 +451,7 @@ Style.prototype.css_property_fn_high_priority = {
 	},
 
 	horizontal: function(value, props) {
-		if (props.col) {
+		if (props.col || props.column) {
 			return `
 				align-content: center;
 				align-items: center;
@@ -452,54 +467,9 @@ Style.prototype.css_property_fn_high_priority = {
 			`
 		}
 	},
-	'horizontal-waterfall': function(value, props) {
-		if (props.col) {
-			return `
-				class, class > * {
-					display:flex;
-					align-content: center;
-					align-items: center;
-					// align-content: safe center;
-					// align-items: safe center;
-				}
-			`
-		} else {
-			return `
-				class, class > * {
-					display:flex;
-					justify-content: center;
-					justify-items: center;
-					// justify-content: safe center;
-					// justify-items: safe center;
-				}
-			`
-		}
-	},
-	'horizontal-waterfall-deep': function(value, props) {
-		if (props.col) {
-			return `
-				class, class * {
-					display:flex;
-					align-content: center;
-					align-items: center;
-					// align-content: safe center;
-					// align-items: safe center;
-				}
-			`
-		} else {
-			return `
-				class, class * {
-					display:flex;
-					justify-content: center;
-					justify-items: center;
-					// justify-content: safe center;
-					// justify-items: safe center;
-				}
-			`
-		}
-	},
+
 	vertical: function(value, props) {
-		if (props.col) {
+		if (props.col || props.column) {
 			return `
 				justify-content: center;
 				justify-items: center;
@@ -515,52 +485,7 @@ Style.prototype.css_property_fn_high_priority = {
 			`
 		}
 	},
-	'vertical-waterfall': function(value, props) {
-		if (props.col) {
-			return `
-				class, class > * {
-					display:flex;
-					justify-content: center;
-					justify-items: center;
-					// justify-content: safe center;
-					// justify-items: safe center;
-				}
-			`
-		} else {
-			return `
-				class, class > * {
-					display:flex;
-					align-content: center;
-					align-items: center;
-					// align-content: safe center;
-					// align-items: safe center;
-				}
-			`
-		}
-	},
-	'vertical-waterfall-deep': function(value, props) {
-		if (props.col) {
-			return `
-				class, class * {
-					display:flex;
-					justify-content: center;
-					justify-items: center;
-					// justify-content: safe center;
-					// justify-items: safe center;
-				}
-			`
-		} else {
-			return `
-				class, class * {
-					display:flex;
-					align-content: center;
-					align-items: center;
-					// align-content: safe center;
-					// align-items: safe center;
-				}
- 			`
-		}
-	},
+
 	center: function(value, props) {
 		return `
 			justify-content: center;
@@ -585,7 +510,7 @@ Style.prototype.css_property_fn_high_priority = {
 		`
 	},
 	'space-around-horizontal': function(value, props) {
-		if (props.col) {
+		if (props.col || props.column) {
 			// TODO
 			return `
 				justify-content: space-around;
@@ -602,7 +527,7 @@ Style.prototype.css_property_fn_high_priority = {
 		}
 	},
 	'space-around-vertical': function(value, props) {
-		if (props.col) {
+		if (props.col || props.column) {
 			// TODO
 			return `
 				justify-content: space-around;
@@ -629,7 +554,7 @@ Style.prototype.css_property_fn_high_priority = {
 		`
 	},
 	'space-between-horizontal': function(value, props) {
-		if (props.col) {
+		if (props.col || props.column) {
 			// TODO
 			return `
 				justify-content: space-between;
@@ -646,7 +571,7 @@ Style.prototype.css_property_fn_high_priority = {
 		}
 	},
 	'space-between-vertical': function(value, props) {
-		if (props.col) {
+		if (props.col || props.column) {
 			// TODO
 			return `
 				justify-content: space-between;
@@ -673,7 +598,7 @@ Style.prototype.css_property_fn_high_priority = {
 		`
 	},
 	'space-evenly-horizontal': function(value, props) {
-		if (props.col) {
+		if (props.col || props.column) {
 			// TODO
 			return `
 				justify-content: space-evenly;
@@ -690,7 +615,7 @@ Style.prototype.css_property_fn_high_priority = {
 		}
 	},
 	'space-evenly-vertical': function(value, props) {
-		if (props.col) {
+		if (props.col || props.column) {
 			// TODO
 			return `
 				justify-content: space-evenly;
@@ -706,7 +631,7 @@ Style.prototype.css_property_fn_high_priority = {
 			`
 		}
 	},
-	stretch: function(value, props) {
+	/*stretch: function(value, props) {
 		return `
 			justify-content: stretch;
 			align-content: stretch;
@@ -715,7 +640,7 @@ Style.prototype.css_property_fn_high_priority = {
 			// justify-items: safe center;
 			// align-items: safe center;
 		`
-	},
+	},*/
 
 	// scroll
 
@@ -732,14 +657,44 @@ Style.prototype.css_property_fn_high_priority = {
 	'scroll-color': function(value, props) {
 		return `
 			class::-webkit-scrollbar-track {
-				background-color: ${value[0]};
+				background-color: ${props['scroll-background']};
 			}
 
 			class::-webkit-scrollbar-thumb {
-				background-color: ${value[1]};
+				background-color: ${props['scroll-color']};
 			}
 			class {
-				scrollbar-color: ${value[1]} ${value[0]};
+				scrollbar-color: ${props['scroll-color']} ${props['scroll-background']};
+			}
+		`
+	},
+	'scroll-background': function(value, props) {
+		return `
+			class::-webkit-scrollbar-track {
+				background-color: ${props['scroll-background']};
+			}
+
+			class::-webkit-scrollbar-thumb {
+				background-color: ${props['scroll-color']};
+			}
+			class {
+				scrollbar-color: ${props['scroll-color']} ${props['scroll-background']};
+			}
+		`
+	},
+
+	// selection
+	'selection-color': function(value, props) {
+		return `
+			class::selection {
+				color: ${value};
+			}
+		`
+	},
+	'selection-background': function(value, props) {
+		return `
+			class::selection {
+				background-color: ${value};
 			}
 		`
 	},
@@ -898,59 +853,532 @@ Style.prototype.props = function(_props, classNames) {
 			// TODO!
 			if (this.debug) {
 				switch (id) {
-					case 'children':
-					case 'onClick':
-					case 'className':
-					case 'change':
-					case 'l':
-					case 'holder':
-					case 'multiple':
-					case 'complete':
-					case 'progress':
-					case 'limit':
-					case 'title':
-					case 'accept':
-					case 'name':
-					case 'label':
-					case 'checked':
-					case 'length':
-					case 'value':
-					case 'focus':
-					case 'disabled':
-					case 'onKeyUp':
-					case 'onMouseDown':
-					case 'tabIndex':
-					case 'spell':
-					case 'type':
-					case 'id':
-					case 'blank':
-					case 'dangerouslySetInnerHTML':
-					case 'selected':
-					case 'category':
-					case 'element':
-					case 'maxLength':
-					case 'spellCheck':
-					case 'autoComplete':
-					case 'placeholder':
-					case 'defaultValue':
-					case 'onChange':
-					case 'onKeyPress':
-					case 'onPaste':
-					case 'onFocus':
-					case 'rows':
-					case 'onPointerDown':
+					// events
+					case 'onAbort':
+					case 'onAnimationEnd':
+					case 'onAnimationIteration':
+					case 'onAnimationStart':
 					case 'onBlur':
-					case 'onPointerUp':
-					case 'onPointerOut':
-					case 'onLoad':
-					case 'send':
-					case 'data':
-					case 'src':
-					case 'txt':
-					case 'default':
-					case 'r':
+					case 'onCanPlay':
+					case 'onCanPlayThrough':
+					case 'onChange':
+					case 'onClick':
+					case 'onCompositionEnd':
+					case 'onCompositionStart':
+					case 'onCompositionUpdate':
+					case 'onContextMenu':
+					case 'onCopy':
+					case 'onCut':
+					case 'onDoubleClick':
+					case 'onDrag':
+					case 'onDragEnd':
+					case 'onDragEnter':
+					case 'onDragExit':
+					case 'onDragLeave':
+					case 'onDragOver':
+					case 'onDragStart':
+					case 'onDrop':
+					case 'onDurationChange':
+					case 'onEmptied':
+					case 'onEncrypted':
+					case 'onEnded':
+					case 'onError':
+					case 'onFocus':
+					case 'onGotPointerCapture':
+					case 'onInput':
+					case 'onInvalid':
 					case 'onKeyDown':
+					case 'onKeyPress':
+					case 'onKeyUp':
+					case 'onLoad':
+					case 'onLoadedData':
+					case 'onLoadedMetadata':
+					case 'onLoadStart':
+					case 'onLostPointerCapture':
+					case 'onMouseDown':
+					case 'onMouseEnter':
+					case 'onMouseLeave':
+					case 'onMouseMove':
+					case 'onMouseOut':
+					case 'onMouseOver':
+					case 'onMouseUp':
+					case 'onPaste':
+					case 'onPause':
+					case 'onPlay':
+					case 'onPlaying':
+					case 'onPointerCancel':
+					case 'onPointerDown':
+					case 'onPointerEnter':
+					case 'onPointerLeave':
+					case 'onPointerMove':
+					case 'onPointerOut':
+					case 'onPointerOver':
+					case 'onPointerUp':
+					case 'onProgress':
+					case 'onRateChange':
+					case 'onScroll':
+					case 'onSeeked':
+					case 'onSeeking':
+					case 'onSelect':
+					case 'onStalled':
+					case 'onSubmit':
+					case 'onSuspend':
+					case 'onTimeUpdate':
+					case 'onToggle':
+					case 'onTouchCancel':
+					case 'onTouchEnd':
+					case 'onTouchMove':
+					case 'onTouchStart':
+					case 'onTransitionEnd':
+					case 'onVolumeChange':
+					case 'onWaiting':
+					case 'onWheel':
+					// attributes react special
+
+					case 'checked':
+					case 'className':
+					case 'dangerouslySetInnerHTML':
+					case 'htmlFor':
+					case 'selected':
+					case 'style':
+					case 'suppressContentEditableWarning':
+					case 'suppressHydrationWarning':
+					case 'value':
+
+					// svg
+					case 'accentHeight':
+					case 'accumulate':
+					case 'additive':
+					case 'alignmentBaseline':
+					case 'allowReorder':
+					case 'alphabetic':
+					case 'amplitude':
+					case 'arabicForm':
+					case 'ascent':
+					case 'attributeName':
+					case 'attributeType':
+					case 'autoReverse':
+					case 'azimuth':
+					case 'baseFrequency':
+					case 'baselineShift':
+					case 'baseProfile':
+					case 'bbox':
+					case 'begin':
+					case 'bias':
+					case 'by':
+					case 'calcMode':
+					case 'capHeight':
+					case 'clip':
+					case 'clipPath':
+					case 'clipPathUnits':
+					case 'clipRule':
+					case 'colorInterpolation':
+					case 'colorInterpolationFilters':
+					case 'colorProfile':
+					case 'colorRendering':
+					case 'contentScriptType':
+					case 'contentStyleType':
+					case 'cursor':
+					case 'cx':
+					case 'cy':
+					case 'd':
+					case 'decelerate':
+					case 'descent':
+					case 'diffuseConstant':
+					case 'direction':
+					case 'display':
+					case 'divisor':
+					case 'dominantBaseline':
+					case 'dur':
+					case 'dx':
+					case 'dy':
+					case 'edgeMode':
+					case 'elevation':
+					case 'enableBackground':
+					case 'end':
+					case 'exponent':
+					case 'externalResourcesRequired':
+					case 'fill':
+					case 'fillOpacity':
+					case 'fillRule':
+					case 'filter':
+					case 'filterRes':
+					case 'filterUnits':
+					case 'floodColor':
+					case 'floodOpacity':
+					case 'focusable':
+					case 'fontFamily':
+					case 'fontSize':
+					case 'fontSizeAdjust':
+					case 'fontStretch':
+					case 'fontStyle':
+					case 'fontVariant':
+					case 'fontWeight':
+					case 'format':
+					case 'from':
+					case 'fx':
+					case 'fy':
+					case 'g1':
+					case 'g2':
+					case 'glyphName':
+					case 'glyphOrientationHorizontal':
+					case 'glyphOrientationVertical':
+					case 'glyphRef':
+					case 'gradientTransform':
+					case 'gradientUnits':
+					case 'hanging':
+					case 'horizAdvX':
+					case 'horizOriginX':
+					case 'ideographic':
+					case 'imageRendering':
+					case 'in':
+					case 'in2':
+					case 'intercept':
+					case 'k':
+					case 'k1':
+					case 'k2':
+					case 'k3':
+					case 'k4':
+					case 'kernelMatrix':
+					case 'kernelUnitLength':
+					case 'kerning':
+					case 'keyPoints':
+					case 'keySplines':
+					case 'keyTimes':
+					case 'lengthAdjust':
+					case 'letterSpacing':
+					case 'lightingColor':
+					case 'limitingConeAngle':
+					case 'local':
+					case 'markerEnd':
+					case 'markerHeight':
+					case 'markerMid':
+					case 'markerStart':
+					case 'markerUnits':
+					case 'markerWidth':
+					case 'mask':
+					case 'maskContentUnits':
+					case 'maskUnits':
+					case 'mathematical':
+					case 'mode':
+					case 'numOctaves':
+					case 'offset':
+					case 'opacity':
+					case 'operator':
+					case 'order':
+					case 'orient':
+					case 'orientation':
+					case 'origin':
+					case 'overflow':
+					case 'overlinePosition':
+					case 'overlineThickness':
+					case 'paintOrder':
+					case 'panose1':
+					case 'pathLength':
+					case 'patternContentUnits':
+					case 'patternTransform':
+					case 'patternUnits':
+					case 'pointerEvents':
+					case 'points':
+					case 'pointsAtX':
+					case 'pointsAtY':
+					case 'pointsAtZ':
+					case 'preserveAlpha':
+					case 'preserveAspectRatio':
+					case 'primitiveUnits':
+					case 'r':
+					case 'radius':
+					case 'refX':
+					case 'refY':
+					case 'renderingIntent':
+					case 'repeatCount':
+					case 'repeatDur':
+					case 'requiredExtensions':
+					case 'requiredFeatures':
+					case 'restart':
+					case 'result':
+					case 'rotate':
+					case 'rx':
+					case 'ry':
+					case 'scale':
+					case 'seed':
+					case 'shapeRendering':
+					case 'slope':
+					case 'spacing':
+					case 'specularConstant':
+					case 'specularExponent':
+					case 'speed':
+					case 'spreadMethod':
+					case 'startOffset':
+					case 'stdDeviation':
+					case 'stemh':
+					case 'stemv':
+					case 'stitchTiles':
+					case 'stopColor':
+					case 'stopOpacity':
+					case 'strikethroughPosition':
+					case 'strikethroughThickness':
+					case 'string':
+					case 'stroke':
+					case 'strokeDasharray':
+					case 'strokeDashoffset':
+					case 'strokeLinecap':
+					case 'strokeLinejoin':
+					case 'strokeMiterlimit':
+					case 'strokeOpacity':
+					case 'strokeWidth':
+					case 'surfaceScale':
+					case 'systemLanguage':
+					case 'tableValues':
+					case 'targetX':
+					case 'targetY':
+					case 'textAnchor':
+					case 'textDecoration':
+					case 'textLength':
+					case 'textRendering':
+					case 'to':
+					case 'transform':
+					case 'u1':
+					case 'u2':
+					case 'underlinePosition':
+					case 'underlineThickness':
+					case 'unicode':
+					case 'unicodeBidi':
+					case 'unicodeRange':
+					case 'unitsPerEm':
+					case 'vAlphabetic':
+					case 'values':
+					case 'vectorEffect':
+					case 'version':
+					case 'vertAdvY':
+					case 'vertOriginX':
+					case 'vertOriginY':
+					case 'vHanging':
+					case 'vIdeographic':
+					case 'viewBox':
+					case 'viewTarget':
+					case 'visibility':
+					case 'vMathematical':
+					case 'widths':
+					case 'wordSpacing':
+					case 'writingMode':
+					case 'x':
+					case 'x1':
+					case 'x2':
+					case 'xChannelSelector':
+					case 'xHeight':
+					case 'xlinkActuate':
+					case 'xlinkArcrole':
+					case 'xlinkHref':
+					case 'xlinkRole':
+					case 'xlinkShow':
+					case 'xlinkTitle':
+					case 'xlinkType':
+					case 'xmlBase':
+					case 'xmlLang':
+					case 'xmlns':
+					case 'xmlnsXlink':
+					case 'xmlSpace':
+					case 'y':
+					case 'y1':
+					case 'y2':
+					case 'yChannelSelector':
+					case 'z':
+					case 'zoomAndPan':
+
+					// attributes html/react
+					case '':
+					case 'accept':
+					case 'accept-charset':
+					case 'acceptCharset':
+					case 'acceptcharset':
+					case 'accessKey':
+					case 'accesskey':
+					case 'action':
+					case 'align':
+					case 'allow':
+					case 'allowFullScreen':
+					case 'allowfullscreen':
+					case 'alt':
+					case 'async':
+					case 'autocapitalize':
+					case 'autoComplete':
+					case 'autocomplete':
 					case 'autoFocus':
+					case 'autofocus':
+					case 'autoPlay':
+					case 'autoplay':
+					case 'background':
+					case 'bgcolor':
+					case 'border':
+					case 'buffered':
+					case 'capture':
+					case 'cellPadding':
+					case 'cellpadding':
+					case 'cellSpacing':
+					case 'cellspacing':
+					case 'challenge':
+					case 'charSet':
+					case 'charset':
+					case 'cite':
+					case 'class':
+					case 'classID':
+					case 'classid':
+					case 'classname':
+					case 'code':
+					case 'codebase':
+					case 'color':
+					case 'cols':
+					case 'colSpan':
+					case 'colspan':
+					case 'content':
+					case 'contentEditable':
+					case 'contenteditable':
+					case 'contextMenu':
+					case 'contextmenu':
+					case 'controls':
+					case 'controlsList':
+					case 'controlslist':
+					case 'coords':
+					case 'crossOrigin':
+					case 'crossorigin':
+					case 'csp':
+					case 'data':
+					case 'dateTime':
+					case 'datetime':
+					case 'decoding':
+					case 'default':
+					case 'defer':
+					case 'dir':
+					case 'dirname':
+					case 'disabled':
+					case 'download':
+					case 'draggable':
+					case 'dropzone':
+					case 'encType':
+					case 'enctype':
+					case 'enterkeyhint':
+					case 'for':
+					case 'form':
+					case 'formAction':
+					case 'formaction':
+					case 'formEncType':
+					case 'formenctype':
+					case 'formMethod':
+					case 'formmethod':
+					case 'formNoValidate':
+					case 'formnovalidate':
+					case 'formTarget':
+					case 'formtarget':
+					case 'frameBorder':
+					case 'frameborder':
+					case 'headers':
+					case 'height':
+					case 'hidden':
+					case 'high':
+					case 'href':
+					case 'hrefLang':
+					case 'hreflang':
+					case 'htmlfor':
+					case 'http-equiv':
+					case 'httpEquiv':
+					case 'httpequiv':
+					case 'icon':
+					case 'id':
+					case 'importance':
+					case 'inputMode':
+					case 'inputmode':
+					case 'integrity':
+					case 'intrinsicsize':
+					case 'is':
+					case 'ismap':
+					case 'itemprop':
+					case 'keyParams':
+					case 'keyparams':
+					case 'keyType':
+					case 'keytype':
+					case 'kind':
+					case 'label':
+					case 'lang':
+					case 'language':
+					case 'list':
+					case 'loading':
+					case 'loop':
+					case 'low':
+					case 'manifest':
+					case 'marginHeight':
+					case 'marginheight':
+					case 'marginWidth':
+					case 'marginwidth':
+					case 'max':
+					case 'maxLength':
+					case 'maxlength':
+					case 'media':
+					case 'mediaGroup':
+					case 'mediagroup':
+					case 'method':
+					case 'min':
+					case 'minLength':
+					case 'minlength':
+					case 'multiple':
+					case 'muted':
+					case 'name':
+					case 'nonce':
+					case 'noValidate':
+					case 'novalidate':
+					case 'open':
+					case 'optimum':
+					case 'pattern':
+					case 'ping':
+					case 'placeholder':
+					case 'poster':
+					case 'preload':
+					case 'profile':
+					case 'radioGroup':
+					case 'radiogroup':
+					case 'readOnly':
+					case 'readonly':
+					case 'referrerpolicy':
+					case 'rel':
+					case 'required':
+					case 'reversed':
+					case 'role':
+					case 'rows':
+					case 'rowSpan':
+					case 'rowspan':
+					case 'sandbox':
+					case 'scope':
+					case 'scoped':
+					case 'scrolling':
+					case 'seamless':
+					case 'shape':
+					case 'size':
+					case 'sizes':
+					case 'slot':
+					case 'span':
+					case 'spellCheck':
+					case 'spellcheck':
+					case 'src':
+					case 'srcDoc':
+					case 'srcdoc':
+					case 'srcLang':
+					case 'srclang':
+					case 'srcSet':
+					case 'srcset':
+					case 'start':
+					case 'step':
+					case 'summary':
+					case 'tabIndex':
+					case 'tabindex':
+					case 'target':
+					case 'title':
+					case 'translate':
+					case 'type':
+					case 'useMap':
+					case 'usemap':
+					case 'width':
+					case 'wmode':
+					case 'wrap':
 						break
 					default:
 						if (id.indexOf('data-') == -1 && this.warned[id] === undefined) {
@@ -980,7 +1408,7 @@ Style.prototype.props = function(_props, classNames) {
 	).trim()
 
 	if (this.debug) {
-		if (props.className != '' && _props.novalidate === undefined) {
+		if (props.className != '' && _props['no-validate'] === undefined) {
 			this.validate_clases(props.className)
 		}
 	}
@@ -1033,6 +1461,7 @@ Style.prototype.process_styles = function(_categories, _styles) {
 			continue
 		} else {
 			found = false
+			// bug
 			if (header.indexOf(':after') === -1 && header.indexOf(':before') === -1) {
 				for (id in categories) {
 					category = categories[id]
@@ -1251,12 +1680,12 @@ Style.prototype.index_attributes = function() {
 				values.classNames += this.classNames(attribute_value, 2) + ' '
 			}.bind(this),
 		],
-		css_parent: [
+		'css-parent': [
 			function(attribute_value, _props, values) {
 				this.append_to_parent(attribute_value)
 			}.bind(this),
 		],
-		novalidate: [function() {}],
+		'no-validate': [function() {}],
 	}
 
 	for (var id in this.css_property) {

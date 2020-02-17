@@ -152,12 +152,12 @@ The element is `<Box></Box>`, and you can just add attributes to it without any 
 
 Sets the direction of the children.
 
-| attribute | description                        |
-| --------- | ---------------------------------- |
-| `row`     | children will display as a row     |
-| `col`     | children will display as a column  |
-| `wrap`    | wraps the children as in flex-wrap |
-| `nowrap`  | disables wrapping as in flex-wrap  |
+| attribute       | description                        |
+| --------------- | ---------------------------------- |
+| `row`           | children will display as a row     |
+| `col`, `column` | children will display as a column  |
+| `wrap`          | wraps the children as in flex-wrap |
+| `no-wrap`       | disables wrapping as in flex-wrap  |
 
 ### Size
 
@@ -211,22 +211,23 @@ This is the alignment of the children, NOT the alignment of the content of these
 
 Useful text stuff.
 
-| attribute      | description                             |
-| -------------- | --------------------------------------- |
-| `align`        | text-align could be left, center, right |
-| `bold`         | bold font                               |
-| `capitalize`   | capitalize                              |
-| `font-size`    | font size                               |
-| `no-bold`      | no bold font                            |
-| `no-underline` | do not underline                        |
-| `small`        | font size small                         |
-| `text-crop`    | crops the text                          |
-| `text-nowrap`  | nowrap the text if it overflows         |
-| `text-shadow`  | text-shadow                             |
-| `text-wrap`    | wrap the text if it overflows           |
-| `text`         | sets line-height:1.4;                   |
-| `underline`    | underline                               |
-| `uppercase`    | uppercase                               |
+| attribute                | description                             |
+| ------------------------ | --------------------------------------- |
+| `text-align`             | text-align could be left, center, right |
+| `text-bold`              | bold font                               |
+| `text-capitalize`        | capitalize                              |
+| `text-color`             | color css property                      |
+| `text-size`, `font-size` | font size                               |
+| `text-regular`           | no bold font                            |
+| `text-no-underline`      | do not underline                        |
+| `text-small`             | font size small                         |
+| `text-crop`              | crops the text                          |
+| `text-no-wrap`           | nowrap the text if it overflows         |
+| `text-shadow`            | text-shadow                             |
+| `text-wrap`              | wrap the text if it overflows           |
+| `text-multiline`         | sets line-height:1.4;                   |
+| `text-underline`         | underline                               |
+| `text-uppercase`         | uppercase                               |
 
 #### Bugs
 
@@ -244,11 +245,18 @@ Useful text stuff.
 
 ### Cursor
 
-| attribute   | description            |
-| ----------- | ---------------------- |
-| `hand`      | cursor pointer         |
-| `ignore`    | ignore events          |
-| `no-select` | prevent text selection |
+| attribute       | description    |
+| --------------- | -------------- |
+| `cursor-hand`   | cursor pointer |
+| `cursor-ignore` | ignore events  |
+
+### Selection
+
+| attribute              | description                |
+| ---------------------- | -------------------------- |
+| `selection-none`       | prevent text selection     |
+| `selection-color`      | selection text color       |
+| `selection-background` | selection background color |
 
 ### Padding / Margin / Border
 
@@ -275,7 +283,7 @@ Useful text stuff.
 
 Attributes to add custom CSS/classNames. Priority, the ones on top overwrite the ones on bottom:
 
-1. `css_parent` overwrites:
+1. `css-parent` overwrites:
 2. `define_attribute_high_priority` functions, overwrites:
 3. `<Box style={{background:'red';}}/>` overwrites:
 4. `<Box css="background:red;"/>` overwrites:
@@ -290,11 +298,11 @@ Please Note: if you set an attribute as `!important` same order will apply but `
 | `style`      | React standard object for styles. Please note these get added as classes, not as a style attribute. |
 | `className`  | React standard string with classNames                                                               |
 | `css`        | string with regular css properties                                                                  |
-| `css_parent` | string with regular css properties, to be applied to the parent. This is :parent selector           |
+| `css-parent` | string with regular css properties, to be applied to the parent. This is :parent selector           |
 
 #### Bugs
 
-- `css_parent` wasnt tested
+- `css-parent` wasnt tested
 
 ### breakpoints
 
@@ -337,17 +345,17 @@ const Button = css(`
 | attribute      | description                                                                     |
 | -------------- | ------------------------------------------------------------------------------- |
 | `absolute`     | position absolute                                                               |
+| `relative`     | position relative                                                               |
 | `background`   | background css property                                                         |
 | `block`        | display block                                                                   |
-| `color`        | color css property                                                              |
+| `inline-block` | display inline-block                                                            |
+| `inline-flex`  | display inline-flex                                                             |
+| `inline`       | display inline                                                                  |
 | `collapse`     | sets the visibility to collapsed                                                |
 | `fixed`        | position fixed top 0 left 0                                                     |
 | `full`         | full width and height with overflow hidden                                      |
-| `inline-block` | display inline-block                                                            |
-| `inline`       | display inline                                                                  |
 | `layer`        | forces the browser to create a layer using `transform:translateZ(0);`           |
 | `overflow`     | overflow hidden                                                                 |
-| `relative`     | position relative                                                               |
 | `drop-shadow`  | sets the filter to drop-shadow and expects a value with unit, drop-shadow='4px' |
 | `z`            | z-index                                                                         |
 
@@ -397,7 +405,7 @@ const Button = css(
 
 ### Globals
 
-Including this creates four globals:
+Including this creates three globals:
 
 - `Style` the class itself.
 - `Box` the component `Box`
@@ -441,7 +449,7 @@ style={{color:'blue'}}></Box>
 These attributes cannot have a class.
 
 ```html
-<Box css_parent="class{background:red;}"></Box>
+<Box css-parent="class{background:red;}"></Box>
 ```
 
 ### Valid use cases for `css` component factory
@@ -589,6 +597,8 @@ It has defined a function to validate complete classes attached to an element to
 
 - Maybe enforce style coupling: if an animation with transform is used, then will-change: transform; should be there
 - Maybe change pixels to em on the fly
+- \*-waterfall (should apply the same style too all immediate children)
+- \*-waterfall-deep (should apply the same style too all children)
 
 ## Authors
 
