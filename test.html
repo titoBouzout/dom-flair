@@ -4,7 +4,7 @@
 	<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 	<script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-	<script crossorigin src="https://cdn.jsdelivr.net/gh/titoBouzout/crippling-sorrow-styling/style.js"></script>
+	<script crossorigin="anonymous" src="style.js"></script>
 	<style type="text/css">
 		html,
 		body,
@@ -26,34 +26,6 @@
 </head>
 <body>
 	<div id="root"></div>
-	<script type="text/jsx"> function Component(){
-				return (
-					<Box grow>
-						<Box col grow max-width="210px" horizontal>
-							left sidebar
-						</Box>
-						<Box col grow>
-							<Box row width="100%" right>
-								toolbar
-							</Box>
-							<Box row grow center>
-								content
-							</Box>
-							<Box row width="100%" left>
-								footer
-							</Box>
-						</Box>
-						<Box col grow max-width="210px" vertical>
-							right sidebar
-						</Box>
-					</Box>
-				)
-			}
-
-			ReactDOM.render(
-				React.createElement(Component),
-				document.querySelector('#root')
-			)
-		</script>
+	<script type="text/jsx" src="test.js"></script>
 </body>
 </html>

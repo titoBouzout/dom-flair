@@ -20,5 +20,8 @@
 	"bugs": {
 		"url": "https://github.com/titoBouzout/crippling-sorrow-styling/issues"
 	},
-	"homepage": "https://github.com/titoBouzout/crippling-sorrow-styling#readme"
+	"homepage": "https://github.com/titoBouzout/crippling-sorrow-styling#readme",
+	"dependencies": {
+		"express": "^4.17.1"
+	}
 }

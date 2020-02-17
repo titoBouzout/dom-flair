@@ -400,7 +400,6 @@ const Button = css(
 Including this creates four globals:
 
 - `Style` the class itself.
-- `style` the class instance.
 - `Box` the component `Box`
 - `css` a component factory
 
@@ -497,39 +496,39 @@ const Button = css(
 
 #### Static argument
 
-We add a new static attribute named fancy_margin
+We add a new static attribute named fancy-margin
 
 ```javascript
-style.define_attribute('fancy_margin', 'margin:0 auto;')
+style.define_attribute('fancy-margin', 'margin:0 auto;')
 
-// You now can use as <Box fancy_margin></Box>
+// You now can use as <Box fancy-margin></Box>
 ```
 
 Sometimes the attributes you add get overwritten by something else. In that case you can assign to the attributes a higher priority by defining these as high priority instead.
 
 ```javascript
-style.define_attribute_high_priority('fancy_margin', 'margin:0 auto;')
+style.define_attribute_high_priority('fancy-margin', 'margin:0 auto;')
 
-// You now can use as <Box fancy_margin></Box>
+// You now can use as <Box fancy-margin></Box>
 ```
 
 #### Dynamic argument
 
-Lets say we add a new dynamic attribute named random_margin. This is a function that gets called, it should return a string with css properties, NOT classes.
+Lets say we add a new dynamic attribute named random-margin. This is a function that gets called, it should return a string with css properties, NOT classes.
 
 ```javascript
-style.define_dynamic_attribute('random_margin', function(value, props) {
+style.define_dynamic_attribute('random-margin', function(value, props) {
 	return 'margin:' + ((Math.random() * 10) | 0) + 'px;padding:5px;'
 })
 
-// You then can use as <Box random_margin></Box>
+// You then can use as <Box random-margin></Box>
 ```
 
 The arguments:
 
 ##### `value`
 
-Is the value of the attribute. If you do `<Box random_margin="false"></Box>` Then the value will be "false"
+Is the value of the attribute. If you do `<Box random-margin="false"></Box>` Then the value will be "false"
 
 ##### `props`
 
@@ -543,7 +542,7 @@ You can also define a high priority dynamic attribute.
 
 ```javascript
 // defining a dynamic attribute with high priority
-style.define_dynamic_attribute_high_priority('random_margin', function(value, props) {
+style.define_dynamic_attribute_high_priority('random-margin', function(value, props) {
 	// we avoid adding a random margin to something that already has a margin defined
 	if (props.margin) return ''
 	// yeah!
@@ -594,4 +593,4 @@ It has defined a function to validate complete classes attached to an element to
 ## Authors
 
 - Tito Bouzout https://github.com/titoBouzout
-- Kilo https://github.com/kspade
+- Kilo https://github.com/boredofnames

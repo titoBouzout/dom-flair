@@ -1,5 +1,3 @@
-
-
 function Style() {
 	// bind
 
@@ -77,15 +75,19 @@ function Style() {
 		this.css_property_value[id] = this.css_property_value[id].replace(/;\s*$/, '')
 	}
 
-
- 	this.Box =    React.memo(
-	function(React, style, props) {
-		return React.createElement(props.element || style.element, style.props(props))
-	}.bind(null, React, this)
-)
+	if (!React.memo) {
+		React.memo = function(a) {
+			return a
+		}
+	}
+	this.Box = React.memo(
+		function(React, style, props) {
+			return React.createElement(props.element || style.element, style.props(props))
+		}.bind(null, React, this),
+	)
 }
 
-Style.prototype.debug = false
+Style.prototype.debug = location.href.indexOf('localhost') != -1
 
 Style.prototype.element = 'div'
 
@@ -217,6 +219,7 @@ Style.prototype.css_property = {
 	block: 'display:block;',
 	inline: 'display:inline;',
 	'inline-block': 'display:inline-block;',
+	'inline-flex': 'display:inline-flex;',
 
 	relative: 'position:relative;',
 	absolute: 'position:absolute;',
@@ -234,7 +237,7 @@ Style.prototype.css_property = {
 
 	overflow: 'overflow:hidden;',
 	layer: 'transform:translateZ(0);',
-	'collapse': 'visibility:collapse;',
+	collapse: 'visibility:collapse;',
 
 	// CURSOR
 
@@ -448,6 +451,52 @@ Style.prototype.css_property_fn_high_priority = {
 			`
 		}
 	},
+	'horizontal-waterfall': function(value, props) {
+		if (props.col) {
+			return `
+				class, class > * {
+					display:flex;
+					align-content: center;
+					align-items: center;
+					// align-content: safe center;
+					// align-items: safe center;
+				}
+			`
+		} else {
+			return `
+				class, class > * {
+					display:flex;
+					justify-content: center;
+					justify-items: center;
+					// justify-content: safe center;
+					// justify-items: safe center;
+				}
+			`
+		}
+	},
+	'horizontal-waterfall-deep': function(value, props) {
+		if (props.col) {
+			return `
+				class, class * {
+					display:flex;
+					align-content: center;
+					align-items: center;
+					// align-content: safe center;
+					// align-items: safe center;
+				}
+			`
+		} else {
+			return `
+				class, class * {
+					display:flex;
+					justify-content: center;
+					justify-items: center;
+					// justify-content: safe center;
+					// justify-items: safe center;
+				}
+			`
+		}
+	},
 	vertical: function(value, props) {
 		if (props.col) {
 			return `
@@ -463,6 +512,52 @@ Style.prototype.css_property_fn_high_priority = {
 				// align-content: safe center;
 				// align-items: safe center;
 			`
+		}
+	},
+	'vertical-waterfall': function(value, props) {
+		if (props.col) {
+			return `
+				class, class > * {
+					display:flex;
+					justify-content: center;
+					justify-items: center;
+					// justify-content: safe center;
+					// justify-items: safe center;
+				}
+			`
+		} else {
+			return `
+				class, class > * {
+					display:flex;
+					align-content: center;
+					align-items: center;
+					// align-content: safe center;
+					// align-items: safe center;
+				}
+			`
+		}
+	},
+	'vertical-waterfall-deep': function(value, props) {
+		if (props.col) {
+			return `
+				class, class * {
+					display:flex;
+					justify-content: center;
+					justify-items: center;
+					// justify-content: safe center;
+					// justify-items: safe center;
+				}
+			`
+		} else {
+			return `
+				class, class * {
+					display:flex;
+					align-content: center;
+					align-items: center;
+					// align-content: safe center;
+					// align-items: safe center;
+				}
+ 			`
 		}
 	},
 	center: function(value, props) {
@@ -793,6 +888,7 @@ Style.prototype.props = function(_props, classNames) {
 					? _props[id]
 					: this.serialize(_props[id])
 			}
+		} else if (id == 'element') {
 		} else if (id == 'reference') {
 			props['ref'] = _props[id]
 		} else {
@@ -852,6 +948,8 @@ Style.prototype.props = function(_props, classNames) {
 					case 'txt':
 					case 'default':
 					case 'r':
+					case 'onKeyDown':
+					case 'autoFocus':
 						break
 					default:
 						if (id.indexOf('data-') == -1 && this.warned[id] === undefined) {
@@ -1073,10 +1171,7 @@ Style.prototype.sheet_process = function() {
 					element.parentNode.classList.add(parent.className)
 					parent_new.push(parent)
 				} else {
-					console.error(
-						'Style: looking for parent, the element does not exists.',
-						element,
-					)
+					console.error('Style: looking for parent, the element does not exists.', element)
 				}
 			}
 		}
@@ -1251,9 +1346,6 @@ Style.prototype.is_primitive = function(o) {
 	}
 }
 Style.prototype.memo = function(fn) {
-	if (!fn) {
-		console.error('function to memoize is undefined')
-	}
 	return function(fn, cache, serialize, is_primitive, ...args) {
 		const k = args.length == 1 && is_primitive(args[0]) ? args[0] : serialize(args)
 
@@ -1261,10 +1353,6 @@ Style.prototype.memo = function(fn) {
 	}.bind(null, fn, {}, this.serialize, this.is_primitive)
 }
 
-Style = new Style
+Style = new Style()
 const css = Style.css
 const Box = Style.Box
-
-
-
-
