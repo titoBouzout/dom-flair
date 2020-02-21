@@ -58,7 +58,7 @@ function _generate_code_for_item(item, depth) {
 	}
 	code += '>'
 	if (item.content) {
-		code += ' ' + item.content
+		code += item.content
 	}
 	return code
 }
