@@ -871,7 +871,7 @@ class Sidebar extends Component {
 							</OptionValue>
 						</Option>
 					</OptionGroup>
-					<OptionGroup title="padding/margin/border" closed>
+					<OptionGroup title="Padding Margin Border" closed>
 						<Option>
 							<OptionTitle>padding</OptionTitle>
 							<OptionValue>

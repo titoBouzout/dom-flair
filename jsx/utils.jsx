@@ -45,7 +45,9 @@ class OptionGroup extends Component {
 			<React.Fragment>
 				<hr />
 				<Box element="details" width open={!this.props.closed}>
-					<summary>{this.props.title}</summary>
+					<Box element="summary" text-capitalize>
+						{this.props.title}
+					</Box>
 					{this.props.children}
 				</Box>
 			</React.Fragment>
