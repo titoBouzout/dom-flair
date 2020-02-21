@@ -31,6 +31,7 @@ function reloadTree() {
 var generate_code = action(function generate_code() {
 	g.content = ''
 	_generate_code(g.Tree, -1)
+	g.content = g.content.replace(/>([^<]+)\n\s+<\/Box>/g, '>$1</Box>')
 })
 
 function _generate_code(item, depth) {
