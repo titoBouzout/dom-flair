@@ -39,19 +39,19 @@ function _generate_code(item, depth) {
 	for (var id in item.c) {
 		_generate_code(item.c[id], depth)
 	}
-	g.content += '</Box>'
+	g.content += '\n\t\t'.repeat(depth) + '</Box>'
 	depth--
 }
 function _generate_code_for_item(item, depth) {
 	var indent = '\t'.repeat(depth)
 	var code = '\n' + indent + '<Box'
 	if (item.class) {
-		code += '\n' + indent + '\tclassName="' + item.class + '"'
+		code += ' className="' + item.class + '"'
 	}
 	if (item.style) {
 		for (var id in item.style) {
 			if (item.style[id] != null) {
-				code += '\n' + indent + '\t' + id + '="' + item.style[id] + '"'
+				code += ' ' + id + '="' + item.style[id] + '"'
 			}
 		}
 	}
