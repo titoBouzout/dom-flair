@@ -79,7 +79,7 @@ body,
 .el-tool-copy-left,
 .el-tool-copy-right {
 	position: absolute;
-	background: red;
+	background: blue;
 	padding: 2px;
 	box-sizing: border-box;
 	display: none;
