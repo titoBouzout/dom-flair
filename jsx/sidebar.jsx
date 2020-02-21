@@ -136,7 +136,7 @@ class Sidebar extends Component {
 						<Option>
 							<OptionTitle>background</OptionTitle>
 							<OptionValue>
-								<OptionInputSmall
+								<OptionInput
 									title="background"
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
@@ -816,7 +816,7 @@ class Sidebar extends Component {
 						<Option>
 							<OptionTitle>width</OptionTitle>
 							<OptionValue>
-								<OptionInputSmall
+								<OptionInput
 									title="width"
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
@@ -830,7 +830,7 @@ class Sidebar extends Component {
 						<Option>
 							<OptionTitle>min-width</OptionTitle>
 							<OptionValue>
-								<OptionInputSmall
+								<OptionInput
 									title="min-width"
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
@@ -844,7 +844,7 @@ class Sidebar extends Component {
 						<Option>
 							<OptionTitle>max-width</OptionTitle>
 							<OptionValue>
-								<OptionInputSmall
+								<OptionInput
 									title="max-width"
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
@@ -858,7 +858,7 @@ class Sidebar extends Component {
 						<Option>
 							<OptionTitle>height</OptionTitle>
 							<OptionValue>
-								<OptionInputSmall
+								<OptionInput
 									title="height"
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
@@ -872,7 +872,7 @@ class Sidebar extends Component {
 						<Option>
 							<OptionTitle>min-height</OptionTitle>
 							<OptionValue>
-								<OptionInputSmall
+								<OptionInput
 									title="min-height"
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
@@ -886,7 +886,7 @@ class Sidebar extends Component {
 						<Option>
 							<OptionTitle>max-height</OptionTitle>
 							<OptionValue>
-								<OptionInputSmall
+								<OptionInput
 									title="max-height"
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
