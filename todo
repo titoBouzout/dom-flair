@@ -3,3 +3,4 @@
 - maybe try to set some defaults
 - make all the elements without childs content editable
 - the input boxes suck(cannot update in real time)
+- for some reason the main content does not want to scroll
