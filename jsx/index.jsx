@@ -30,7 +30,7 @@ function reloadTree() {
 
 var generate_code = action(function generate_code() {
 	g.content = ''
-	_generate_code(g.Tree, 0)
+	_generate_code(g.Tree, -1)
 })
 
 function _generate_code(item, depth) {
@@ -39,7 +39,7 @@ function _generate_code(item, depth) {
 	for (var id in item.c) {
 		_generate_code(item.c[id], depth)
 	}
-	g.content += '\n\t\t'.repeat(depth) + '</Box>'
+	g.content += '\n' + '\t'.repeat(depth) + '</Box>'
 	depth--
 }
 function _generate_code_for_item(item, depth) {
