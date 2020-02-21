@@ -120,6 +120,33 @@ class Sidebar extends Component {
 								</OptionValue>
 							</Option>
 						)}
+						<Option>
+							<OptionTitle>background color</OptionTitle>
+							<OptionValue>
+								<ColorPicker
+									onChange={e => {
+										update_tree(item.id, function(item, style, parent) {
+											style['background-color'] = e || null
+										})
+									}}
+									value={style['background-color']}
+								/>
+							</OptionValue>
+						</Option>
+						<Option>
+							<OptionTitle>background</OptionTitle>
+							<OptionValue>
+								<OptionInputSmall
+									title="background"
+									onChange={e => {
+										update_tree(item.id, function(item, style, parent) {
+											style['background'] = e || null
+										})
+									}}
+									value={style['background']}
+								/>
+							</OptionValue>
+						</Option>
 					</OptionGroup>
 					<OptionGroup title="Layout">
 						<Option>
@@ -1122,6 +1149,19 @@ class Sidebar extends Component {
 							</OptionValue>
 						</Option>
 						<Option>
+							<OptionTitle>color</OptionTitle>
+							<OptionValue>
+								<ColorPicker
+									onChange={e => {
+										update_tree(item.id, function(item, style, parent) {
+											style['text-color'] = e || null
+										})
+									}}
+									value={style['text-color']}
+								/>
+							</OptionValue>
+						</Option>
+						<Option>
 							<OptionTitle>align</OptionTitle>
 							<OptionValue>
 								<OptionIcon
@@ -1242,46 +1282,6 @@ class Sidebar extends Component {
 							</OptionValue>
 						</Option>
 
-						<Option>
-							<OptionTitle>font color</OptionTitle>
-							<OptionValue>
-								<ColorPicker
-									onChange={e => {
-										update_tree(item.id, function(item, style, parent) {
-											style['text-color'] = e || null
-										})
-									}}
-									value={style['text-color']}
-								/>
-							</OptionValue>
-						</Option>
-						<Option>
-							<OptionTitle>background color</OptionTitle>
-							<OptionValue>
-								<ColorPicker
-									onChange={e => {
-										update_tree(item.id, function(item, style, parent) {
-											style['background-color'] = e || null
-										})
-									}}
-									value={style['background-color']}
-								/>
-							</OptionValue>
-						</Option>
-						<Option>
-							<OptionTitle>background</OptionTitle>
-							<OptionValue>
-								<OptionInputSmall
-									title="background"
-									onChange={e => {
-										update_tree(item.id, function(item, style, parent) {
-											style['background'] = e || null
-										})
-									}}
-									value={style['background']}
-								/>
-							</OptionValue>
-						</Option>
 						<Option>
 							<OptionTitle>weight</OptionTitle>
 							<OptionValue>
