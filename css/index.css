@@ -1,0 +1,173 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: arial;
+	line-height: 1;
+}
+
+html,
+body,
+#root {
+	flex: 1;
+	display: flex;
+	min-height: 100%;
+	min-width: 100%;
+}
+* {
+	box-sizing: border-box;
+	outline: none;
+}
+
+.sidebar {
+	background: #333;
+	color: #a0a098;
+	padding: 10px;
+	box-sizing: border-box;
+
+	max-width: 15%;
+	min-width: 200px;
+	max-height: 100%;
+	height: 100%;
+	max-height: -webkit-fill-available;
+}
+
+.content {
+	background: #111;
+	color: white;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.content div {
+	border: 2px solid #36cc05;
+	position: relative;
+	user-select: none;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.content div:before {
+	content: attr(name);
+	position: absolute;
+	bottom: 3px;
+	left: 5px;
+	opacity: 0.1;
+	pointer-events: none;
+	color: orange;
+	z-index: 2;
+	text-transform: none;
+	font-size: 0.9rem;
+}
+
+.content div:hover:before {
+	opacity: 1;
+}
+
+.content div[data-selected='true'] {
+	border-color: blue !important;
+}
+
+.content div:hover {
+	border-color: red;
+}
+
+.content div[data-selected='true'] > .el-tool-copy-left,
+.content div[data-selected='true'] > .el-tool-copy-right {
+	display: block;
+}
+
+.el-tool-copy-left,
+.el-tool-copy-right {
+	position: absolute;
+	background: red;
+	padding: 2px;
+	box-sizing: border-box;
+	display: none;
+	cursor: pointer;
+}
+
+.el-tool-copy-left {
+	top: 0px;
+	left: 0px;
+	width: 6px;
+	height: 100%;
+}
+
+.el-tool-copy-right {
+	top: 0px;
+	right: 0px;
+	width: 6px;
+	height: 100%;
+}
+
+.sidebar-input {
+	background: white;
+	color: black;
+	padding: 3px;
+	padding-left: 3px;
+	padding-right: 3px;
+
+	font-size: 0.8rem;
+	margin-top: 1px;
+	border-radius: 2px;
+}
+.sidebar-icon i.fa-check {
+	visibility: collapse;
+}
+
+.sidebar-icon[data-selected='true'] {
+	color: #36cc05 !important;
+	border: 1px solid #908383;
+}
+.sidebar-icon[data-selected='true'] i.fa-check {
+	visibility: initial;
+}
+
+.sidebar-icon:hover {
+	color: #36cc05b3 !important;
+}
+.sidebar-icon:hover i.fa-check {
+	visibility: initial;
+}
+
+.sidebar-icon {
+	background: #525252;
+	border-radius: 5px;
+	text-align: center;
+	margin-left: 5px;
+	user-select: none;
+	cursor: pointer;
+	padding: 3px;
+	box-sizing: content-box;
+	border: 1px solid #656565;
+	font-size: 0.9em;
+}
+
+.sidebar-icon > i {
+	height: 1em;
+	width: 1em;
+	line-height: 1.1;
+}
+.sidebar-color-picker {
+	min-height: 1em;
+	min-width: 1em;
+	border: 1px solid #908383;
+}
+
+hr {
+	height: 0px;
+	padding: 0px;
+	border: 0px;
+	border-bottom: 1px solid red;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	width: 100%;
+}
+
+summary {
+	cursor: pointer;
+}
+
+.layout-editor-ignore {
+	pointer-events: none;
+}
