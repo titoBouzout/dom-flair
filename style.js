@@ -30,7 +30,7 @@ function Style() {
 	this.normalize_properties = this.memo(this.normalize_properties)
 	this.validate_clases = this.memo(this.validate_clases)
 
-	// The following functions cannot be memoize
+	// The following functions cannot be memoize (later comment: I dont remember why xD)
 	// this.css = this.memo(this.css)
 	// this.factory = this.memo(this.factory)
 
@@ -113,7 +113,7 @@ Style.prototype.define_attribute = function(name, string) {
 	this.index_attributes()
 }
 Style.prototype.css_property = {
-	// LAYOUT
+	// Direction
 
 	row: `
 		display: flex;
@@ -148,6 +148,19 @@ Style.prototype.css_property = {
 		justify-items: flex-start;
 		align-items: flex-start;
 	`,
+	// box-sizing maybe messing with wrap
+	// min-height: auto !important;
+	wrap: `
+		display: flex;
+		flex-wrap: wrap;
+	`,
+	// here maybe we should add min-height: 0 !important;
+	'no-wrap': `
+		flex-wrap: nowrap;
+	`,
+
+	// SIZE
+
 	grow: `
 		display: flex;
 
@@ -164,16 +177,69 @@ Style.prototype.css_property = {
 		justify-items: flex-start;
 		align-items: flex-start;
 	`,
-	// box-sizing maybe messing with wrap
-	wrap: `
-		display: flex;
-		flex-wrap: wrap;
-		//min-height: auto !important;
+
+	// SCROLL
+
+	scroll: `
+		overflow: auto;
+		transform: translateZ(0);
+		will-change: scroll-position;
+		min-height: 0;
+		min-width: 0;
 	`,
-	// here maybe we should add min-height: 0 !important;
-	'no-wrap': `
-		flex-wrap: nowrap;
+	'scroll-x': `
+		overflow-x: auto;
+		overflow-y: hidden;
+		transform: translateZ(0);
+		will-change: scroll-position;
+		min-width: 0;
 	`,
+	'scroll-y': `
+		overflow-y: auto;
+		overflow-x: hidden;
+		transform: translateZ(0);
+		will-change: scroll-position;
+		min-height: 0;
+	`,
+
+	// DISPLAY
+
+	'border-box': 'box-sizing:border-box;',
+	'content-box': 'box-sizing:content-box;',
+
+	block: 'display:block;',
+	inline: 'display:inline;',
+	'inline-block': 'display:inline-block;',
+	'inline-flex': 'display:inline-flex;',
+	'flex': 'display:flex;',
+
+	relative: 'position:relative;',
+	absolute: 'position:absolute;',
+	fixed: 'position:fixed;top:0;left:0;',
+
+	full: `
+		width: 100%;
+		height: 100%;
+		max-width: 100%;
+		max-height: 100%;
+		overflow: hidden;
+	`,
+
+	// stretch: 'display:flex;',
+
+	overflow: 'overflow:hidden;',
+	layer: 'transform:translateZ(0);',
+	collapse: 'visibility:collapse;',
+
+	// CURSOR
+
+	'cursor-hand': 'cursor:pointer;',
+	'cursor-ignore': 'pointer-events:none;',
+	'cursor-no-ignore': 'pointer-events:initial;',
+
+	// SELECTION
+
+	'selection-none': '-moz-user-select: none;user-select:none;',
 
 	// TEXT
 
@@ -197,86 +263,27 @@ Style.prototype.css_property = {
 		min-height: 0;
 		min-width: 0;
 	`,
-
-	// SCROLL
-
-	scroll: `
-		overflow: auto;
-		transform: translateZ(0);
-		will-change: scroll-position;
-		min-height: 0;
-		min-width: 0;
-	`,
-	'scroll-y': `
-		overflow-y: auto;
-		overflow-x: hidden;
-		transform: translateZ(0);
-		will-change: scroll-position;
-		min-height: 0;
-	`,
-	'scroll-x': `
-		overflow-x: auto;
-		overflow-y: hidden;
-		transform: translateZ(0);
-		will-change: scroll-position;
-		min-width: 0;
-	`,
-
-	// DISPLAY
-
-	'border-box': 'box-sizing:border-box;',
-	'content-box': 'box-sizing:content-box;',
-
-	block: 'display:block;',
-	inline: 'display:inline;',
-	'inline-block': 'display:inline-block;',
-	'inline-flex': 'display:inline-flex;',
-
-	relative: 'position:relative;',
-	absolute: 'position:absolute;',
-	fixed: 'position:fixed;top:0;left:0;',
-
-	full: `
-		width: 100%;
-		height: 100%;
-		max-width: 100%;
-		max-height: 100%;
-		overflow: hidden;
-	`,
-
-	stretch: 'display:flex;',
-
-	overflow: 'overflow:hidden;',
-	layer: 'transform:translateZ(0);',
-	collapse: 'visibility:collapse;',
-
-	// CURSOR
-
-	'cursor-hand': 'cursor:pointer;',
-	'cursor-ignore': 'pointer-events:none;',
-
-	// SELECTION
-
-	'selection-none': '-moz-user-select: none;user-select:none;',
-
-	// FONT
-
 	'text-bold': 'font-weight:bold;',
-	'text-capitalize': 'text-transform:capitalize;',
-	'text-no-underline': 'text-decoration:none;',
 	'text-regular': 'font-weight:normal;',
-	'text-small': 'font-size:small;',
-	'text-underline': 'text-decoration:underline;',
+
+	'text-capitalize': 'text-transform:capitalize;',
 	'text-uppercase': 'text-transform:uppercase;',
+
+	'text-underline': 'text-decoration:underline;',
+	'text-no-underline': 'text-decoration:none;',
+
+	'text-small': 'font-size:small;',
 
 	// ALIGNMENT regular priority values
 
 	left: 'display:flex;',
 	right: 'display:flex;',
+	horizontal: 'display:flex;',
+
 	top: 'display:flex;',
 	bottom: 'display:flex;',
-	horizontal: 'display:flex;',
 	vertical: 'display:flex;',
+
 	center: 'display:flex;',
 
 	'space-around': 'display:flex;',
@@ -318,6 +325,7 @@ Style.prototype.css_property_value = {
 	// basis: 'flex-basis:',
 
 	background: 'background:',
+	'background-color': 'background-color:',
 	'text-color': 'color:',
 
 	'text-shadow': 'text-shadow:',
@@ -334,6 +342,9 @@ Style.prototype.define_dynamic_attribute = function(name, fn) {
 	this.css_property_fn[name] = fn
 	this.index_attributes()
 }
+
+// these have default values
+
 Style.prototype.css_property_fn = {
 	// width
 	width: function(value, props) {
@@ -391,13 +402,11 @@ Style.prototype.css_property_fn_high_priority = {
 
 	left: function(value, props) {
 		if (props.col || props.column) {
-			// the default not tested
 			return `
 				align-content: flex-start;
 				align-items: flex-start;
 			`
 		} else {
-			// the default not tested
 			return `
 				justify-content: flex-start;
 				justify-items: flex-start;
@@ -421,13 +430,11 @@ Style.prototype.css_property_fn_high_priority = {
 
 	top: function(value, props) {
 		if (props.col || props.column) {
-			// the default not tested
 			return `
 				justify-content: flex-start;
 				justify-items: flex-start;
 			`
 		} else {
-			// the default not tested
 			return `
 				align-content: flex-start;
 				align-items: flex-start;
@@ -511,6 +518,7 @@ Style.prototype.css_property_fn_high_priority = {
 	'space-around-horizontal': function(value, props) {
 		if (props.col || props.column) {
 			// TODO
+			console.warn('Styled: space-around-horizontal with columns not tested')
 			return `
 				justify-content: space-around;
 				align-content: space-around;
@@ -528,6 +536,7 @@ Style.prototype.css_property_fn_high_priority = {
 	'space-around-vertical': function(value, props) {
 		if (props.col || props.column) {
 			// TODO
+			console.warn('Styled: space-around-vertical with columns not tested')
 			return `
 				justify-content: space-around;
 				align-content: space-around;
@@ -555,6 +564,7 @@ Style.prototype.css_property_fn_high_priority = {
 	'space-between-horizontal': function(value, props) {
 		if (props.col || props.column) {
 			// TODO
+			console.warn('Styled: space-between-horizontal with columns not tested')
 			return `
 				justify-content: space-between;
 				align-content: space-between;
@@ -572,6 +582,7 @@ Style.prototype.css_property_fn_high_priority = {
 	'space-between-vertical': function(value, props) {
 		if (props.col || props.column) {
 			// TODO
+			console.warn('Styled: space-between-vertical with columns not tested')
 			return `
 				justify-content: space-between;
 				align-content: space-between;
@@ -599,6 +610,7 @@ Style.prototype.css_property_fn_high_priority = {
 	'space-evenly-horizontal': function(value, props) {
 		if (props.col || props.column) {
 			// TODO
+			console.warn('Styled: space-evenly-horizontal with columns not tested')
 			return `
 				justify-content: space-evenly;
 				align-content: space-evenly;
@@ -616,6 +628,7 @@ Style.prototype.css_property_fn_high_priority = {
 	'space-evenly-vertical': function(value, props) {
 		if (props.col || props.column) {
 			// TODO
+			console.warn('Styled: space-evenly-vertical with columns not tested')
 			return `
 				justify-content: space-evenly;
 				align-content: space-evenly;
@@ -630,16 +643,6 @@ Style.prototype.css_property_fn_high_priority = {
 			`
 		}
 	},
-	/*stretch: function(value, props) {
-		return `
-			justify-content: stretch;
-			align-content: stretch;
-			justify-items: center;
-			align-items: center;
-			// justify-items: safe center;
-			// align-items: safe center;
-		`
-	},*/
 
 	// scroll
 
@@ -715,7 +718,7 @@ Style.prototype.pre_style_categories = function() {
 	}
 }
 
-// creates the mobile styles from properties
+// creates the @queries styles from properties
 Style.prototype.post_style_categories = function() {
 	return {
 		unknown: { buffer: '' },
@@ -820,7 +823,6 @@ Style.prototype.className = function(_props, classNames) {
 	return this.props(_props, classNames).className
 }
 
-// from any react props (row col align etc) transforms that to classNames
 // return props without our attributes
 // returns same props if nothing been modified
 Style.prototype.props = function(_props, classNames) {
@@ -839,7 +841,7 @@ Style.prototype.props = function(_props, classNames) {
 			}
 
 			if (this.debug) {
-				props['data-styled-' + id] = this.is_primitive(_props[id])
+				props['data-' + id] = this.is_primitive(_props[id])
 					? _props[id]
 					: this.serialize(_props[id])
 			}
@@ -849,7 +851,6 @@ Style.prototype.props = function(_props, classNames) {
 		} else {
 			props[id] = _props[id]
 
-			// TODO!
 			if (this.debug) {
 				switch (id) {
 					// events
@@ -932,9 +933,10 @@ Style.prototype.props = function(_props, classNames) {
 					case 'onVolumeChange':
 					case 'onWaiting':
 					case 'onWheel':
-					// attributes react special
 
+					// attributes react special
 					case 'checked':
+					case 'children':
 					case 'className':
 					case 'dangerouslySetInnerHTML':
 					case 'htmlFor':
@@ -1186,7 +1188,6 @@ Style.prototype.props = function(_props, classNames) {
 					case 'zoomAndPan':
 
 					// attributes html/react
-					case '':
 					case 'accept':
 					case 'accept-charset':
 					case 'acceptCharset':

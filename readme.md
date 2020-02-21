@@ -217,17 +217,17 @@ Useful text stuff.
 | `text-bold`              | bold font                               |
 | `text-capitalize`        | capitalize                              |
 | `text-color`             | color css property                      |
-| `text-size`, `font-size` | font size                               |
-| `text-regular`           | no bold font                            |
-| `text-no-underline`      | do not underline                        |
-| `text-small`             | font size small                         |
 | `text-crop`              | crops the text                          |
-| `text-no-wrap`           | nowrap the text if it overflows         |
-| `text-shadow`            | text-shadow                             |
-| `text-wrap`              | wrap the text if it overflows           |
 | `text-multiline`         | sets line-height:1.4;                   |
+| `text-no-wrap`           | nowrap the text if it overflows         |
+| `text-regular`           | no bold font                            |
+| `text-shadow`            | text-shadow                             |
+| `text-size`, `font-size` | font size                               |
+| `text-small`             | font size small                         |
 | `text-underline`         | underline                               |
+| `text-no-underline`      | do not underline                        |
 | `text-uppercase`         | uppercase                               |
+| `text-wrap`              | wrap the text if it overflows           |
 
 #### Bugs
 
@@ -235,28 +235,26 @@ Useful text stuff.
 
 ### Scroll
 
-| attribute      | description                                                      |
-| -------------- | ---------------------------------------------------------------- |
-| `scroll`       | scrolls both vertically and horizontally when overflows          |
-| `scroll-x`     | scrolls horizontally when overflows                              |
-| `scroll-y`     | scrolls vertically when overflows                                |
-| `scroll-thin`  | to set the size of the scrollbar to thin                         |
-| `scroll-color` | an array [background, thumb], like scroll-color={['red', 'blue]} |
+| attribute           | description                                             |
+| ------------------- | ------------------------------------------------------- |
+| `scroll`            | scrolls both vertically and horizontally when overflows |
+| `scroll-x`          | scrolls horizontally when overflows                     |
+| `scroll-y`          | scrolls vertically when overflows                       |
+| `scroll-thin`       | to set the size of the scrollbar to thin                |
+| `scroll-color`      | sets the color for the bar                              |
+| `scroll-background` | sets the color for the background                       |
+
+#### Bugs
+
+- `scroll-color` and `scroll-background` must both be provided for this properties to work
 
 ### Cursor
 
-| attribute       | description    |
-| --------------- | -------------- |
-| `cursor-hand`   | cursor pointer |
-| `cursor-ignore` | ignore events  |
-
-### Selection
-
-| attribute              | description                |
-| ---------------------- | -------------------------- |
-| `selection-none`       | prevent text selection     |
-| `selection-color`      | selection text color       |
-| `selection-background` | selection background color |
+| attribute          | description        |
+| ------------------ | ------------------ |
+| `cursor-hand`      | cursor pointer     |
+| `cursor-ignore`    | ignore events      |
+| `cursor-no-ignore` | dont ignore events |
 
 ### Padding / Margin / Border
 
@@ -278,6 +276,41 @@ Useful text stuff.
 | `padding-top`    | padding top                               |
 | `padding`        | padding                                   |
 | `radius`         | border-radius (if empty defaults to 100%) |
+
+### Display
+
+| attribute      | description                                     |
+| -------------- | ----------------------------------------------- |
+| `absolute`     | position absolute                               |
+| `relative`     | position relative                               |
+| `fixed`        | position fixed top 0 left 0                     |
+| `full`         | full width and height with overflow hidden      |
+| `block`        | display block                                   |
+| `inline`       | display inline                                  |
+| `inline-block` | display inline-block                            |
+| `inline-flex`  | display inline-flex                             |
+| `collapse`     | sets the visibility to collapsed                |
+| `layer`        | forces a layer using `transform:translateZ(0);` |
+| `overflow`     | overflow hidden                                 |
+| `z`            | z-index                                         |
+| `border-box`   | box-sizing property                             |
+| `content-box`  | box-sizing property                             |
+
+### Selection
+
+| attribute              | description                |
+| ---------------------- | -------------------------- |
+| `selection-none`       | prevent text selection     |
+| `selection-color`      | selection text color       |
+| `selection-background` | selection background color |
+
+### Random Helpers As We See These Fit
+
+| attribute          | description                                                                     |
+| ------------------ | ------------------------------------------------------------------------------- |
+| `background`       | background css property                                                         |
+| `background-color` | background css property                                                         |
+| `drop-shadow`      | sets the filter to drop-shadow and expects a value with unit, drop-shadow='4px' |
 
 ### CSS
 
@@ -316,7 +349,7 @@ By prefixing any css attribute with the following keywords you can apply media q
 
 #### Examples
 
-```html
+````html
 
 <Box css=`
 	@mobile background:red;
@@ -338,26 +371,7 @@ const Button = css(`
 	color: black;
 `)
 
-```
-
-### Random Helpers As We See These Fit
-
-| attribute      | description                                                                     |
-| -------------- | ------------------------------------------------------------------------------- |
-| `absolute`     | position absolute                                                               |
-| `relative`     | position relative                                                               |
-| `background`   | background css property                                                         |
-| `block`        | display block                                                                   |
-| `inline-block` | display inline-block                                                            |
-| `inline-flex`  | display inline-flex                                                             |
-| `inline`       | display inline                                                                  |
-| `collapse`     | sets the visibility to collapsed                                                |
-| `fixed`        | position fixed top 0 left 0                                                     |
-| `full`         | full width and height with overflow hidden                                      |
-| `layer`        | forces the browser to create a layer using `transform:translateZ(0);`           |
-| `overflow`     | overflow hidden                                                                 |
-| `drop-shadow`  | sets the filter to drop-shadow and expects a value with unit, drop-shadow='4px' |
-| `z`            | z-index                                                                         |
+```                                                                       |
 
 ### Core
 
@@ -399,7 +413,7 @@ const Button = css(
 	`,
 	Component_NOTICE_ME,
 )
-```
+````
 
 ## API
 
@@ -604,3 +618,5 @@ It has defined a function to validate complete classes attached to an element to
 
 - Tito Bouzout https://github.com/titoBouzout
 - Kilo https://github.com/boredofnames
+
+URL: https://github.com/titoBouzout/crippling-sorrow-styling
