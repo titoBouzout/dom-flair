@@ -74,7 +74,7 @@ class Element extends Component {
 			select_item(this.item)
 		}
 	}
-
+	@action
 	onDragStart(e) {
 		if (e.target == e.currentTarget) {
 			e.dataTransfer.dropEffect = 'copy'
