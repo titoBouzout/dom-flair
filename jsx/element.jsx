@@ -86,6 +86,7 @@ class Element extends Component {
 		e.stopPropagation()
 		e.dataTransfer.dropEffect = 'copy'
 	}
+	@action
 	onDrop(e) {
 		e.preventDefault()
 		e.stopPropagation()
