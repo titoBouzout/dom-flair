@@ -1,6 +1,5 @@
 'use strict'
 
-@observer
 class Sidebar extends Component {
 	constructor(props) {
 		super(props)
@@ -1695,7 +1694,7 @@ class Sidebar extends Component {
 							<Box
 								element="textarea"
 								grow
-								value={g.content}
+								value={g.content.trim()}
 								height="4em"
 								onChange={function() {}}
 							/>

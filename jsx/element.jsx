@@ -6,6 +6,7 @@ class Element extends Component {
 		super(props)
 		this.updateItem(props)
 		this.state = {}
+		this.reference = React.createRef()
 	}
 	componentDidUpdate(props, state) {
 		this.updateItem(props)
@@ -36,6 +37,7 @@ class Element extends Component {
 	render() {
 		return (
 			<Box
+				reference={this.reference}
 				className={this.item.class || ''}
 				name={this.item.class || ''}
 				onClick={this.onClick}
@@ -46,7 +48,16 @@ class Element extends Component {
 				onDragOver={this.onDragOver}
 				{...this.item.style}
 			>
-				{this.item.content}
+				<span
+					contentEditable={true}
+					onBlur={function(e) {
+						update_tree(this.item.id, function(item, style, parent) {
+							item.content = e.currentTarget.innerText || null
+						})
+					}.bind(this)}
+				>
+					{this.item.content}
+				</span>
 				{!this.parent ? null : (
 					<span
 						className="el-tool-copy-left"

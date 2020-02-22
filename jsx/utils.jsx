@@ -1,6 +1,5 @@
 'use strict'
 
-@observer
 class Component extends React.Component {
 	bind_not = {
 		componentDidCatch: null,
@@ -38,7 +37,7 @@ class Component extends React.Component {
 		}
 	}
 }
-@observer
+
 class OptionGroup extends Component {
 	render() {
 		return (
@@ -54,40 +53,37 @@ class OptionGroup extends Component {
 		)
 	}
 }
-@observer
+
 class Option extends Component {
 	render() {
 		return (
-			<Box text-small row margin-top="5px" width>
+			<Box text-small row margin-top=".5rem" width>
 				{this.props.children}
 			</Box>
 		)
 	}
 }
 
-@observer
 class OptionTitle extends Component {
 	render() {
 		return (
-			<Box padding-left="17px" padding-top="5px" top text-capitalize>
+			<Box padding-left="1.7rem" padding-top=".5rem" top text-capitalize>
 				{this.props.children}
 			</Box>
 		)
 	}
 }
 
-@observer
 class OptionValue extends Component {
 	render() {
 		return (
-			<Box padding-left="5px" grow right wrap>
+			<Box padding-left=".5rem" grow right wrap>
 				{this.props.children}
 			</Box>
 		)
 	}
 }
 
-@observer
 class OptionInput extends Component {
 	render() {
 		return (
@@ -95,7 +91,7 @@ class OptionInput extends Component {
 				element="div"
 				row
 				className="sidebar-input"
-				width="110px"
+				width="11rem"
 				onBlur={this.props.onChange && this.onChange}
 				title={this.props.title}
 				contentEditable="true"
@@ -107,15 +103,15 @@ class OptionInput extends Component {
 		this.props.onChange(e.target.innerText.trim())
 	}
 }
-@observer
+
 class OptionTextarea extends Component {
 	render() {
 		return (
 			<Box
 				element="div"
 				className="sidebar-input"
-				width="110px"
-				height="3em"
+				width="11rem"
+				height="3rem"
 				onBlur={this.props.onChange && this.onChange}
 				title={this.props.title}
 				scroll-y
@@ -129,7 +125,7 @@ class OptionTextarea extends Component {
 		this.props.onChange(e.target.innerText.trim())
 	}
 }
-@observer
+
 class OptionInputSmall extends Component {
 	render() {
 		return (
@@ -150,7 +146,6 @@ class OptionInputSmall extends Component {
 	}
 }
 
-@observer
 class OptionIcon extends Component {
 	render() {
 		return (
@@ -246,7 +241,6 @@ class ColorPicker extends Component {
 	}
 }
 
-@observer
 class App extends Component {
 	render() {
 		return (
@@ -258,7 +252,6 @@ class App extends Component {
 	}
 }
 
-@observer
 class Content extends Component {
 	render() {
 		return (
@@ -266,5 +259,13 @@ class Content extends Component {
 				<Element item={g.Tree} />
 			</Box>
 		)
+	}
+}
+
+function IF(props) {
+	if (props.condition) {
+		return props.children || null
+	} else {
+		return null
 	}
 }
