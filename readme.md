@@ -349,7 +349,7 @@ By prefixing any css attribute with the following keywords you can apply media q
 
 #### Examples
 
-````html
+```html
 
 <Box css=`
 	@mobile background:red;
@@ -413,7 +413,7 @@ const Button = css(
 	`,
 	Component_NOTICE_ME,
 )
-````
+```
 
 ## API
 
