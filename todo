@@ -6,3 +6,5 @@
 
 DONE
 - make all the elements without childs content editable
+- simplify serving
+- mergue gh-pages and master for the sake of simplicity

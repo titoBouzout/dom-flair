@@ -1,2 +1,2 @@
 start http://localhost
-node server.js
+npx node-static -p 80

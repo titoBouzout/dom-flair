@@ -1,0 +1,23 @@
+{
+	"name": "crippling-sorrow-styling",
+	"version": "1.0.0",
+	"description": "React component named `Box` to solve `html` layout in intuitive ways, `<Box col grow center></Box>`. That's it.",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/titoBouzout/crippling-sorrow-styling.git"
+	},
+	"keywords": [
+		"CSS",
+		"Style",
+		"React",
+		"Box",
+		"Styled"
+	],
+	"author": "Tito Bouzout, Kilo Spade",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/titoBouzout/crippling-sorrow-styling/issues"
+	},
+	"homepage": "https://github.com/titoBouzout/crippling-sorrow-styling#readme"
+}
