@@ -614,6 +614,18 @@ It has defined a function to validate complete classes attached to an element to
 - \*-waterfall (should apply the same style too all immediate children)
 - \*-waterfall-deep (should apply the same style too all children)
 
+- try to avoid the important for changing defaults
+- drag and drop should move by default and copy when holding control
+- maybe try to set some defaults
+- the input boxes suck(cannot update in real time)
+- for some reason the main content does not want to scroll
+
+## DONE
+
+- [layout editor] make all the elements with content-editable
+- [development] simplify serving
+- [development] mergue gh-pages and master for the sake of simplicity
+
 ## Authors
 
 - Tito Bouzout https://github.com/titoBouzout

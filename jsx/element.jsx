@@ -1,6 +1,5 @@
 'use strict'
 
-@observer
 class Element extends Component {
 	constructor(props) {
 		super(props)
@@ -58,20 +57,19 @@ class Element extends Component {
 				>
 					{this.item.content}
 				</span>
-				{!this.parent ? null : (
+				<IF condition={this.parent}>
 					<span
 						className="el-tool-copy-left"
 						title={g.ctrlKey ? 'Copy To Left' : 'New To Left'}
 						onClick={this.appendLeft}
 					/>
-				)}
-				{!this.parent ? null : (
+
 					<span
 						className="el-tool-copy-right"
 						title={g.ctrlKey ? 'Copy To Right' : 'New To Right'}
 						onClick={this.appendRight}
 					/>
-				)}
+				</IF>
 				{this.item.c.map(
 					function(child, idx) {
 						return <Element item={child} key={idx} parent={this.item} />
@@ -90,9 +88,11 @@ class Element extends Component {
 		if (e.target == e.currentTarget) {
 			e.dataTransfer.dropEffect = 'copy'
 			g.draggedElement = this
+			document.querySelector('body').setAttribute('data-dragging', true)
 		}
 	}
 	onDragOver(e) {
+		document.querySelector('body').setAttribute('data-dragging', false)
 		e.preventDefault()
 		e.stopPropagation()
 		e.dataTransfer.dropEffect = 'copy'
