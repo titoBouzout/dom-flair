@@ -109,6 +109,7 @@ class Element extends Component {
 			document.querySelector('body').setAttribute('data-dragging', true)
 		}
 	}
+	@action
 	onDragEnd(e) {
 		document.querySelector('body').removeAttribute('data-dragging')
 		g.dragged_element = null
