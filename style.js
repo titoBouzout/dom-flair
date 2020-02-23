@@ -215,7 +215,7 @@ Style.prototype.css_property = {
 
 	relative: 'position:relative;',
 	absolute: 'position:absolute;',
-	fixed: 'position:fixed;top:0;left:0;',
+	fixed: 'position:fixed;',
 
 	full: `
 		width: 100%;
@@ -240,6 +240,8 @@ Style.prototype.css_property = {
 	// SELECTION
 
 	'selection-none': '-moz-user-select: none;user-select:none;',
+	'selection-text': '-moz-user-select: text;user-select:text;',
+	'selection-all': '-moz-user-select: all;user-select:all;',
 
 	// TEXT
 
@@ -697,6 +699,13 @@ Style.prototype.css_property_fn_high_priority = {
 		return `
 			class::selection {
 				background-color: ${value};
+			}
+		`
+	},
+	'no-empty': function(value, props) {
+		return `
+			class:empty {
+				display: none;
 			}
 		`
 	},

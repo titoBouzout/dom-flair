@@ -1,5 +1,5 @@
 'use strict'
-
+@observer
 class Sidebar extends Component {
 	constructor(props) {
 		super(props)
@@ -24,16 +24,22 @@ class Sidebar extends Component {
 
 			return (
 				<Box
+					className="sidebar"
 					column
 					scroll-y
 					scroll-thin
 					scroll-background="#444242"
 					scroll-color="#797575"
-					className="sidebar"
 					selection-none
 				>
 					<b>Layout Editor</b>
-					<OptionGroup title="Element">
+					<OptionGroup
+						title={
+							<Box row grow>
+								<Box grow>Element</Box> #{item.id}
+							</Box>
+						}
+					>
 						<Option>
 							<OptionTitle>classname</OptionTitle>
 							<OptionValue>
@@ -68,9 +74,9 @@ class Sidebar extends Component {
 							<OptionValue>
 								<OptionIcon
 									onChange={e => {
-										var c = {}
+										var c = new_element()
 										update_tree(item.id, function(item, style, parent) {
-											item.c.push(c)
+											item.children.push(c)
 										})
 									}}
 								>
@@ -84,7 +90,7 @@ class Sidebar extends Component {
 								<OptionIcon
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
-											item.c = []
+											item.children = []
 										})
 									}}
 								>
@@ -92,21 +98,21 @@ class Sidebar extends Component {
 								</OptionIcon>
 							</OptionValue>
 						</Option>
-						{!parent ? null : (
+						<IF condition={parent}>
 							<Option>
 								<OptionTitle>delete element</OptionTitle>
 								<OptionValue>
 									<OptionIcon
 										onChange={e => {
 											update_tree(item.id, function(item, style, parent) {
-												if (parent && parent.c) {
-													patch_array(parent.c, function(a) {
-														a.splice(parent.c.indexOf(item), 1)
+												if (parent && parent.children) {
+													patch_array(parent.children, function(a) {
+														a.splice(parent.children.indexOf(item), 1)
 														return a
 													})
 
-													if (parent.c.length) {
-														select_item(parent.c[parent.c.length - 1])
+													if (parent.children.length) {
+														select_item(parent.children[parent.children.length - 1])
 													} else {
 														select_item(parent)
 													}
@@ -118,34 +124,39 @@ class Sidebar extends Component {
 									</OptionIcon>
 								</OptionValue>
 							</Option>
-						)}
-						<Option>
-							<OptionTitle>background color</OptionTitle>
-							<OptionValue>
-								<ColorPicker
-									onChange={e => {
-										update_tree(item.id, function(item, style, parent) {
-											style['background-color'] = e || null
-										})
-									}}
-									value={style['background-color']}
-								/>
-							</OptionValue>
-						</Option>
-						<Option>
-							<OptionTitle>background</OptionTitle>
-							<OptionValue>
-								<OptionInput
-									title="background"
-									onChange={e => {
-										update_tree(item.id, function(item, style, parent) {
-											style['background'] = e || null
-										})
-									}}
-									value={style['background']}
-								/>
-							</OptionValue>
-						</Option>
+							<IF condition={element_count(item.id).length > 1}>
+								<Option>
+									<OptionTitle>delete clones</OptionTitle>
+									<OptionValue>
+										<OptionIcon
+											onChange={e => {
+												var count = 0
+												update_tree(item.id, function(item, style, parent) {
+													if (parent && parent.children) {
+														count++
+														if (count == 1) {
+															return
+														}
+														patch_array(parent.children, function(a) {
+															a.splice(parent.children.indexOf(item), 1)
+															return a
+														})
+
+														if (parent.children.length) {
+															select_item(parent.children[parent.children.length - 1])
+														} else {
+															select_item(parent)
+														}
+													}
+												})
+											}}
+										>
+											<i className="fa fa-trash" />
+										</OptionIcon>
+									</OptionValue>
+								</Option>
+							</IF>
+						</IF>
 					</OptionGroup>
 					<OptionGroup title="Layout">
 						<Option>
@@ -185,25 +196,6 @@ class Sidebar extends Component {
 						</Option>
 
 						<Option>
-							<OptionTitle>grow</OptionTitle>
-							<OptionValue>
-								<OptionIcon
-									onChange={e => {
-										update_tree(item.id, function(item, style, parent) {
-											if (style.grow) {
-												delete style.grow
-											} else {
-												style.grow = true
-											}
-										})
-									}}
-									value={style.grow}
-								>
-									<i className="fa fa-check fa-fw" />
-								</OptionIcon>
-							</OptionValue>
-						</Option>
-						<Option>
 							<OptionTitle>wrap</OptionTitle>
 							<OptionValue>
 								<OptionIcon
@@ -241,38 +233,21 @@ class Sidebar extends Component {
 						</Option>
 
 						<Option>
-							<OptionTitle>box-sizing</OptionTitle>
+							<OptionTitle>grow</OptionTitle>
 							<OptionValue>
 								<OptionIcon
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
-											if (style['border-box']) {
-												delete style['border-box']
+											if (style.grow) {
+												delete style.grow
 											} else {
-												style['border-box'] = true
-												delete style['content-box']
+												style.grow = true
 											}
 										})
 									}}
-									value={style['border-box']}
+									value={style.grow}
 								>
-									border
-								</OptionIcon>
-
-								<OptionIcon
-									onChange={e => {
-										update_tree(item.id, function(item, style, parent) {
-											if (style['content-box']) {
-												delete style['content-box']
-											} else {
-												style['content-box'] = true
-												delete style['border-box']
-											}
-										})
-									}}
-									value={style['content-box']}
-								>
-									content
+									<i className="fa fa-check fa-fw" />
 								</OptionIcon>
 							</OptionValue>
 						</Option>
@@ -568,7 +543,7 @@ class Sidebar extends Component {
 							</OptionValue>
 						</Option>
 					</OptionGroup>
-					<OptionGroup title="Space between">
+					<OptionGroup title="Space between" closed>
 						<Option>
 							<OptionTitle>around</OptionTitle>
 							<OptionValue>
@@ -820,6 +795,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['width'] = e || null
+											if (style['width'] === null) delete style['width']
 										})
 									}}
 									value={style['width']}
@@ -834,6 +810,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['min-width'] = e || null
+											if (style['min-width'] === null) delete style['min-width']
 										})
 									}}
 									value={style['min-width']}
@@ -848,6 +825,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['max-width'] = e || null
+											if (style['max-width'] === null) delete style['max-width']
 										})
 									}}
 									value={style['max-width']}
@@ -862,6 +840,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['height'] = e || null
+											if (style['height'] === null) delete style['height']
 										})
 									}}
 									value={style['height']}
@@ -876,6 +855,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['min-height'] = e || null
+											if (style['min-height'] === null) delete style['min-height']
 										})
 									}}
 									value={style['min-height']}
@@ -890,6 +870,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['max-height'] = e || null
+											if (style['max-height'] === null) delete style['max-height']
 										})
 									}}
 									value={style['max-height']}
@@ -898,6 +879,42 @@ class Sidebar extends Component {
 						</Option>
 					</OptionGroup>
 					<OptionGroup title="Padding Margin Border" closed>
+						<Option>
+							<OptionTitle>box-sizing</OptionTitle>
+							<OptionValue>
+								<OptionIcon
+									onChange={e => {
+										update_tree(item.id, function(item, style, parent) {
+											if (style['border-box']) {
+												delete style['border-box']
+											} else {
+												style['border-box'] = true
+												delete style['content-box']
+											}
+										})
+									}}
+									value={style['border-box']}
+								>
+									border
+								</OptionIcon>
+
+								<OptionIcon
+									onChange={e => {
+										update_tree(item.id, function(item, style, parent) {
+											if (style['content-box']) {
+												delete style['content-box']
+											} else {
+												style['content-box'] = true
+												delete style['border-box']
+											}
+										})
+									}}
+									value={style['content-box']}
+								>
+									content
+								</OptionIcon>
+							</OptionValue>
+						</Option>
 						<Option>
 							<OptionTitle>
 								<u>
@@ -910,6 +927,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['padding'] = e || null
+											if (style['padding'] === null) delete style['padding']
 										})
 									}}
 									value={style['padding']}
@@ -924,6 +942,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['padding-top'] = e || null
+											if (style['padding-top'] === null) delete style['padding-top']
 										})
 									}}
 									value={style['padding-top']}
@@ -938,6 +957,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['padding-left'] = e || null
+											if (style['padding-left'] === null) delete style['padding-left']
 										})
 									}}
 									value={style['padding-left']}
@@ -952,6 +972,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['padding-bottom'] = e || null
+											if (style['padding-bottom'] === null) delete style['padding-bottom']
 										})
 									}}
 									value={style['padding-bottom']}
@@ -966,6 +987,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['padding-right'] = e || null
+											if (style['padding-right'] === null) delete style['padding-right']
 										})
 									}}
 									value={style['padding-right']}
@@ -984,6 +1006,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['border'] = e || null
+											if (style['border'] === null) delete style['border']
 										})
 									}}
 									value={style['border']}
@@ -998,6 +1021,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['border-top'] = e || null
+											if (style['border-top'] === null) delete style['border-top']
 										})
 									}}
 									value={style['border-top']}
@@ -1012,6 +1036,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['border-left'] = e || null
+											if (style['border-left'] === null) delete style['border-left']
 										})
 									}}
 									value={style['border-left']}
@@ -1026,6 +1051,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['border-bottom'] = e || null
+											if (style['border-bottom'] === null) delete style['border-bottom']
 										})
 									}}
 									value={style['border-bottom']}
@@ -1040,6 +1066,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['border-right'] = e || null
+											if (style['border-right'] === null) delete style['border-right']
 										})
 									}}
 									value={style['border-right']}
@@ -1055,6 +1082,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['radius'] = e || null
+											if (style['radius'] === null) delete style['radius']
 										})
 									}}
 									value={style['radius']}
@@ -1074,6 +1102,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['margin'] = e || null
+											if (style['margin'] === null) delete style['margin']
 										})
 									}}
 									value={style['margin']}
@@ -1088,6 +1117,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['margin-top'] = e || null
+											if (style['margin-top'] === null) delete style['margin-top']
 										})
 									}}
 									value={style['margin-top']}
@@ -1102,6 +1132,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['margin-left'] = e || null
+											if (style['margin-left'] === null) delete style['margin-left']
 										})
 									}}
 									value={style['margin-left']}
@@ -1116,6 +1147,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['margin-bottom'] = e || null
+											if (style['margin-bottom'] === null) delete style['margin-bottom']
 										})
 									}}
 									value={style['margin-bottom']}
@@ -1130,6 +1162,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['margin-right'] = e || null
+											if (style['margin-right'] === null) delete style['margin-right']
 										})
 									}}
 									value={style['margin-right']}
@@ -1147,6 +1180,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['text-size'] = e || null
+											if (style['text-size'] === null) delete style['text-size']
 										})
 									}}
 									value={style['text-size']}
@@ -1154,18 +1188,80 @@ class Sidebar extends Component {
 							</OptionValue>
 						</Option>
 						<Option>
-							<OptionTitle>color</OptionTitle>
+							<OptionTitle>small</OptionTitle>
 							<OptionValue>
-								<ColorPicker
+								<OptionIcon
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
-											style['text-color'] = e || null
+											if (style['text-small']) {
+												delete style['text-small']
+											} else {
+												style['text-small'] = true
+											}
 										})
 									}}
-									value={style['text-color']}
-								/>
+									value={style['text-small']}
+								>
+									<i className="fa fa-check fa-fw" />
+								</OptionIcon>
 							</OptionValue>
 						</Option>
+
+						<Option>
+							<OptionTitle>weight</OptionTitle>
+							<OptionValue>
+								<OptionIcon
+									onChange={e => {
+										update_tree(item.id, function(item, style, parent) {
+											if (style['text-bold']) {
+												delete style['text-bold']
+											} else {
+												style['text-bold'] = true
+												delete style['text-regular']
+											}
+										})
+									}}
+									value={style['text-bold']}
+								>
+									bold
+								</OptionIcon>
+								<OptionIcon
+									onChange={e => {
+										update_tree(item.id, function(item, style, parent) {
+											if (style['text-regular']) {
+												delete style['text-regular']
+											} else {
+												style['text-regular'] = true
+												delete style['text-bold']
+											}
+										})
+									}}
+									value={style['text-regular']}
+								>
+									regular
+								</OptionIcon>
+							</OptionValue>
+						</Option>
+						<Option>
+							<OptionTitle>multiline</OptionTitle>
+							<OptionValue>
+								<OptionIcon
+									onChange={e => {
+										update_tree(item.id, function(item, style, parent) {
+											if (style['text-multiline']) {
+												delete style['text-multiline']
+											} else {
+												style['text-multiline'] = true
+											}
+										})
+									}}
+									value={style['text-multiline']}
+								>
+									<i className="fa fa-check fa-fw" />
+								</OptionIcon>
+							</OptionValue>
+						</Option>
+
 						<Option>
 							<OptionTitle>align</OptionTitle>
 							<OptionValue>
@@ -1267,61 +1363,7 @@ class Sidebar extends Component {
 								</OptionIcon>
 							</OptionValue>
 						</Option>
-						<Option>
-							<OptionTitle>multiline</OptionTitle>
-							<OptionValue>
-								<OptionIcon
-									onChange={e => {
-										update_tree(item.id, function(item, style, parent) {
-											if (style['text-multiline']) {
-												delete style['text-multiline']
-											} else {
-												style['text-multiline'] = true
-											}
-										})
-									}}
-									value={style['text-multiline']}
-								>
-									<i className="fa fa-check fa-fw" />
-								</OptionIcon>
-							</OptionValue>
-						</Option>
 
-						<Option>
-							<OptionTitle>weight</OptionTitle>
-							<OptionValue>
-								<OptionIcon
-									onChange={e => {
-										update_tree(item.id, function(item, style, parent) {
-											if (style['text-bold']) {
-												delete style['text-bold']
-											} else {
-												style['text-bold'] = true
-												delete style['text-regular']
-											}
-										})
-									}}
-									value={style['text-bold']}
-								>
-									bold
-								</OptionIcon>
-								<OptionIcon
-									onChange={e => {
-										update_tree(item.id, function(item, style, parent) {
-											if (style['text-regular']) {
-												delete style['text-regular']
-											} else {
-												style['text-regular'] = true
-												delete style['text-bold']
-											}
-										})
-									}}
-									value={style['text-regular']}
-								>
-									regular
-								</OptionIcon>
-							</OptionValue>
-						</Option>
 						<Option>
 							<OptionTitle>transform</OptionTitle>
 							<OptionValue>
@@ -1392,25 +1434,6 @@ class Sidebar extends Component {
 								</OptionIcon>
 							</OptionValue>
 						</Option>
-						<Option>
-							<OptionTitle>small</OptionTitle>
-							<OptionValue>
-								<OptionIcon
-									onChange={e => {
-										update_tree(item.id, function(item, style, parent) {
-											if (style['text-small']) {
-												delete style['text-small']
-											} else {
-												style['text-small'] = true
-											}
-										})
-									}}
-									value={style['text-small']}
-								>
-									<i className="fa fa-check fa-fw" />
-								</OptionIcon>
-							</OptionValue>
-						</Option>
 					</OptionGroup>
 					<OptionGroup title="Selection" closed>
 						<Option>
@@ -1423,12 +1446,46 @@ class Sidebar extends Component {
 												delete style['selection-none']
 											} else {
 												style['selection-none'] = true
+												delete style['selection-text']
+												delete style['selection-all']
 											}
 										})
 									}}
 									value={style['selection-none']}
 								>
 									none
+								</OptionIcon>
+								<OptionIcon
+									onChange={e => {
+										update_tree(item.id, function(item, style, parent) {
+											if (style['selection-text']) {
+												delete style['selection-text']
+											} else {
+												style['selection-text'] = true
+												delete style['selection-none']
+												delete style['selection-all']
+											}
+										})
+									}}
+									value={style['selection-text']}
+								>
+									text
+								</OptionIcon>
+								<OptionIcon
+									onChange={e => {
+										update_tree(item.id, function(item, style, parent) {
+											if (style['selection-all']) {
+												delete style['selection-all']
+											} else {
+												style['selection-all'] = true
+												delete style['selection-none']
+												delete style['selection-text']
+											}
+										})
+									}}
+									value={style['selection-all']}
+								>
+									all
 								</OptionIcon>
 							</OptionValue>
 						</Option>
@@ -1493,6 +1550,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['selection-color'] = e || null
+											if (style['selection-color'] === null) delete style['selection-color']
 										})
 									}}
 									value={style['selection-color']}
@@ -1506,6 +1564,8 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['selection-background'] = e || null
+											if (style['selection-background'] === null)
+												delete style['selection-background']
 										})
 									}}
 									value={style['selection-background']}
@@ -1608,12 +1668,13 @@ class Sidebar extends Component {
 							</OptionValue>
 						</Option>
 						<Option>
-							<OptionTitle>color</OptionTitle>
+							<OptionTitle>track color</OptionTitle>
 							<OptionValue>
 								<ColorPicker
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['scroll-color'] = e || null
+											if (style['scroll-color'] === null) delete style['scroll-color']
 										})
 									}}
 									value={style['scroll-color']}
@@ -1627,6 +1688,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['scroll-background'] = e || null
+											if (style['scroll-background'] === null) delete style['scroll-background']
 										})
 									}}
 									value={style['scroll-background']}
@@ -1663,6 +1725,7 @@ class Sidebar extends Component {
 									onChange={e => {
 										update_tree(item.id, function(item, style, parent) {
 											style['z'] = e || null
+											if (style['z'] === null) delete style['z']
 										})
 									}}
 									value={style['z']}
@@ -1689,7 +1752,58 @@ class Sidebar extends Component {
 							</OptionValue>
 						</Option>
 					</OptionGroup>
+
+					<OptionGroup title="Colors" closed>
+						<Option>
+							<OptionTitle>text color</OptionTitle>
+							<OptionValue>
+								<ColorPicker
+									onChange={e => {
+										update_tree(item.id, function(item, style, parent) {
+											style['text-color'] = e || null
+											if (style['text-color'] === null) delete style['text-color']
+										})
+									}}
+									value={style['text-color']}
+								/>
+							</OptionValue>
+						</Option>
+						<Option>
+							<OptionTitle>background color</OptionTitle>
+							<OptionValue>
+								<ColorPicker
+									onChange={e => {
+										update_tree(item.id, function(item, style, parent) {
+											style['background-color'] = e || null
+											if (!style['background-color']) delete style['background-color']
+										})
+									}}
+									value={style['background-color']}
+								/>
+							</OptionValue>
+						</Option>
+						<Option>
+							<OptionTitle>background</OptionTitle>
+							<OptionValue>
+								<OptionInput
+									title="background"
+									onChange={e => {
+										update_tree(item.id, function(item, style, parent) {
+											style['background'] = e || null
+											if (!style['background']) delete style['background']
+										})
+									}}
+									value={style['background']}
+								/>
+							</OptionValue>
+						</Option>
+					</OptionGroup>
 					<OptionGroup title="Output">
+						<Option>
+							<Box grow selection-text>
+								{g.Active ? _generate_code_item_header(g.Active.item, 0).trim() : null}
+							</Box>
+						</Option>
 						<Option>
 							<Box
 								element="textarea"

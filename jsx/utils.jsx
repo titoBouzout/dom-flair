@@ -1,5 +1,6 @@
 'use strict'
 
+@observer
 class Component extends React.Component {
 	bind_not = {
 		componentDidCatch: null,
@@ -12,39 +13,35 @@ class Component extends React.Component {
 		constructor: null,
 		forceUpdate: null,
 		getSnapshotBeforeUpdate: null,
-		name: null,
-		props: null,
 		render: null,
 		setState: null,
 		shouldComponentUpdate: null,
-		state: null,
 		UNSAFE_componentWillMount: null,
 		UNSAFE_componentWillReceiveProps: null,
 		UNSAFE_componentWillUpdate: null,
 	}
 	constructor(props) {
 		super(props)
-
 		this.bind(this)
-		return observer(this)
 	}
 
 	bind(o) {
 		for (var m of Object.getOwnPropertyNames(Object.getPrototypeOf(o))) {
-			if (o[m] && o[m].bind && this.bind_not[m] === undefined && typeof o[m] == 'function') {
+			if (o[m] && o[m].bind && this.bind_not[m] === undefined) {
 				o[m] = o[m].bind(o)
 			}
 		}
 	}
 }
 
+@observer
 class OptionGroup extends Component {
 	render() {
 		return (
 			<React.Fragment>
 				<hr />
 				<Box element="details" width open={!this.props.closed}>
-					<Box element="summary" text-capitalize>
+					<Box element="summary" vertical text-capitalize row grow>
 						{this.props.title}
 					</Box>
 					{this.props.children}
@@ -54,6 +51,7 @@ class OptionGroup extends Component {
 	}
 }
 
+@observer
 class Option extends Component {
 	render() {
 		return (
@@ -64,6 +62,7 @@ class Option extends Component {
 	}
 }
 
+@observer
 class OptionTitle extends Component {
 	render() {
 		return (
@@ -74,6 +73,7 @@ class OptionTitle extends Component {
 	}
 }
 
+@observer
 class OptionValue extends Component {
 	render() {
 		return (
@@ -84,6 +84,7 @@ class OptionValue extends Component {
 	}
 }
 
+@observer
 class OptionInput extends Component {
 	render() {
 		return (
@@ -104,6 +105,7 @@ class OptionInput extends Component {
 	}
 }
 
+@observer
 class OptionTextarea extends Component {
 	render() {
 		return (
@@ -126,6 +128,7 @@ class OptionTextarea extends Component {
 	}
 }
 
+@observer
 class OptionInputSmall extends Component {
 	render() {
 		return (
@@ -146,6 +149,7 @@ class OptionInputSmall extends Component {
 	}
 }
 
+@observer
 class OptionIcon extends Component {
 	render() {
 		return (
@@ -164,6 +168,7 @@ class OptionIcon extends Component {
 	}
 }
 
+@observer
 class ColorPicker extends Component {
 	constructor(props) {
 		super(props)
@@ -175,7 +180,7 @@ class ColorPicker extends Component {
 			useAsButton: true,
 
 			theme: 'nano', // or 'monolith', or 'nano'
-			default: '#FFF',
+			default: this.props.value || '',
 			swatches: [
 				'rgba(244, 67, 54, 1)',
 				'rgba(233, 30, 99, 1)',
@@ -211,29 +216,42 @@ class ColorPicker extends Component {
 					save: true,
 				},
 			},
-		}).on(
-			'change',
-			function(color, instance) {
-				clearTimeout(this.timeout)
-				this.timeout = setTimeout(
-					function() {
-						this.props.onChange(
-							color
-								.toRGBA()
-								.toString()
-								.replace(/\.[0-9]+,/g, ','),
-						)
-					}.bind(this),
-					300,
-				)
-			}.bind(this),
-		)
+		})
+			.on(
+				'change',
+				function(color, instance) {
+					clearTimeout(this.timeout)
+					this.timeout = setTimeout(
+						function() {
+							this.props.onChange(
+								color
+									.toRGBA()
+									.toString()
+									.replace(/\.[0-9]+,/g, ','),
+							)
+						}.bind(this),
+						300,
+					)
+				}.bind(this),
+			)
+			.on(
+				'clear',
+				function(color, instance) {
+					clearTimeout(this.timeout)
+					this.timeout = setTimeout(
+						function() {
+							this.props.onChange('')
+						}.bind(this),
+						300,
+					)
+				}.bind(this),
+			)
 	}
 	render() {
 		return (
 			<Box
+				background={this.props.value || ''}
 				className={'sidebar-icon sidebar-color-picker ' + this.className}
-				background-color={this.props.value}
 			>
 				{this.props.children}
 			</Box>
@@ -241,6 +259,7 @@ class ColorPicker extends Component {
 	}
 }
 
+@observer
 class App extends Component {
 	render() {
 		return (
@@ -252,6 +271,7 @@ class App extends Component {
 	}
 }
 
+@observer
 class Content extends Component {
 	render() {
 		return (

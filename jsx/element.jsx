@@ -1,5 +1,6 @@
 'use strict'
 
+@observer
 class Element extends Component {
 	constructor(props) {
 		super(props)
@@ -18,9 +19,11 @@ class Element extends Component {
 	}
 	@action
 	static updateProps(props) {
-		props.item.c = props.item.c || []
-		props.item.style = props.item.style || {}
-		props.item.id = props.item.id || guid()
+		if (props && props.item) {
+			props.item.children = props.item.children || []
+			props.item.style = props.item.style || {}
+			props.item.id = props.item.id || guid()
+		}
 	}
 	@action
 	updateItem(props) {
@@ -30,25 +33,33 @@ class Element extends Component {
 		this.parent = props.parent
 
 		if (!g.Active) {
-			select_item(this.item)
+			select_item(g.Tree.active || this.item)
+		}
+		if (!this.parent) {
+			g.Root = this
 		}
 	}
 	render() {
 		return (
 			<Box
 				reference={this.reference}
-				className={this.item.class || ''}
 				name={this.item.class || ''}
-				onClick={this.onClick}
+				onMouseDown={this.onClick}
 				data-selected={(g.Active && g.Active.item.id == this.item.id) || null}
-				draggable="true"
+				draggable={this.parent ? true : false}
 				onDragStart={this.onDragStart}
 				onDrop={this.onDrop}
 				onDragOver={this.onDragOver}
+				onDragLeave={this.onDragLeave}
+				onDragEnd={this.onDragEnd}
 				{...this.item.style}
+				className={this.item.class || ''}
 			>
-				<span
+				<Box
+					element="span"
+					no-empty
 					contentEditable={true}
+					onMouseDown={this.onClick}
 					onBlur={function(e) {
 						update_tree(this.item.id, function(item, style, parent) {
 							item.content = e.currentTarget.innerText || null
@@ -56,7 +67,8 @@ class Element extends Component {
 					}.bind(this)}
 				>
 					{this.item.content}
-				</span>
+				</Box>
+
 				<IF condition={this.parent}>
 					<span
 						className="el-tool-copy-left"
@@ -70,7 +82,8 @@ class Element extends Component {
 						onClick={this.appendRight}
 					/>
 				</IF>
-				{this.item.c.map(
+
+				{this.item.children.map(
 					function(child, idx) {
 						return <Element item={child} key={idx} parent={this.item} />
 					}.bind(this),
@@ -86,25 +99,90 @@ class Element extends Component {
 	@action
 	onDragStart(e) {
 		if (e.target == e.currentTarget) {
-			e.dataTransfer.dropEffect = 'copy'
-			g.draggedElement = this
+			if (e.ctrlKey) {
+				e.dataTransfer.dropEffect = 'copy'
+			} else {
+				e.dataTransfer.dropEffect = 'move'
+			}
+
+			g.dragged_element = this.item
 			document.querySelector('body').setAttribute('data-dragging', true)
 		}
 	}
+	onDragEnd(e) {
+		document.querySelector('body').removeAttribute('data-dragging')
+		g.dragged_element = null
+		g.dragged_over_element = null
+	}
+	onDragLeave(e) {
+		e.currentTarget.removeAttribute('data-dragging-over')
+	}
+	@action
 	onDragOver(e) {
-		document.querySelector('body').setAttribute('data-dragging', false)
-		e.preventDefault()
-		e.stopPropagation()
-		e.dataTransfer.dropEffect = 'copy'
+		if (e.target == e.currentTarget) {
+			if (
+				this.item.id != g.dragged_element.id &&
+				!element_includes(g.dragged_element.id, this.item)
+			) {
+				e.preventDefault()
+				e.stopPropagation()
+				if (e.ctrlKey) {
+					e.dataTransfer.dropEffect = 'copy'
+				} else {
+					e.dataTransfer.dropEffect = 'move'
+				}
+				e.currentTarget.setAttribute('data-dragging-over', true)
+				g.dragged_over_element = this.item
+			} else {
+				g.dragged_over_element = null
+			}
+		}
 	}
 	@action
 	onDrop(e) {
+		document.querySelector('body').removeAttribute('data-dragging')
+
+		e.currentTarget.removeAttribute('data-dragging-over')
+
 		e.preventDefault()
 		e.stopPropagation()
-		if (g.draggedElement) {
-			this.item.c.push(copy(g.draggedElement.item))
-			g.draggedElement = false
-			save()
+		if (g.dragged_element) {
+			var c = copy(g.dragged_element)
+			var dragged_element_id = g.dragged_element.id
+			var dragged_over_element_id = g.dragged_over_element.id
+			if (e.ctrlKey) {
+				update_tree(dragged_over_element_id, function(item, style, parent) {
+					patch_array(item.children, function(a) {
+						a.push(c)
+						return a
+					})
+				})
+			} else {
+				update_tree(
+					dragged_element_id,
+					function(item, style, parent) {
+						if (parent && parent.children) {
+							patch_array(parent.children, function(a) {
+								a.splice(parent.children.indexOf(item), 1)
+								return a
+							})
+						}
+					},
+					true,
+				)
+				update_tree(dragged_over_element_id, function(item, style, parent) {
+					patch_array(item.children, function(a) {
+						a.push(c)
+						return a
+					})
+				})
+			}
+			setTimeout(function() {
+				select_item(dragged_element_id)
+			}, 0)
+
+			g.dragged_element = null
+			g.dragged_over_element = null
 		}
 	}
 	appendLeft(e) {
@@ -112,12 +190,12 @@ class Element extends Component {
 			if (e.ctrlKey) {
 				var c = copy(this.item)
 			} else {
-				var c = {}
+				var c = new_element()
 			}
 			update_tree(this.item.id, function(item, style, parent) {
-				if (parent && parent.c) {
-					patch_array(parent.c, function(a) {
-						a.splice(parent.c.indexOf(item), 0, c)
+				if (parent && parent.children) {
+					patch_array(parent.children, function(a) {
+						a.splice(parent.children.indexOf(item), 0, c)
 						return a
 					})
 				}
@@ -129,12 +207,12 @@ class Element extends Component {
 			if (e.ctrlKey) {
 				var c = copy(this.item)
 			} else {
-				var c = {}
+				var c = new_element()
 			}
 			update_tree(this.item.id, function(item, style, parent) {
-				if (parent && parent.c) {
-					patch_array(parent.c, function(a) {
-						a.splice(parent.c.indexOf(item) + 1, 0, c)
+				if (parent && parent.children) {
+					patch_array(parent.children, function(a) {
+						a.splice(parent.children.indexOf(item) + 1, 0, c)
 						return a
 					})
 				}

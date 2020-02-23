@@ -283,7 +283,7 @@ Useful text stuff.
 | -------------- | ----------------------------------------------- |
 | `absolute`     | position absolute                               |
 | `relative`     | position relative                               |
-| `fixed`        | position fixed top 0 left 0                     |
+| `fixed`        | position fixed                                  |
 | `full`         | full width and height with overflow hidden      |
 | `block`        | display block                                   |
 | `inline`       | display inline                                  |
@@ -295,12 +295,15 @@ Useful text stuff.
 | `z`            | z-index                                         |
 | `border-box`   | box-sizing property                             |
 | `content-box`  | box-sizing property                             |
+| `no-empty`     | hides the element if empty                      |
 
 ### Selection
 
 | attribute              | description                |
 | ---------------------- | -------------------------- |
 | `selection-none`       | prevent text selection     |
+| `selection-all`        | selects all text on focus  |
+| `selection-text`       | allows text selection      |
 | `selection-color`      | selection text color       |
 | `selection-background` | selection background color |
 
@@ -607,28 +610,28 @@ It has defined a function to validate complete classes attached to an element to
 - deduplicates css
 - is efficient
 
-## TODO
-
-- Maybe enforce style coupling: if an animation with transform is used, then will-change: transform; should be there
-- Maybe change pixels to em on the fly
-- \*-waterfall (should apply the same style too all immediate children)
-- \*-waterfall-deep (should apply the same style too all children)
-
-- try to avoid the important for changing defaults
-- drag and drop should move by default and copy when holding control
-- maybe try to set some defaults
-- the input boxes suck(cannot update in real time)
-- for some reason the main content does not want to scroll
-
-## DONE
-
-- [layout editor] make all the elements with content-editable
-- [development] simplify serving
-- [development] mergue gh-pages and master for the sake of simplicity
-
 ## Authors
 
 - Tito Bouzout https://github.com/titoBouzout
 - Kilo https://github.com/boredofnames
 
 URL: https://github.com/titoBouzout/crippling-sorrow-styling
+
+## TODO
+
+- [style] Maybe enforce style coupling: if an animation with transform is used, then will-change: transform; should be there
+- [style] Maybe change pixels to em on the fly
+- [style] \*-waterfall (should apply the same style too all immediate children)
+- [style] \*-waterfall-deep (should apply the same style too all children)
+- [layout editor] try to avoid the important for changing defaults
+- [layout editor] the input boxes suck(cannot update in real time)
+
+## CHANGE LOG
+
+- [layout editor] drag and drop should move by default and copy when holding control
+- [layout editor] improve drag and drop
+- [layout editor] make all the elements with content-editable
+- [development] simplify serving
+- [development] mergue gh-pages and master for the sake of simplicity
+- [layout editor] maybe try to set some defaults
+- [layout editor] for some reason the main content does not want to scroll
