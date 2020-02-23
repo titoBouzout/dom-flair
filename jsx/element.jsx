@@ -65,9 +65,8 @@ class Element extends Component {
 							item.content = e.currentTarget.innerText || null
 						})
 					}.bind(this)}
-				>
-					{this.item.content}
-				</Box>
+					dangerouslySetInnerHTML={{ __html: this.item.content }}
+				/>
 
 				<IF condition={this.parent}>
 					<span
