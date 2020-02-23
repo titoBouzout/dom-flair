@@ -124,7 +124,7 @@ class OptionTextarea extends Component {
 		)
 	}
 	onChange(e) {
-		this.props.onChange(e.target.innerText.trim())
+		this.props.onChange(e.target.innerHTML.trim())
 	}
 }
 
