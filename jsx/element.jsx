@@ -20,7 +20,7 @@ class Element extends Component {
 	@action
 	static updateProps(props) {
 		if (props && props.item) {
-			props.item.children = props.item.children || []
+			props.item.children = props.item.c || props.item.children || []
 			props.item.style = props.item.style || {}
 			props.item.id = props.item.id || guid()
 		}
