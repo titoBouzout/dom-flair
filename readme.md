@@ -1,43 +1,33 @@
-# Crippling Sorrow Styling
+# Styled
 
-The goal of this project is to have just one React "meta component" named `Box`. This is to solve any or most `html` layout issues in intuitive ways without having to think about CSS. For example `<Box col grow></Box>`. That's it.
+The goal of this project is to solve any or most `html` layout issues in intuitive ways via attributes without having to think much about CSS. For example `<div col grow></div>`. That's it.
 
-It could also help with trivial CSS that can be just named in an attribute, For example `<Box capitalize></Box>` to capitalize the `Box` contents. It could also be used similar to styled-components.
+It could also help with trivial CSS, For example `<div text-capitalize></div>` to capitalize the `div` contents.
 
 ## Installation
 
-Please note React is required.
-
 ### ES module
 
-`npm install crippling-sorrow-styling`
+`npm install styled`
 
 Import it where you gonna use is
 
-`import { css, Box } from 'crippling-sorrow-styling'`
+`import 'styled'`
 
-The element you mount to should be `display:flex;flex:1;`
-
-### Regular js file
-
-`<script crossorigin src="https://cdn.jsdelivr.net/gh/titoBouzout/crippling-sorrow-styling/style.js"></script>`.
-
-The element you mount to should be `display:flex;flex:1;`
+The element you mount to should be `display:flex;flex:1;` for the attributes to work.
 
 ## Examples
-
-You may try the codepen directly https://codepen.io/anon/pen/ZgabXx
 
 ### The "Holy Grail Layout":
 
 Sticky footer
 
 ```jsx
-<Box col grow>
-	<Box>header</Box>
-	<Box grow>content</Box>
-	<Box>footer</Box>
-</Box>
+<div col grow>
+	<div>header</div>
+	<div grow>content</div>
+	<div>footer</div>
+</div>
 ```
 
 ### Elaborate Example:
@@ -45,108 +35,28 @@ Sticky footer
 Has two sidebars, a toolbar, a footer, and grows in the middle content:
 
 ```jsx
-<Box grow>
-	<Box col grow max-width="210px" horizontal>
+<div grow>
+	<div col grow horizontal>
 		left sidebar
-	</Box>
-	<Box col grow>
-		<Box row width right>
+	</div>
+	<div col grow>
+		<div row right>
 			toolbar
-		</Box>
-		<Box row grow center>
+		</div>
+		<div row grow center>
 			content
-		</Box>
-		<Box row width left>
+		</div>
+		<div row left>
 			footer
-		</Box>
-	</Box>
-	<Box col grow max-width="210px" center>
+		</div>
+	</div>
+	<div col grow center>
 		right sidebar
-	</Box>
-</Box>
+	</div>
+</div>
 ```
 
-### Full Working Example:
-
-Notice `html` and `body` should be full width/height for the flex elements to work.
-
-Also the element you mount to should be `display:flex;flex:1;`
-
-```html
-<!DOCTYPE html>
-<html>
-	<head>
-		<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-		<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-		<script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-		<script
-			crossorigin
-			src="https://cdn.jsdelivr.net/gh/titoBouzout/crippling-sorrow-styling/style.js"
-		></script>
-		<style type="text/css">
-			html,
-			body,
-			#root {
-				margin: 0;
-				width: 100%;
-				height: 100%;
-			}
-
-			#root {
-				display: flex;
-				flex: 1;
-			}
-
-			* {
-				box-sizing: border-box;
-			}
-		</style>
-	</head>
-	<body>
-		<div id="root"></div>
-		<script type="text/jsx">
-			function Component(){
-						return (
-							<Box grow>
-								<Box col grow max-width="210px" horizontal>
-									left sidebar
-								</Box>
-								<Box col grow>
-									<Box row width right>
-										toolbar
-									</Box>
-									<Box row grow center>
-										content
-									</Box>
-									<Box row width left>
-										footer
-									</Box>
-								</Box>
-								<Box col grow max-width="210px" vertical>
-									right sidebar
-								</Box>
-							</Box>
-						)
-					}
-
-					ReactDOM.render(
-						React.createElement(Component),
-						document.querySelector('#root')
-					)
-		</script>
-	</body>
-</html>
-```
-
-## Caveats / Surprises
-
-1. You are responsible of defining `html`, `body` or `body > div` so the styles of this library work properly. (example, if you use `<Box grow/>` and it does not work then maybe the parent is preventing the `Box` from growing. See section "Full Working Example"
-2. Rows will not take the full width unless you add to them `width="100%"`
-3. It does not do any kind of prefixing. But you can add a custom function `define_processor` for prefixing before appending to the document.
-
-## Attributes supported by `Box`
-
-The element is `<Box></Box>`, and you can just add attributes to it without any values. Some attributes like `width` will require a value. If a value is not required, then it'll be ignored.
+## Attributes supported
 
 ### Direction
 
@@ -161,21 +71,19 @@ Sets the direction of the children.
 
 ### Size
 
-The size of the `Box` and NOT the size of the children.
-
 | attribute    | description                                                |
 | ------------ | ---------------------------------------------------------- |
 | `grow`       | grow `self` as much as it can without growing the children |
-| `width`      | sets the width value(if empty defaults to 100%)            |
-| `min-width`  | sets the min-width value (if empty defaults to 100%)       |
-| `max-width`  | sets the max-width value (if empty defaults to 100%)       |
-| `height`     | sets the height value (if empty defaults to 100%)          |
-| `min-height` | sets the min-height value (if empty defaults to 100%)      |
-| `max-height` | sets the max-height value (if empty defaults to 100%)      |
+| `width`      | sets the width to 100%                                     |
+| `min-width`  | sets the min-width to 100%                                 |
+| `max-width`  | sets the max-width to 100%                                 |
+| `height`     | sets the height to 100%                                    |
+| `min-height` | sets the min-height to 100%                                |
+| `max-height` | sets the max-height to 100%                                |
 
 ### Children Alignment
 
-This is the alignment of the children, NOT the alignment of the content of these children. Example: You can display a `div` aligned to the left, but the text on it aligned to the `right`. Well, in here we only control the `div` itself and not the `div` content.
+Alignment of the children, NOT the alignment of the content of these children. Example: You can display a `div` aligned to the left, but the text on it aligned to the `right`. Well, in here we only control the `div` itself and not the `div` content.
 
 | attribute    | description                                        |
 | ------------ | -------------------------------------------------- |
@@ -209,44 +117,51 @@ This is the alignment of the children, NOT the alignment of the content of these
 
 ### Text
 
-Useful text stuff.
-
-| attribute                | description                             |
-| ------------------------ | --------------------------------------- |
-| `text-align`             | text-align could be left, center, right |
-| `text-bold`              | bold font                               |
-| `text-capitalize`        | capitalize                              |
-| `text-color`             | color css property                      |
-| `text-crop`              | crops the text                          |
-| `text-multiline`         | sets line-height:1.4;                   |
-| `text-no-wrap`           | nowrap the text if it overflows         |
-| `text-regular`           | no bold font                            |
-| `text-shadow`            | text-shadow                             |
-| `text-size`, `font-size` | font size                               |
-| `text-small`             | font size small                         |
-| `text-underline`         | underline                               |
-| `text-no-underline`      | do not underline                        |
-| `text-uppercase`         | uppercase                               |
-| `text-wrap`              | wrap the text if it overflows           |
+| attribute           | description                     |
+| ------------------- | ------------------------------- |
+| `text-center`       | sets text-align to center       |
+| `text-left`         | sets text-align to left         |
+| `text-right`        | sets text-align to right        |
+| `text-bold`         | bold font                       |
+| `text-crop`         | crops the text                  |
+| `text-multiline`    | sets line-height:1.4;           |
+| `text-regular`      | no bold font                    |
+| `text-small`        | font size small                 |
+| `text-underline`    | underline                       |
+| `text-no-underline` | do not underline                |
+| `text-capitalize`   | capitalize                      |
+| `text-uppercase`    | uppercase                       |
+| `text-no-wrap`      | nowrap the text if it overflows |
+| `text-wrap`         | wrap the text if it overflows   |
 
 #### Bugs
 
-- `text-crop` ellipsis will only be shown if the container in not `display:flex` (aka not `row/col/grow`), if you want to show ellipsis in a flex container then wrap it like `<Box row><Box text-crop>The..</Box></Box>`
+- `text-crop` ellipsis will only be shown if the container in not `display:flex` (aka not `row/col/grow`), if you want to show ellipsis in a flex container then wrap it like `<div row><div text-crop>The..</div></div>`
 
 ### Scroll
 
-| attribute           | description                                             |
-| ------------------- | ------------------------------------------------------- |
-| `scroll`            | scrolls both vertically and horizontally when overflows |
-| `scroll-x`          | scrolls horizontally when overflows                     |
-| `scroll-y`          | scrolls vertically when overflows                       |
-| `scroll-thin`       | to set the size of the scrollbar to thin                |
-| `scroll-color`      | sets the color for the bar                              |
-| `scroll-background` | sets the color for the background                       |
+| attribute           | description                                                                                         |
+| ------------------- | --------------------------------------------------------------------------------------------------- |
+| `scroll`            | scrolls both vertically and horizontally when overflows                                             |
+| `scroll-x`          | scrolls horizontally when overflows                                                                 |
+| `scroll-y`          | scrolls vertically when overflows                                                                   |
+| `scroll-thin`       | to set the size of the scrollbar to thin                                                            |
+| `scroll-color`      | sets the color for the bar `<div scroll-color style="--scroll-color:black"></div>`                  |
+| `scroll-background` | sets the color for the background `<div scroll-background style="--scroll-background:black"></div>` |
 
 #### Bugs
 
 - `scroll-color` and `scroll-background` must both be provided for this properties to work
+
+### Selection
+
+| attribute              | description                                                                                        |
+| ---------------------- | -------------------------------------------------------------------------------------------------- |
+| `selection-none`       | prevent text selection                                                                             |
+| `selection-all`        | selects all text on focus                                                                          |
+| `selection-text`       | allows text selection                                                                              |
+| `selection-color`      | selection text color `<div selection-color style="--selection-color:black"></div>`                 |
+| `selection-background` | selection background color `<div selection-background style="--selection-background:black"></div>` |
 
 ### Cursor
 
@@ -256,357 +171,31 @@ Useful text stuff.
 | `cursor-ignore`    | ignore events      |
 | `cursor-no-ignore` | dont ignore events |
 
-### Padding / Margin / Border
-
-| attribute        | description                               |
-| ---------------- | ----------------------------------------- |
-| `border-bottom`  | border bottom                             |
-| `border-left`    | border left                               |
-| `border-right`   | border right                              |
-| `border-top`     | border top                                |
-| `border`         | border                                    |
-| `margin-bottom`  | margin bottom                             |
-| `margin-left`    | margin left                               |
-| `margin-right`   | margin right                              |
-| `margin-top`     | margin top                                |
-| `margin`         | margin                                    |
-| `padding-bottom` | padding bottom                            |
-| `padding-left`   | padding left                              |
-| `padding-right`  | padding right                             |
-| `padding-top`    | padding top                               |
-| `padding`        | padding                                   |
-| `radius`         | border-radius (if empty defaults to 100%) |
-
 ### Display
 
-| attribute      | description                                     |
-| -------------- | ----------------------------------------------- |
-| `absolute`     | position absolute                               |
-| `relative`     | position relative                               |
-| `fixed`        | position fixed                                  |
-| `full`         | full width and height with overflow hidden      |
-| `block`        | display block                                   |
-| `inline`       | display inline                                  |
-| `inline-block` | display inline-block                            |
-| `inline-flex`  | display inline-flex                             |
-| `collapse`     | sets the visibility to collapsed                |
-| `layer`        | forces a layer using `transform:translateZ(0);` |
-| `overflow`     | overflow hidden                                 |
-| `z`            | z-index                                         |
-| `border-box`   | box-sizing property                             |
-| `content-box`  | box-sizing property                             |
-| `no-empty`     | hides the element if empty                      |
-
-### Selection
-
-| attribute              | description                |
-| ---------------------- | -------------------------- |
-| `selection-none`       | prevent text selection     |
-| `selection-all`        | selects all text on focus  |
-| `selection-text`       | allows text selection      |
-| `selection-color`      | selection text color       |
-| `selection-background` | selection background color |
-
-### Random Helpers As We See These Fit
-
-| attribute          | description                                                                     |
-| ------------------ | ------------------------------------------------------------------------------- |
-| `background`       | background css property                                                         |
-| `background-color` | background css property                                                         |
-| `drop-shadow`      | sets the filter to drop-shadow and expects a value with unit, drop-shadow='4px' |
-
-### CSS
-
-Attributes to add custom CSS/classNames. Priority, the ones on top overwrite the ones on bottom:
-
-1. `css-parent` overwrites:
-2. `define_attribute_high_priority` functions, overwrites:
-3. `<Box style={{background:'red';}}/>` overwrites:
-4. `<Box css="background:red;"/>` overwrites:
-5. `<Box grow/>` overwrites:
-6. `css('background:red;');`
-7. `className` is unknown if overwrites or not because depends were you include the style sheet.
-
-Please Note: if you set an attribute as `!important` same order will apply but `!important` values will still be important.
-
-| attribute    | description                                                                                         |
-| ------------ | --------------------------------------------------------------------------------------------------- |
-| `style`      | React standard object for styles. Please note these get added as classes, not as a style attribute. |
-| `className`  | React standard string with classNames                                                               |
-| `css`        | string with regular css properties                                                                  |
-| `css-parent` | string with regular css properties, to be applied to the parent. This is :parent selector           |
-
-#### Bugs
-
-- `css-parent` wasnt tested
-
-### breakpoints
-
-By prefixing any css attribute with the following keywords you can apply media query styles.
-
-| attribute | description                     |
-| --------- | ------------------------------- |
-| `@mobile` | screens that are 768px or less  |
-| `@tablet` | screens that are 1023px or less |
-| `@small`  | screens that are 1366px or less |
-
-#### Examples
-
-```html
-
-<Box css=`
-	@mobile background:red;
-	@mobile padding:10px;
-	@tablet background:blue;
-	@tablet padding:10px;
-	@small background:orange;
-	background:violet;
-	color: black;
-`>Hola!</Box>
-
-const Button = css(`
-	@mobile background:red;
-	@mobile padding:10px;
-	@tablet background:blue;
-	@tablet padding:10px;
-	@small background:orange;
-	background:violet;
-	color: black;
-`)
-
-```
-
-### Core
-
-| attribute   | description                                                                                                                                                                                            |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `element`   | `string`, `class` or `function` telling what kind of element the Box should be. By default is a `div`, but if you do `<Box element="span"/>`, it should just work and use a `span` instead of a `div`. |
-| `reference` | as `ref` is forbidden as props of custom elements, we forward ref to the html element using `reference` instead                                                                                        |
-
-#### Examples
-
-```jsx
-// plain jsx
-
-;<Box element="span">Hola!</Box>
-
-// using the component factory
-
-const Button = css(
-	`
-		color: black;
-	`,
-	'span',
-)
-
-// using any other component
-
-function Component_NOTICE_ME(props) {
-	// props.className will contain all the classes for "grow col"
-	return <div className={props.className} />
-}
-
-;<Box grow col element={Component_NOTICE_ME}>
-	Hola!
-</Box>
-
-const Button = css(
-	`
-		color: black;
-	`,
-	Component_NOTICE_ME,
-)
-```
-
-## API
-
-### Globals
-
-Including this creates three globals:
-
-- `Style` the class itself.
-- `Box` the component `Box`
-- `css` a component factory
-
-### Valid use cases for `Box` component
-
-```html
-
-<Box></Box>
-
-<Box col grow></Box>
-
-<Box css="background:red"></Box>
-
-<Box css=`
-	class:hover{
-		background:red;
-	}
-	class >a{
-		background:green
-	}
-`></Box>
-
-<Box style={{background:'red'}}></Box>
-
-<Box col grow css=`
-	class:hover{
-		background:red;
-	}
-	class >a{
-		background:green
-	}
-`
-style={{color:'blue'}}></Box>
-
-```
-
-### Invalid use cases for `Box` component. It Will Not Work !
-
-These attributes cannot have a class.
-
-```html
-<Box css-parent="class{background:red;}"></Box>
-```
-
-### Valid use cases for `css` component factory
-
-```javascript
-// this is basically the same as Box
-const Component = css()
-
-// defining a default css for the component
-const Component = css('background:red;')
-
-// class gets automatically replaced for a unique name
-const Component = css('class{background:red;}')
-
-// this is why class is handy
-const Component = css('class:hover{background:red;}')
-
-// as many classes as you want
-const Component = css('class{color:red;}class>a{color:blue;}')
-
-// the default element is a div, you can change it
-const Component = css('background:red;', 'span')
-
-// using other components in a simple way
-function Component_NOTICE_ME(props) {
-	// here className was automatically created
-	return (
-		<div className={props.className}>
-			<a href="index.html">{props.children}</a>
-		</div>
-	)
-}
-const Red = css('background:red', Something_NOTICE_ME)
-const Blue = css('background:blue', Something_NOTICE_ME)
-
-// Then you just do
-// <Red>the red link!</Red>
-// <Red padding="5px">the red link!</Red>
-// <Blue>the blue link!</Blue>
-
-// sort styled-components
-const Button = css(
-	`
-		display: inline-block;
-		border-radius: 3px;
-	`,
-	'button',
-)
-```
-
-### Extending. You can define new static and dynamic attributes for `Box`
-
-#### Static argument
-
-We add a new static attribute named fancy-margin
-
-```javascript
-style.define_attribute('fancy-margin', 'margin:0 auto;')
-
-// You now can use as <Box fancy-margin></Box>
-```
-
-Sometimes the attributes you add get overwritten by something else. In that case you can assign to the attributes a higher priority by defining these as high priority instead.
-
-```javascript
-style.define_attribute_high_priority('fancy-margin', 'margin:0 auto;')
-
-// You now can use as <Box fancy-margin></Box>
-```
-
-#### Dynamic argument
-
-Lets say we add a new dynamic attribute named random-margin. This is a function that gets called, it should return a string with css properties, NOT classes.
-
-```javascript
-style.define_dynamic_attribute('random-margin', function(value, props) {
-	return 'margin:' + ((Math.random() * 10) | 0) + 'px;padding:5px;'
-})
-
-// You then can use as <Box random-margin></Box>
-```
-
-The arguments:
-
-##### `value`
-
-Is the value of the attribute. If you do `<Box random-margin="false"></Box>` Then the value will be "false"
-
-##### `props`
-
-The react props object. This is handy so you can look up other attributes.
-
-`if(props.margin) { /* as has a defined margin do not add a random margin! */ }`
-
-##### High Priority
-
-You can also define a high priority dynamic attribute.
-
-```javascript
-// defining a dynamic attribute with high priority
-style.define_dynamic_attribute_high_priority('random-margin', function(value, props) {
-	// we avoid adding a random margin to something that already has a margin defined
-	if (props.margin) return ''
-	// yeah!
-	return 'margin:' + ((Math.random() * 10) | 0) + 'px;'
-})
-```
-
-#### Processor
-
-You can hook just before the styles are appended to the document to do some processing.
-
-```javascript
-// here we change all margins and paddings to use calc and multiply for --density var
-style.define_processor(function(styles) {
-	return styles.replace(
-		/(margin|padding)(-left|-right|-top|-bottom)?:([^;]+);/g,
-		'$1$2:calc($3 * var(--density));',
-	)
-})
-```
-
-#### How To Debug
-
-As we are going to create unique classes, we are going to reuse everywhere any class that has the same properties. So if you edit the properties of any class, you're basically editing everything globally. You should test/debug by editing `element.style` in the developer console and not the classes.
-
-To set debug to true do `style.debug = true`
-
-- This will print the attributes in the elements as `data-*`
-- Will allow edit the css in the developer console, because when you arent debuging the css is injected using sheet.insertRule and that way isnt editable
-
-### Validating
-
-It has defined a function to validate complete classes attached to an element together, but currently does not validate anything. It does not pretend to validate everything, just the annoying things that could cause problems.
+| attribute      | description                                                   |
+| -------------- | ------------------------------------------------------------- |
+| `absolute`     | position absolute                                             |
+| `relative`     | position relative                                             |
+| `fixed`        | position fixed                                                |
+| `full`         | full width and height with overflow hidden                    |
+| `full-window`  | full width and height with overflow hidden and top and left 0 |
+| `block`        | display block                                                 |
+| `inline`       | display inline                                                |
+| `inline-block` | display inline-block                                          |
+| `inline-flex`  | display inline-flex                                           |
+| `collapse`     | sets the visibility to collapsed                              |
+| `layer`        | forces a layer using `transform:translateZ(0);`               |
+| `overflow`     | overflow hidden                                               |
+| `border-box`   | box-sizing property                                           |
+| `content-box`  | box-sizing property                                           |
+| `no-empty`     | hides the element if empty                                    |
+| `circle`       | set border-radius to 100%                                     |
 
 ## Features
 
 - easy to think about layouts
 - some handy default attributes
-- easy to use mobile breakpoints
 - deduplicates css
 - is efficient
 
@@ -615,23 +204,4 @@ It has defined a function to validate complete classes attached to an element to
 - Tito Bouzout https://github.com/titoBouzout
 - Kilo https://github.com/boredofnames
 
-URL: https://github.com/titoBouzout/crippling-sorrow-styling
-
-## TODO
-
-- [style] Maybe enforce style coupling: if an animation with transform is used, then will-change: transform; should be there
-- [style] Maybe change pixels to em on the fly
-- [style] \*-waterfall (should apply the same style too all immediate children)
-- [style] \*-waterfall-deep (should apply the same style too all children)
-- [layout editor] try to avoid the important for changing defaults
-- [layout editor] the input boxes suck(cannot update in real time)
-
-## CHANGE LOG
-
-- [layout editor] drag and drop should move by default and copy when holding control
-- [layout editor] improve drag and drop
-- [layout editor] make all the elements with content-editable
-- [development] simplify serving
-- [development] mergue gh-pages and master for the sake of simplicity
-- [layout editor] maybe try to set some defaults
-- [layout editor] for some reason the main content does not want to scroll
+URL: https://github.com/titoBouzout/styled
