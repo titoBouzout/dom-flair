@@ -1,0 +1,549 @@
+/*
+PROPERTIES (the very basic first styles on the cascade)
+they are only mean to be basic values of anything, then at a later step could be overiden for when behaviour changes or is buggy
+*/
+
+/* direction */
+[row] {
+	display: flex;
+	flex-direction: row;
+
+	align-content: flex-start;
+	justify-content: flex-start;
+	justify-items: flex-start;
+	align-items: flex-start;
+}
+
+[col],
+[column] {
+	display: flex;
+	flex-direction: column;
+
+	align-content: flex-start;
+	justify-content: flex-start;
+	justify-items: flex-start;
+	align-items: flex-start;
+}
+
+[wrap] {
+	display: flex;
+	flex-wrap: wrap;
+}
+[no-wrap] {
+	flex-wrap: nowrap;
+}
+
+/* size */
+
+[grow] {
+	display: flex;
+
+	flex-grow: 1;
+	flex-shrink: 1;
+	flex-basis: 0%;
+
+	align-self: stretch;
+	min-height: 0;
+	min-width: 0;
+
+	align-content: flex-start;
+	justify-content: flex-start;
+	justify-items: flex-start;
+	align-items: flex-start;
+}
+
+[width] {
+	width: 100%;
+}
+[min-width] {
+	min-width: 100%;
+}
+[max-width] {
+	max-width: 100%;
+}
+
+[height] {
+	height: 100%;
+}
+[min-height] {
+	min-height: 100%;
+}
+[max-height] {
+	max-height: 100%;
+}
+
+/* scroll  */
+
+[scroll] {
+	will-change: scroll-position;
+	transform: translatez(0);
+
+	overflow: auto;
+
+	min-height: 0;
+	min-width: 0;
+}
+[scroll-x] {
+	will-change: scroll-position;
+	transform: translatez(0);
+
+	overflow-x: auto;
+	overflow-y: hidden;
+
+	min-width: 0;
+}
+[scroll-y] {
+	will-change: scroll-position;
+	transform: translatez(0);
+
+	overflow-y: auto;
+	overflow-x: hidden;
+
+	min-height: 0;
+}
+[scroll-thin]::-webkit-scrollbar {
+	width: 8px;
+}
+[scroll-thin] {
+	scrollbar-width: thin;
+}
+
+/* display  */
+
+[border-box] {
+	box-sizing: border-box;
+}
+[content-box] {
+	box-sizing: content-box;
+}
+[block] {
+	display: block;
+}
+[inline] {
+	display: inline;
+}
+[inline-block] {
+	display: inline-block;
+}
+[inline-flex] {
+	display: inline-flex;
+}
+[flex] {
+	display: flex;
+}
+[relative] {
+	position: relative;
+}
+[absolute] {
+	position: absolute;
+}
+[fixed] {
+	position: fixed;
+}
+[full] {
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	overflow: hidden;
+}
+[full-window] {
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
+[overflow] {
+	overflow: hidden;
+}
+[layer] {
+	transform: translatez(0);
+}
+[collapse] {
+	visibility: collapse;
+}
+
+[no-empty]::empty {
+	display: none;
+}
+
+/* cursor  */
+
+[cursor-hand] {
+	cursor: pointer;
+}
+[cursor-ignore] {
+	pointer-events: none;
+}
+[cursor-no-ignore] {
+	pointer-events: initial;
+}
+
+/* selection  */
+
+[selection-none] {
+	-moz-user-select: none;
+	user-select: none;
+}
+[selection-text] {
+	-moz-user-select: text;
+	user-select: text;
+}
+[selection-all] {
+	-moz-user-select: all;
+	user-select: all;
+}
+
+/* text  */
+
+[text-multiline] {
+	line-height: 1.4;
+}
+[text-center] {
+	text-align: center;
+}
+[text-left] {
+	text-align: left;
+}
+[text-right] {
+	text-align: right;
+}
+[text-crop] {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	min-width: 0;
+	min-height: 0;
+}
+[text-no-wrap] {
+	white-space: nowrap;
+}
+[text-wrap] {
+	word-break: break-word;
+	overflow-wrap: anywhere;
+	min-height: 0;
+	min-width: 0;
+}
+[text-bold] {
+	font-weight: bold;
+}
+[text-regular] {
+	font-weight: normal;
+}
+[text-capitalize] {
+	text-transform: capitalize;
+}
+[text-uppercase] {
+	text-transform: uppercase;
+}
+[text-underline] {
+	text-decoration: underline;
+}
+[text-no-underline] {
+	text-decoration: none;
+}
+[text-small] {
+	font-size: small;
+}
+
+/* alignment  */
+
+[left] {
+	display: flex;
+}
+[right] {
+	display: flex;
+}
+[horizontal] {
+	display: flex;
+}
+[top] {
+	display: flex;
+}
+[bottom] {
+	display: flex;
+}
+[vertical] {
+	display: flex;
+}
+[center] {
+	display: flex;
+}
+
+/* spacing  */
+
+[space-around] {
+	display: flex;
+}
+[space-around-horizontal] {
+	display: flex;
+}
+[space-around-vertical] {
+	display: flex;
+}
+[space-between] {
+	display: flex;
+}
+[space-between-horizontal] {
+	display: flex;
+}
+[space-between-vertical] {
+	display: flex;
+}
+[space-evenly] {
+	display: flex;
+}
+[space-evenly-horizontal] {
+	display: flex;
+}
+[space-evenly-vertical] {
+	display: flex;
+}
+
+/*
+PROPERTIES GROUPS
+the properties depend of other classes
+*/
+
+/* left */
+[col][left],
+[column][left] {
+	align-content: flex-start;
+	align-items: flex-start;
+}
+[row][left] {
+	justify-content: flex-start;
+	justify-items: flex-start;
+}
+
+/* right */
+[col][right],
+[column][right] {
+	align-content: flex-end;
+	align-items: flex-end;
+}
+[row][right] {
+	justify-content: flex-end;
+	justify-items: flex-end;
+}
+
+/* top */
+[col][top],
+[column][top] {
+	justify-content: flex-start;
+	justify-items: flex-start;
+}
+[row][top] {
+	align-content: flex-start;
+	align-items: flex-start;
+}
+
+/* bottom */
+[col][bottom],
+[column][bottom] {
+	justify-content: flex-end;
+	justify-items: flex-end;
+}
+[row][bottom] {
+	align-content: flex-end;
+	align-items: flex-end;
+}
+
+/* horizontal */
+[col][horizontal],
+[column][horizontal] {
+	align-content: center;
+	align-items: center;
+	align-content: safe center;
+	align-items: safe center;
+}
+[row][horizontal] {
+	justify-content: center;
+	justify-items: center;
+	justify-content: safe center;
+	justify-items: safe center;
+}
+
+/* vertical */
+[col][vertical],
+[column][vertical] {
+	justify-content: center;
+	justify-items: center;
+}
+[row][vertical] {
+	align-content: center;
+	align-items: center;
+}
+
+/* center */
+[col][center],
+[column][center] {
+	justify-content: center;
+	align-content: center;
+	justify-items: center;
+	align-items: center;
+}
+[row][center] {
+	justify-content: center;
+	align-content: center;
+	justify-items: center;
+	align-items: center;
+}
+
+/* space-around */
+[col][space-around],
+[column][space-around] {
+	justify-content: space-around;
+	align-content: initial; /* this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
+
+	justify-items: center;
+	align-items: center;
+}
+[row][space-around] {
+	justify-content: space-around;
+	align-content: initial; /* this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
+
+	justify-items: center;
+	align-items: center;
+}
+
+/* space-around-horizontal */
+[col][space-around-horizontal],
+[column][space-around-horizontal] {
+	justify-content: space-around;
+	align-content: space-around;
+	justify-items: center;
+	align-items: center;
+}
+[row][space-around-horizontal] {
+	justify-content: space-around;
+}
+
+/* space-around-vertical */
+[col][space-around-vertical],
+[column][space-around-vertical] {
+	justify-content: space-around;
+	align-content: space-around;
+	justify-items: center;
+	align-items: center;
+}
+[row][space-around-vertical] {
+	align-content: space-around;
+}
+
+/* space-between */
+[col][space-between],
+[column][space-between] {
+	justify-content: space-between;
+	align-content: initial; /* this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
+	justify-items: center;
+	align-items: center;
+}
+[row][space-between] {
+	justify-content: space-between;
+	align-content: initial; /* this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
+	justify-items: center;
+	align-items: center;
+}
+/* space-between-horizontal */
+[col][space-between-horizontal],
+[column][space-between-horizontal] {
+	justify-content: space-between;
+	align-content: space-between;
+	justify-items: center;
+	align-items: center;
+}
+[row][space-between-horizontal] {
+	justify-content: space-between;
+}
+/* space-between-vertical */
+[col][space-between-vertical],
+[column][space-between-vertical] {
+	justify-content: space-between;
+	align-content: space-between;
+	justify-items: center;
+	align-items: center;
+}
+[row][space-between-vertical] {
+	align-content: space-between;
+}
+
+/* .space-evenly */
+[col][space-evenly],
+[column][space-evenly] {
+	justify-content: space-evenly;
+	align-content: initial; /* this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
+	justify-items: center;
+	align-items: center;
+}
+[row][space-evenly] {
+	justify-content: space-evenly;
+	align-content: initial; /* this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
+	justify-items: center;
+	align-items: center;
+}
+
+/* .space-evenly-horizontal */
+[col][space-evenly-horizontal],
+[column][space-evenly-horizontal] {
+	justify-content: space-evenly;
+	align-content: space-evenly;
+	justify-items: center;
+	align-items: center;
+}
+[row][space-evenly-horizontal] {
+	justify-content: space-evenly;
+}
+
+/* .space-evenly-vertical */
+[col][space-evenly-vertical],
+[column][space-evenly-vertical] {
+	justify-content: space-evenly;
+	align-content: space-evenly;
+	justify-items: center;
+	align-items: center;
+}
+[row][space-evenly-vertical] {
+	align-content: space-evenly;
+}
+
+/* fix: flex wont grow when its positioned as absolute */
+[absolute][grow] {
+	width: 100%;
+	height: 100%;
+}
+
+/*
+PROPERTIES WITH VALUES
+the values of the properties come via props
+*/
+
+[selection-color]::selection {
+	color: var(--selection-color);
+}
+[selection-background]::selection {
+	background-color: var(--selection-background);
+}
+
+[scroll-color]::-webkit-scrollbar-thumb {
+	background-color: var(--scroll-color);
+}
+[scroll-color] {
+	scrollbar-color: var(--scroll-color) inherit;
+}
+
+[scroll-background-color]::-webkit-scrollbar-track {
+	background-color: var(--scroll-background-color);
+}
+[scroll-background-color] {
+	scrollbar-color: inherit var(--scroll-background-color);
+}
+
+/* useful */
+
+[circle] {
+	border-radius: 100%;
+}
