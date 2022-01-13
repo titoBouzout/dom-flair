@@ -71,15 +71,15 @@ Sets the direction of the children.
 
 ### Size
 
-| attribute    | description                                                |
-| ------------ | ---------------------------------------------------------- |
-| `grow`       | grow `self` as much as it can without growing the children |
-| `width`      | sets the width to 100%                                     |
-| `min-width`  | sets the min-width to 100%                                 |
-| `max-width`  | sets the max-width to 100%                                 |
-| `height`     | sets the height to 100%                                    |
-| `min-height` | sets the min-height to 100%                                |
-| `max-height` | sets the max-height to 100%                                |
+| attribute     | description                                                |
+| ------------- | ---------------------------------------------------------- |
+| `grow`        | grow `self` as much as it can without growing the children |
+| `full-width`  | sets the width to 100%                                     |
+| `min-width`   | sets the min-width to 100%                                 |
+| `max-width`   | sets the max-width to 100%                                 |
+| `full-height` | sets the height to 100%                                    |
+| `min-height`  | sets the min-height to 100%                                |
+| `max-height`  | sets the max-height to 100%                                |
 
 ### Children Alignment
 
@@ -87,10 +87,10 @@ Alignment of the children, NOT the alignment of the content of these children. E
 
 | attribute    | description                                        |
 | ------------ | -------------------------------------------------- |
-| `left`       | aligns to left                                     |
-| `top`        | aligns to top                                      |
-| `right`      | aligns to right                                    |
-| `bottom`     | aligns to bottom                                   |
+| `left`       | aligns to left, sets left to 0                     |
+| `top`        | aligns to top, sets top to 0                       |
+| `right`      | aligns to right, sets right to 0                   |
+| `bottom`     | aligns to bottom, sets botttom to 0                |
 | `horizontal` | aligns to the center horizontally                  |
 | `vertical`   | aligns to the center vertically                    |
 | `center`     | aligns to center, both horizontally and vertically |

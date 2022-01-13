@@ -52,7 +52,7 @@ they are only mean to be basic values of anything, then at a later step could be
 	align-items: flex-start;
 }
 
-[width] {
+[full-width] {
 	width: 100%;
 }
 [min-width] {
@@ -62,7 +62,7 @@ they are only mean to be basic values of anything, then at a later step could be
 	max-width: 100%;
 }
 
-[height] {
+[full-height] {
 	height: 100%;
 }
 [min-height] {
@@ -253,18 +253,22 @@ they are only mean to be basic values of anything, then at a later step could be
 
 [left] {
 	display: flex;
+	left: 0;
 }
 [right] {
 	display: flex;
+	right: 0;
 }
 [horizontal] {
 	display: flex;
 }
 [top] {
 	display: flex;
+	top: 0;
 }
 [bottom] {
 	display: flex;
+	bottom: 0;
 }
 [vertical] {
 	display: flex;
@@ -546,4 +550,8 @@ the values of the properties come via props
 
 [circle] {
 	border-radius: 100%;
+}
+
+[z-index] {
+	z-index: 1;
 }
