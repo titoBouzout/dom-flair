@@ -8,7 +8,7 @@ It could also help with trivial CSS, For example `<div text-capitalize></div>` t
 
 ### ES module
 
-`npm install https://github.com/titoBouzout/styled.git`
+`npm install -g https://github.com/titoBouzout/styled.git`
 
 Import it where you gonna use is
 
