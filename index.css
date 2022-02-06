@@ -52,6 +52,8 @@ they are only mean to be basic values of anything, then at a later step could be
 	align-items: flex-start;
 }
 
+div[width],
+span[width],
 [full-width] {
 	width: 100%;
 }
@@ -62,6 +64,8 @@ they are only mean to be basic values of anything, then at a later step could be
 	max-width: 100%;
 }
 
+div[height],
+span[height],
 [full-height] {
 	height: 100%;
 }
