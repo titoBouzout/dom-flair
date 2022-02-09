@@ -148,10 +148,16 @@ span[all-height] *,
 
 	min-height: 0;
 }
-[scroll-thin]::-webkit-scrollbar {
+
+[scroll-thin]::-webkit-scrollbar,
+[child-scroll-thin] > *::-webkit-scrollbar,
+[all-scroll-thin] *::-webkit-scrollbar {
 	width: 8px;
 }
-[scroll-thin] {
+
+[scroll-thin],
+[child-scroll-thin] > *,
+[all-scroll-thin] * {
 	scrollbar-width: thin;
 }
 
@@ -243,7 +249,9 @@ span[all-height] *,
 	visibility: collapse;
 }
 
-[no-empty]::empty {
+[no-empty]::empty,
+[child-no-empty] > *::empty,
+[all-no-empty] *::empty {
 	display: none;
 }
 
@@ -462,57 +470,65 @@ the properties depend of other classes
 */
 
 /* left */
+[left],
+[child-left] > *,
+[all-left] *,
+[row][left] {
+	justify-content: flex-start;
+	justify-items: flex-start;
+}
 [col][left],
 [column][left] {
 	align-content: flex-start;
 	align-items: flex-start;
 }
-[row][left] {
-	justify-content: flex-start;
-	justify-items: flex-start;
-}
 
 /* right */
+[right],
+[child-right] > *,
+[all-right] *,
+[row][right] {
+	justify-content: flex-end;
+	justify-items: flex-end;
+}
 [col][right],
 [column][right] {
 	align-content: flex-end;
 	align-items: flex-end;
 }
-[row][right] {
-	justify-content: flex-end;
-	justify-items: flex-end;
-}
 
 /* top */
+[top],
+[child-top] > *,
+[all-top] *,
+[row][top] {
+	align-content: flex-start;
+	align-items: flex-start;
+}
 [col][top],
 [column][top] {
 	justify-content: flex-start;
 	justify-items: flex-start;
 }
-[row][top] {
-	align-content: flex-start;
-	align-items: flex-start;
-}
 
 /* bottom */
+[bottom],
+[child-bottom] > *,
+[all-bottom] *,
+[row][bottom] {
+	align-content: flex-end;
+	align-items: flex-end;
+}
 [col][bottom],
 [column][bottom] {
 	justify-content: flex-end;
 	justify-items: flex-end;
 }
-[row][bottom] {
-	align-content: flex-end;
-	align-items: flex-end;
-}
 
 /* horizontal */
-[col][horizontal],
-[column][horizontal] {
-	align-content: center;
-	align-items: center;
-	align-content: safe center;
-	align-items: safe center;
-}
+[horizontal],
+[child-horizontal] > *,
+[all-horizontal] *,
 [row][horizontal] {
 	justify-content: center;
 	justify-items: center;
@@ -520,18 +536,39 @@ the properties depend of other classes
 	justify-items: safe center;
 }
 
-/* vertical */
-[col][vertical],
-[column][vertical] {
-	justify-content: center;
-	justify-items: center;
+[col][horizontal],
+[column][horizontal] {
+	align-content: center;
+	align-items: center;
+	align-content: safe center;
+	align-items: safe center;
 }
+
+/* vertical */
+[vertical],
+[child-vertical] > *,
+[all-vertical] *,
 [row][vertical] {
 	align-content: center;
 	align-items: center;
 }
 
+[col][vertical],
+[column][vertical] {
+	justify-content: center;
+	justify-items: center;
+}
+
 /* center */
+[center],
+[child-center] > *,
+[all-center] *,
+[row][center] {
+	justify-content: center;
+	align-content: center;
+	justify-items: center;
+	align-items: center;
+}
 [col][center],
 [column][center] {
 	justify-content: center;
@@ -539,14 +576,18 @@ the properties depend of other classes
 	justify-items: center;
 	align-items: center;
 }
-[row][center] {
-	justify-content: center;
-	align-content: center;
+
+/* space-around */
+[space-around],
+[child-space-around] > *,
+[all-space-around] *,
+[row][space-around] {
+	justify-content: space-around;
+	align-content: initial; /* this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
+
 	justify-items: center;
 	align-items: center;
 }
-
-/* space-around */
 [col][space-around],
 [column][space-around] {
 	justify-content: space-around;
@@ -555,15 +596,14 @@ the properties depend of other classes
 	justify-items: center;
 	align-items: center;
 }
-[row][space-around] {
-	justify-content: space-around;
-	align-content: initial; /* this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
-
-	justify-items: center;
-	align-items: center;
-}
 
 /* space-around-horizontal */
+[space-around-horizontal],
+[child-space-around-horizontal] > *,
+[all-space-around-horizontal] *,
+[row][space-around-horizontal] {
+	justify-content: space-around;
+}
 [col][space-around-horizontal],
 [column][space-around-horizontal] {
 	justify-content: space-around;
@@ -571,11 +611,14 @@ the properties depend of other classes
 	justify-items: center;
 	align-items: center;
 }
-[row][space-around-horizontal] {
-	justify-content: space-around;
-}
 
 /* space-around-vertical */
+[space-around-vertical],
+[child-space-around-vertical] > *,
+[all-space-around-vertical] *,
+[row][space-around-vertical] {
+	align-content: space-around;
+}
 [col][space-around-vertical],
 [column][space-around-vertical] {
 	justify-content: space-around;
@@ -583,11 +626,17 @@ the properties depend of other classes
 	justify-items: center;
 	align-items: center;
 }
-[row][space-around-vertical] {
-	align-content: space-around;
-}
 
 /* space-between */
+[space-between],
+[child-space-between] > *,
+[all-space-between] *,
+[row][space-between] {
+	justify-content: space-between;
+	align-content: initial; /* this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
+	justify-items: center;
+	align-items: center;
+}
 [col][space-between],
 [column][space-between] {
 	justify-content: space-between;
@@ -595,13 +644,14 @@ the properties depend of other classes
 	justify-items: center;
 	align-items: center;
 }
-[row][space-between] {
-	justify-content: space-between;
-	align-content: initial; /* this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
-	justify-items: center;
-	align-items: center;
-}
+
 /* space-between-horizontal */
+[space-between-horizontal],
+[child-space-between-horizontal] > *,
+[all-space-between-horizontal] *,
+[row][space-between-horizontal] {
+	justify-content: space-between;
+}
 [col][space-between-horizontal],
 [column][space-between-horizontal] {
 	justify-content: space-between;
@@ -609,10 +659,15 @@ the properties depend of other classes
 	justify-items: center;
 	align-items: center;
 }
-[row][space-between-horizontal] {
-	justify-content: space-between;
-}
+
 /* space-between-vertical */
+[space-between-vertical],
+[child-space-between-vertical] > *,
+[all-space-between-vertical] *,
+[row][space-between-vertical] {
+	align-content: space-between;
+}
+
 [col][space-between-vertical],
 [column][space-between-vertical] {
 	justify-content: space-between;
@@ -620,11 +675,17 @@ the properties depend of other classes
 	justify-items: center;
 	align-items: center;
 }
-[row][space-between-vertical] {
-	align-content: space-between;
-}
 
 /* .space-evenly */
+[space-evenly],
+[child-space-evenly] > *,
+[all-space-evenly] *,
+[row][space-evenly] {
+	justify-content: space-evenly;
+	align-content: initial; /* this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
+	justify-items: center;
+	align-items: center;
+}
 [col][space-evenly],
 [column][space-evenly] {
 	justify-content: space-evenly;
@@ -632,14 +693,14 @@ the properties depend of other classes
 	justify-items: center;
 	align-items: center;
 }
-[row][space-evenly] {
-	justify-content: space-evenly;
-	align-content: initial; /* this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
-	justify-items: center;
-	align-items: center;
-}
 
 /* .space-evenly-horizontal */
+[space-evenly-horizontal],
+[child-space-evenly-horizontal] > *,
+[all-space-evenly-horizontal] *,
+[row][space-evenly-horizontal] {
+	justify-content: space-evenly;
+}
 [col][space-evenly-horizontal],
 [column][space-evenly-horizontal] {
 	justify-content: space-evenly;
@@ -647,11 +708,14 @@ the properties depend of other classes
 	justify-items: center;
 	align-items: center;
 }
-[row][space-evenly-horizontal] {
-	justify-content: space-evenly;
-}
 
 /* .space-evenly-vertical */
+[space-evenly-vertical],
+[child-space-evenly-vertical] > *,
+[all-space-evenly-vertical] *,
+[row][space-evenly-vertical] {
+	align-content: space-evenly;
+}
 [col][space-evenly-vertical],
 [column][space-evenly-vertical] {
 	justify-content: space-evenly;
@@ -659,12 +723,11 @@ the properties depend of other classes
 	justify-items: center;
 	align-items: center;
 }
-[row][space-evenly-vertical] {
-	align-content: space-evenly;
-}
 
 /* fix: flex wont grow when its positioned as absolute */
-[absolute][grow] {
+[absolute][grow],
+[child-absolute][child-grow] > *,
+[all-absolute][child-grow] * {
 	width: 100%;
 	height: 100%;
 }
