@@ -4,7 +4,9 @@ they are only mean to be basic values of anything, then at a later step could be
 */
 
 /* direction */
-[row] {
+[row],
+[child-row] > *,
+[all-row] * {
 	display: flex;
 	flex-direction: row;
 
@@ -15,7 +17,11 @@ they are only mean to be basic values of anything, then at a later step could be
 }
 
 [col],
-[column] {
+[column],
+[child-col] > *,
+[child-column] > *,
+[all-col] *,
+[all-column] * {
 	display: flex;
 	flex-direction: column;
 
@@ -25,17 +31,24 @@ they are only mean to be basic values of anything, then at a later step could be
 	align-items: flex-start;
 }
 
-[wrap] {
+[wrap],
+[child-wrap] > *,
+[all-wrap] * {
 	display: flex;
 	flex-wrap: wrap;
 }
-[no-wrap] {
+
+[no-wrap],
+[child-no-wrap] > *,
+[all-no-wrap] * {
 	flex-wrap: nowrap;
 }
 
 /* size */
 
-[grow] {
+[grow],
+[child-grow] > *,
+[all-grow] * {
 	display: flex;
 
 	flex-grow: 1;
@@ -54,31 +67,56 @@ they are only mean to be basic values of anything, then at a later step could be
 
 div[width],
 span[width],
-[full-width] {
+[full-width],
+div[child-width] > *,
+span[child-width] > *,
+[child-full-width] > *,
+div[all-width] *,
+span[all-width] *,
+[all-full-width] * {
 	width: 100%;
 }
-[min-width] {
+
+[min-width],
+[child-min-width] > *,
+[all-min-width] * {
 	min-width: 100%;
 }
-[max-width] {
+[max-width],
+[child-max-width] > *,
+[all-max-width] * {
 	max-width: 100%;
 }
 
 div[height],
 span[height],
-[full-height] {
+[full-height],
+div[child-height] > *,
+span[child-height] > *,
+[child-full-height] > *,
+div[all-height] *,
+span[all-height] *,
+[all-full-height] * {
 	height: 100%;
 }
-[min-height] {
+
+[min-height],
+[child-min-height] > *,
+[all-min-height] * {
 	min-height: 100%;
 }
-[max-height] {
+
+[max-height],
+[child-max-height] > *,
+[all-max-height] * {
 	max-height: 100%;
 }
 
 /* scroll  */
 
-[scroll] {
+[scroll],
+[child-scroll] > *,
+[all-scroll] * {
 	will-change: scroll-position;
 	transform: translatez(0);
 
@@ -87,7 +125,9 @@ span[height],
 	min-height: 0;
 	min-width: 0;
 }
-[scroll-x] {
+[scroll-x],
+[child-scroll-x] > *,
+[all-scroll-x] * {
 	will-change: scroll-position;
 	transform: translatez(0);
 
@@ -96,7 +136,10 @@ span[height],
 
 	min-width: 0;
 }
-[scroll-y] {
+
+[scroll-y],
+[child-scroll-y] > *,
+[all-scroll-y] * {
 	will-change: scroll-position;
 	transform: translatez(0);
 
@@ -114,44 +157,68 @@ span[height],
 
 /* display  */
 
-[border-box] {
+[border-box],
+[child-border-box] > *,
+[all-border-box] * {
 	box-sizing: border-box;
 }
-[content-box] {
+[content-box],
+[child-content-box] > *,
+[all-content-box] * {
 	box-sizing: content-box;
 }
-[block] {
+[block],
+[child-block] > *,
+[all-block] * {
 	display: block;
 }
-[inline] {
+[inline],
+[child-inline] > *,
+[all-inline] * {
 	display: inline;
 }
-[inline-block] {
+[inline-block],
+[child-inline-block] > *,
+[all-inline-block] * {
 	display: inline-block;
 }
-[inline-flex] {
+[inline-flex],
+[child-inline-flex] > *,
+[all-inline-flex] * {
 	display: inline-flex;
 }
-[flex] {
+[flex],
+[child-flex] > *,
+[all-flex] * {
 	display: flex;
 }
-[relative] {
+[relative],
+[child-relative] > *,
+[all-relative] * {
 	position: relative;
 }
-[absolute] {
+[absolute],
+[child-absolute] > *,
+[all-absolute] * {
 	position: absolute;
 }
-[fixed] {
+[fixed],
+[child-fixed] > *,
+[all-fixed] * {
 	position: fixed;
 }
-[full] {
+[full],
+[child-full] > *,
+[all-full] * {
 	width: 100%;
 	height: 100%;
 	max-width: 100%;
 	max-height: 100%;
 	overflow: hidden;
 }
-[full-window] {
+[full-window],
+[child-full-window] > *,
+[all-full-window] * {
 	width: 100%;
 	height: 100%;
 	max-width: 100%;
@@ -160,13 +227,19 @@ span[height],
 	left: 0;
 	overflow: hidden;
 }
-[overflow] {
+[overflow],
+[child-overflow] > *,
+[all-overflow] * {
 	overflow: hidden;
 }
-[layer] {
+[layer],
+[child-layer] > *,
+[all-layer] * {
 	transform: translatez(0);
 }
-[collapse] {
+[collapse],
+[child-collapse] > *,
+[all-collapse] * {
 	visibility: collapse;
 }
 
@@ -176,138 +249,210 @@ span[height],
 
 /* cursor  */
 
-[cursor-hand] {
+[cursor-hand],
+[child-cursor-hand] > *,
+[all-cursor-hand] * {
 	cursor: pointer;
 }
-[cursor-ignore] {
+[cursor-ignore],
+[child-cursor-ignore] > *,
+[all-cursor-ignore] * {
 	pointer-events: none;
 }
-[cursor-no-ignore] {
+[cursor-no-ignore],
+[child-cursor-no-ignore] > *,
+[all-cursor-no-ignore] * {
 	pointer-events: initial;
 }
 
 /* selection  */
 
-[selection-none] {
+[selection-none],
+[child-selection-none] > *,
+[all-selection-none] * {
 	-moz-user-select: none;
 	user-select: none;
 }
-[selection-text] {
+[selection-text],
+[child-selection-text] > *,
+[all-selection-text] * {
 	-moz-user-select: text;
 	user-select: text;
 }
-[selection-all] {
+[selection-all],
+[child-selection-all] > *,
+[all-selection-all] * {
 	-moz-user-select: all;
 	user-select: all;
 }
 
 /* text  */
 
-[text-multiline] {
+[text-multiline],
+[child-text-multiline] > *,
+[all-text-multiline] * {
 	line-height: 1.4;
 }
-[text-center] {
+[text-center],
+[child-text-center] > *,
+[all-text-center] * {
 	text-align: center;
 }
-[text-left] {
+[text-left],
+[child-text-left] > *,
+[all-text-left] * {
 	text-align: left;
 }
-[text-right] {
+[text-right],
+[child-text-right] > *,
+[all-text-right] * {
 	text-align: right;
 }
-[text-crop] {
+[text-crop],
+[child-text-crop] > *,
+[all-text-crop] * {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
 	min-width: 0;
 	min-height: 0;
 }
-[text-no-wrap] {
+[text-no-wrap],
+[child-text-no-wrap] > *,
+[all-text-no-wrap] * {
 	white-space: nowrap;
 }
-[text-wrap] {
+[text-wrap],
+[child-text-wrap] > *,
+[all-text-wrap] * {
 	word-break: break-word;
 	overflow-wrap: anywhere;
 	min-height: 0;
 	min-width: 0;
 }
-[text-bold] {
+[text-bold],
+[child-text-bold] > *,
+[all-text-bold] * {
 	font-weight: bold;
 }
-[text-regular] {
+[text-regular],
+[child-text-regular] > *,
+[all-text-regular] * {
 	font-weight: normal;
 }
-[text-capitalize] {
+[text-capitalize],
+[child-text-capitalize] > *,
+[all-text-capitalize] * {
 	text-transform: capitalize;
 }
-[text-uppercase] {
+[text-uppercase],
+[child-text-uppercase] > *,
+[all-text-uppercase] * {
 	text-transform: uppercase;
 }
-[text-underline] {
+[text-underline],
+[child-text-underline] > *,
+[all-text-underline] * {
 	text-decoration: underline;
 }
-[text-no-underline] {
+[text-no-underline],
+[child-text-no-underline] > *,
+[all-text-no-underline] * {
 	text-decoration: none;
 }
-[text-small] {
+[text-small],
+[child-text-small] > *,
+[all-text-small] * {
 	font-size: small;
 }
 
 /* alignment  */
 
-[left] {
+[left],
+[child-left] > *,
+[all-left] * {
 	display: flex;
 	left: 0;
 }
-[right] {
+[right],
+[child-right] > *,
+[all-right] * {
 	display: flex;
 	right: 0;
 }
-[horizontal] {
+[horizontal],
+[child-horizontal] > *,
+[all-horizontal] * {
 	display: flex;
 }
-[top] {
+[top],
+[child-top] > *,
+[all-top] * {
 	display: flex;
 	top: 0;
 }
-[bottom] {
+[bottom],
+[child-bottom] > *,
+[all-bottom] * {
 	display: flex;
 	bottom: 0;
 }
-[vertical] {
+[vertical],
+[child-vertical] > *,
+[all-vertical] * {
 	display: flex;
 }
-[center] {
+[center],
+[child-center] > *,
+[all-center] * {
 	display: flex;
 }
 
 /* spacing  */
 
-[space-around] {
+[space-around],
+[child-space-around] > *,
+[all-space-around] * {
 	display: flex;
 }
-[space-around-horizontal] {
+[space-around-horizontal],
+[child-space-around-horizontal] > *,
+[all-space-around-horizontal] * {
 	display: flex;
 }
-[space-around-vertical] {
+[space-around-vertical],
+[child-space-around-vertical] > *,
+[all-space-around-vertical] * {
 	display: flex;
 }
-[space-between] {
+[space-between],
+[child-space-between] > *,
+[all-space-between] * {
 	display: flex;
 }
-[space-between-horizontal] {
+[space-between-horizontal],
+[child-space-between-horizontal] > *,
+[all-space-between-horizontal] * {
 	display: flex;
 }
-[space-between-vertical] {
+[space-between-vertical],
+[child-space-between-vertical] > *,
+[all-space-between-vertical] * {
 	display: flex;
 }
-[space-evenly] {
+[space-evenly],
+[child-space-evenly] > *,
+[all-space-evenly] * {
 	display: flex;
 }
-[space-evenly-horizontal] {
+[space-evenly-horizontal],
+[child-space-evenly-horizontal] > *,
+[all-space-evenly-horizontal] * {
 	display: flex;
 }
-[space-evenly-vertical] {
+[space-evenly-vertical],
+[child-space-evenly-vertical] > *,
+[all-space-evenly-vertical] * {
 	display: flex;
 }
 
@@ -552,10 +697,14 @@ the values of the properties come via props
 
 /* useful */
 
-[circle] {
+[circle],
+[child-circle] > *,
+[all-circle] * {
 	border-radius: 100%;
 }
 
-[z-index] {
+[z-index],
+[child-z-index] > *,
+[all-z-index] * {
 	z-index: 1;
 }
