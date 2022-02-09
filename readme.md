@@ -138,6 +138,7 @@ Alignment of the children, NOT the alignment of the content of these children. E
 | `scroll-x`          | scrolls horizontally when overflows                                                                 |
 | `scroll-y`          | scrolls vertically when overflows                                                                   |
 | `scroll-thin`       | to set the size of the scrollbar to thin                                                            |
+| `scroll-no`         | to set the size of the scrollbar to 0px and display none                                            |
 | `scroll-color`      | sets the color for the bar `<div scroll-color style="--scroll-color:black"></div>`                  |
 | `scroll-background` | sets the color for the background `<div scroll-background style="--scroll-background:black"></div>` |
 
