@@ -708,3 +708,9 @@ the values of the properties come via props
 [all-z-index] * {
 	z-index: 1;
 }
+
+[hidden],
+[child-hidden] > *,
+[all-hidden] * {
+	display: none;
+}

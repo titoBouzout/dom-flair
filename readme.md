@@ -184,6 +184,7 @@ Alignment of the children, NOT the alignment of the content of these children. E
 | `inline`       | display inline                                                |
 | `inline-block` | display inline-block                                          |
 | `inline-flex`  | display inline-flex                                           |
+| `hidden`       | display none                                                  |
 | `collapse`     | sets the visibility to collapsed                              |
 | `layer`        | forces a layer using `transform:translateZ(0);`               |
 | `overflow`     | overflow hidden                                               |
