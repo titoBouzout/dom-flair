@@ -22,7 +22,7 @@ The element you mount to should be `display:flex;flex:1;` for the attributes to 
 
 Sticky footer
 
-```jsx
+```html
 <div col grow>
 	<div>header</div>
 	<div grow>content</div>
@@ -34,29 +34,21 @@ Sticky footer
 
 Has two sidebars, a toolbar, a footer, and grows in the middle content:
 
-```jsx
+```html
 <div grow>
-	<div col grow horizontal>
-		left sidebar
-	</div>
+	<div col grow horizontal>left sidebar</div>
 	<div col grow>
-		<div row right>
-			toolbar
-		</div>
-		<div row grow center>
-			content
-		</div>
-		<div row left>
-			footer
-		</div>
+		<div row right>toolbar</div>
+		<div row grow center>content</div>
+		<div row left>footer</div>
 	</div>
-	<div col grow center>
-		right sidebar
-	</div>
+	<div col grow center>right sidebar</div>
 </div>
 ```
 
 ## Attributes supported
+
+NOTE: Most attributes support the prefix `child-` which will apply the styles to all immediate children, and `all-` which will apply the styles to every children of the whole tree.
 
 ### Direction
 
