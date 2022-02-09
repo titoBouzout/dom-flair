@@ -161,16 +161,16 @@ span[all-height] *,
 	scrollbar-width: thin;
 }
 
-[scroll-no]::-webkit-scrollbar,
-[child-scroll-no] > *::-webkit-scrollbar,
-[all-scroll-no] *::-webkit-scrollbar {
+[no-scroll]::-webkit-scrollbar,
+[child-no-scroll] > *::-webkit-scrollbar,
+[all-no-scroll] *::-webkit-scrollbar {
 	width: 0px;
 	display: none;
 }
 
-[scroll-no]::-moz-scrollbar,
-[child-scroll-no] > *::-moz-scrollbar,
-[all-scroll-no] *::-moz-scrollbar {
+[no-scroll]::-moz-scrollbar,
+[child-no-scroll] > *::-moz-scrollbar,
+[all-no-scroll] *::-moz-scrollbar {
 	width: 0px;
 	display: none;
 }
