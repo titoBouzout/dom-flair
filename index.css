@@ -782,7 +782,10 @@ the values of the properties come via props
 
 [z-index],
 [child-z-index] > *,
-[all-z-index] * {
+[all-z-index] *,
+[z],
+[child-z] > *,
+[all-z] * {
 	z-index: 1;
 }
 
