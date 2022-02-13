@@ -66,12 +66,15 @@ they are only mean to be basic values of anything, then at a later step could be
 }
 
 div[width],
+input[width],
 span[width],
 [full-width],
 div[child-width] > *,
+input[child-width] > *,
 span[child-width] > *,
 [child-full-width] > *,
 div[all-width] *,
+input[all-width] *,
 span[all-width] *,
 [all-full-width] * {
 	width: 100%;
@@ -89,12 +92,15 @@ span[all-width] *,
 }
 
 div[height],
+input[height],
 span[height],
 [full-height],
 div[child-height] > *,
+input[child-height] > *,
 span[child-height] > *,
 [child-full-height] > *,
 div[all-height] *,
+input[all-height] *,
 span[all-height] *,
 [all-full-height] * {
 	height: 100%;
