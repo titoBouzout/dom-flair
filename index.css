@@ -771,11 +771,11 @@ the values of the properties come via props
 	scrollbar-color: var(--scroll-color) inherit;
 }
 
-[scroll-background-color]::-webkit-scrollbar-track {
-	background-color: var(--scroll-background-color);
+[scroll-background]::-webkit-scrollbar-track {
+	background-color: var(--scroll-background);
 }
-[scroll-background-color] {
-	scrollbar-color: inherit var(--scroll-background-color);
+[scroll-background] {
+	scrollbar-color: inherit var(--scroll-background);
 }
 
 /* useful */
