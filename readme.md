@@ -8,11 +8,11 @@ It could also help with trivial CSS, For example `<div text-capitalize></div>` t
 
 ### ES module
 
-`npm install -g https://github.com/titoBouzout/styled.git`
+`npm install @titodp/styled`
 
 Import it where you gonna use is
 
-`import 'styled'`
+`import '@titodp/styled'`
 
 The element you mount to should be `display:flex;flex:1;` for the attributes to work.
 
