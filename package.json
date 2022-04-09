@@ -1,6 +1,6 @@
 {
 	"name": "styled",
-	"version": "3.0.19",
+	"version": "3.0.20",
 	"description": "Stylesheet to solve `html` layout in intuitive ways, `<div col grow center></div>`. That's it.",
 	"main": "index.js",
 	"repository": {
