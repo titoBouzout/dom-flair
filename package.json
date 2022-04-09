@@ -1,13 +1,19 @@
 {
 	"name": "styled",
-	"version": "3.0.17",
+	"version": "3.0.18",
 	"description": "Stylesheet to solve `html` layout in intuitive ways, `<div col grow center></div>`. That's it.",
 	"main": "index.js",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/titoBouzout/styled.git"
 	},
-	"keywords": ["CSS", "Style", "Stylesheet", "React", "Styled"],
+	"keywords": [
+		"CSS",
+		"Style",
+		"Stylesheet",
+		"React",
+		"Styled"
+	],
 	"author": "Tito Bouzout, Kilo Spade",
 	"license": "GPL",
 	"bugs": {
@@ -48,11 +54,16 @@
 			"allowImportExportEverywhere": false,
 			"codeFrame": false
 		},
-		"plugins": ["react"],
+		"plugins": [
+			"react"
+		],
 		"rules": {
 			"comma-dangle": "off",
 			"indent": "off",
-			"linebreak-style": ["error", "unix"],
+			"linebreak-style": [
+				"error",
+				"unix"
+			],
 			"no-cond-assign": "off",
 			"no-console": "off",
 			"no-empty": "off",
