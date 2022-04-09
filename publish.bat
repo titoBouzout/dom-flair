@@ -9,6 +9,6 @@ git commit -m "update version"
 
 git push --all --prune
 
-call npm install -g https://github.com/titoBouzout/styled.git
+call npm publish
 
 exit
