@@ -181,6 +181,7 @@ Alignment of the children, NOT the alignment of the content of these children. E
 | `collapse`     | sets the visibility to collapsed                              |
 | `layer`        | forces a layer using `transform:translateZ(0);`               |
 | `overflow`     | overflow hidden                                               |
+| `visible`      | overflow visible                                              |
 | `border-box`   | box-sizing property                                           |
 | `content-box`  | box-sizing property                                           |
 | `no-empty`     | hides the element if empty                                    |

@@ -68,14 +68,20 @@ they are only mean to be basic values of anything, then at a later step could be
 div[width],
 input[width],
 span[width],
+header[width],
+nav[width],
 [full-width],
 div[child-width] > *,
 input[child-width] > *,
 span[child-width] > *,
+header[child-width] > *,
+nav[child-width] > *,
 [child-full-width] > *,
 div[all-width] *,
 input[all-width] *,
 span[all-width] *,
+header[all-width] *,
+nav[all-width] *,
 [all-full-width] * {
 	width: 100%;
 }
@@ -94,14 +100,20 @@ span[all-width] *,
 div[height],
 input[height],
 span[height],
+header[height],
+nav[height],
 [full-height],
 div[child-height] > *,
 input[child-height] > *,
 span[child-height] > *,
+header[child-height] > *,
+nav[child-height] > *,
 [child-full-height] > *,
 div[all-height] *,
 input[all-height] *,
 span[all-height] *,
+header[all-height] *,
+nav[all-height] *,
 [all-full-height] * {
 	height: 100%;
 }
@@ -257,6 +269,11 @@ span[all-height] *,
 [child-overflow] > *,
 [all-overflow] * {
 	overflow: hidden;
+}
+[visible],
+[child-visible] > *,
+[all-visible] * {
+	overflow: visible;
 }
 [layer],
 [child-layer] > *,
