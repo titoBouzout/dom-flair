@@ -130,6 +130,12 @@ nav[all-height] *,
 	max-height: 100%;
 }
 
+[visible],
+[child-visible] > *,
+[all-visible] * {
+	overflow: visible;
+}
+
 /* scroll  */
 
 [scroll],
@@ -270,11 +276,7 @@ nav[all-height] *,
 [all-overflow] * {
 	overflow: hidden;
 }
-[visible],
-[child-visible] > *,
-[all-visible] * {
-	overflow: visible;
-}
+
 [layer],
 [child-layer] > *,
 [all-layer] * {
@@ -362,6 +364,7 @@ nav[all-height] *,
 	min-width: 0;
 	min-height: 0;
 }
+
 [text-no-wrap],
 [child-text-no-wrap] > *,
 [all-text-no-wrap] * {
