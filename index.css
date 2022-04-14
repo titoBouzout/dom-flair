@@ -130,12 +130,6 @@ nav[all-height] *,
 	max-height: 100%;
 }
 
-[visible],
-[child-visible] > *,
-[all-visible] * {
-	overflow: visible;
-}
-
 /* scroll  */
 
 [scroll],
@@ -799,6 +793,12 @@ the values of the properties come via props
 }
 
 /* useful */
+
+[visible],
+[child-visible] > *,
+[all-visible] * {
+	overflow: visible;
+}
 
 [circle],
 [child-circle] > *,
