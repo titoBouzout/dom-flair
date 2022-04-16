@@ -172,6 +172,12 @@ nav[all-height] *,
 [all-scroll-thin] *::-webkit-scrollbar {
 	width: 8px;
 }
+/* default color if not its invisible */
+[scroll-thin]::-webkit-scrollbar-thumb,
+[child-scroll-thin] > *::-webkit-scrollbar-thumb,
+[all-scroll-thin] *::-webkit-scrollbar-thumb {
+	background-color: grey;
+}
 
 [scroll-thin],
 [child-scroll-thin] > *,
