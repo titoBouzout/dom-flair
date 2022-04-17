@@ -826,3 +826,9 @@ the values of the properties come via props
 [all-hidden] * {
 	display: none;
 }
+
+[controls-none]::-webkit-media-controls-enclosure,
+[child-controls-none] > *::-webkit-media-controls-enclosure,
+[all-controls-none] *::-webkit-media-controls-enclosure {
+	display: none;
+}

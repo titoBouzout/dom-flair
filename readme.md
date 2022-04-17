@@ -166,26 +166,27 @@ Alignment of the children, NOT the alignment of the content of these children. E
 
 ### Display
 
-| attribute      | description                                                   |
-| -------------- | ------------------------------------------------------------- |
-| `absolute`     | position absolute                                             |
-| `relative`     | position relative                                             |
-| `fixed`        | position fixed                                                |
-| `full`         | full width and height with overflow hidden                    |
-| `full-window`  | full width and height with overflow hidden and top and left 0 |
-| `block`        | display block                                                 |
-| `inline`       | display inline                                                |
-| `inline-block` | display inline-block                                          |
-| `inline-flex`  | display inline-flex                                           |
-| `hidden`       | display none                                                  |
-| `collapse`     | sets the visibility to collapsed                              |
-| `layer`        | forces a layer using `transform:translateZ(0);`               |
-| `overflow`     | overflow hidden                                               |
-| `visible`      | overflow visible                                              |
-| `border-box`   | box-sizing property                                           |
-| `content-box`  | box-sizing property                                           |
-| `no-empty`     | hides the element if empty                                    |
-| `circle`       | set border-radius to 100%                                     |
+| attribute       | description                                                   |
+| --------------- | ------------------------------------------------------------- |
+| `absolute`      | position absolute                                             |
+| `relative`      | position relative                                             |
+| `fixed`         | position fixed                                                |
+| `full`          | full width and height with overflow hidden                    |
+| `full-window`   | full width and height with overflow hidden and top and left 0 |
+| `block`         | display block                                                 |
+| `inline`        | display inline                                                |
+| `inline-block`  | display inline-block                                          |
+| `inline-flex`   | display inline-flex                                           |
+| `hidden`        | display none                                                  |
+| `collapse`      | sets the visibility to collapsed                              |
+| `layer`         | forces a layer using `transform:translateZ(0);`               |
+| `overflow`      | overflow hidden                                               |
+| `visible`       | overflow visible                                              |
+| `border-box`    | box-sizing property                                           |
+| `content-box`   | box-sizing property                                           |
+| `no-empty`      | hides the element if empty                                    |
+| `circle`        | set border-radius to 100%                                     |
+| `controls-none` | hide video/audio controls                                     |
 
 ## Features
 
