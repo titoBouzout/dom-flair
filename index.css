@@ -378,6 +378,15 @@ nav[all-height] *,
 	min-height: 0;
 	min-width: 0;
 }
+[text-pre],
+[child-text-pre] > *,
+[all-text-pre] * {
+	white-space: pre-wrap;
+	word-break: break-word;
+	overflow-wrap: anywhere;
+	min-height: 0;
+	min-width: 0;
+}
 [text-bold],
 [child-text-bold] > *,
 [all-text-bold] * {

@@ -125,6 +125,7 @@ Alignment of the children, NOT the alignment of the content of these children. E
 | `text-uppercase`    | uppercase                       |
 | `text-no-wrap`      | nowrap the text if it overflows |
 | `text-wrap`         | wrap the text if it overflows   |
+| `text-pre`          | use pre-wrap                    |
 
 #### Bugs
 
