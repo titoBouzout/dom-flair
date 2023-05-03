@@ -1,12 +1,10 @@
 /*
-PROPERTIES (the very basic first styles on the cascade)
-they are only mean to be basic values of anything, then at a later step could be overiden for when behaviour changes or is buggy
+	PROPERTIES (the very basic first styles on the cascade)
+	they are only mean to be basic values of anything, then at a later step could be overiden for when behaviour changes or is buggy
 */
 
 /* direction */
-[row],
-[child-row] > *,
-[all-row] * {
+[row] {
 	display: flex;
 	flex-direction: row;
 
@@ -21,11 +19,7 @@ they are only mean to be basic values of anything, then at a later step could be
 }
 
 [col],
-[column],
-[child-col] > *,
-[child-column] > *,
-[all-col] *,
-[all-column] * {
+[column] {
 	display: flex;
 	flex-direction: column;
 
@@ -39,24 +33,18 @@ they are only mean to be basic values of anything, then at a later step could be
 	min-width: 0;
 }
 
-[wrap],
-[child-wrap] > *,
-[all-wrap] * {
+[wrap] {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-[no-wrap],
-[child-no-wrap] > *,
-[all-no-wrap] * {
+[no-wrap] {
 	flex-wrap: nowrap;
 }
 
 /* size */
 
-[grow],
-[child-grow] > *,
-[all-grow] * {
+[grow] {
 	display: flex;
 
 	flex-grow: 1;
@@ -85,30 +73,14 @@ input[width],
 span[width],
 header[width],
 nav[width],
-[full-width],
-div[child-width] > *,
-input[child-width] > *,
-span[child-width] > *,
-header[child-width] > *,
-nav[child-width] > *,
-[child-full-width] > *,
-div[all-width] *,
-input[all-width] *,
-span[all-width] *,
-header[all-width] *,
-nav[all-width] *,
-[all-full-width] * {
+[full-width] {
 	width: 100%;
 }
 
-[min-width],
-[child-min-width] > *,
-[all-min-width] * {
+[min-width] {
 	min-width: 100%;
 }
-[max-width],
-[child-max-width] > *,
-[all-max-width] * {
+[max-width] {
 	max-width: 100%;
 }
 
@@ -117,39 +89,21 @@ input[height],
 span[height],
 header[height],
 nav[height],
-[full-height],
-div[child-height] > *,
-input[child-height] > *,
-span[child-height] > *,
-header[child-height] > *,
-nav[child-height] > *,
-[child-full-height] > *,
-div[all-height] *,
-input[all-height] *,
-span[all-height] *,
-header[all-height] *,
-nav[all-height] *,
-[all-full-height] * {
+[full-height] {
 	height: 100%;
 }
 
-[min-height],
-[child-min-height] > *,
-[all-min-height] * {
+[min-height] {
 	min-height: 100%;
 }
 
-[max-height],
-[child-max-height] > *,
-[all-max-height] * {
+[max-height] {
 	max-height: 100%;
 }
 
 /* scroll  */
 
-[scroll],
-[child-scroll] > *,
-[all-scroll] * {
+[scroll] {
 	will-change: scroll-position;
 	transform: translatez(0);
 
@@ -158,9 +112,7 @@ nav[all-height] *,
 	min-height: 0;
 	min-width: 0;
 }
-[scroll-x],
-[child-scroll-x] > *,
-[all-scroll-x] * {
+[scroll-x] {
 	will-change: scroll-position;
 	transform: translatez(0);
 
@@ -170,9 +122,7 @@ nav[all-height] *,
 	min-width: 0;
 }
 
-[scroll-y],
-[child-scroll-y] > *,
-[all-scroll-y] * {
+[scroll-y] {
 	will-change: scroll-position;
 	transform: translatez(0);
 
@@ -185,113 +135,73 @@ nav[all-height] *,
 /* fix container overflows parent and stuff gets aligned to the center and wont scroll properly  */
 [FLEXBOX-BUG],
 [scroll] > *,
-[child-scroll] > * > *,
-[all-scroll] * > *,
 [scroll-x] > *,
-[child-scroll-x] > * > *,
-[all-scroll-x] * > *,
-[scroll-y] > *,
-[child-scroll-y] > * > *,
-[all-scroll-y] * > * {
+[scroll-y] > * {
 	margin: auto;
 }
 
-[scroll-thin]::-webkit-scrollbar,
-[child-scroll-thin] > *::-webkit-scrollbar,
-[all-scroll-thin] *::-webkit-scrollbar {
+[scroll-thin]::-webkit-scrollbar {
 	width: 8px;
 }
 /* default color if not its invisible */
-[scroll-thin]::-webkit-scrollbar-thumb,
-[child-scroll-thin] > *::-webkit-scrollbar-thumb,
-[all-scroll-thin] *::-webkit-scrollbar-thumb {
+[scroll-thin]::-webkit-scrollbar-thumb {
 	background-color: grey;
 }
 
-[scroll-thin],
-[child-scroll-thin] > *,
-[all-scroll-thin] * {
+[scroll-thin] {
 	scrollbar-width: thin;
 }
 
-[no-scroll]::-webkit-scrollbar,
-[child-no-scroll] > *::-webkit-scrollbar,
-[all-no-scroll] *::-webkit-scrollbar {
+[no-scroll]::-webkit-scrollbar {
 	width: 0px;
 	display: none;
 }
 
-[no-scroll]::-moz-scrollbar,
-[child-no-scroll] > *::-moz-scrollbar,
-[all-no-scroll] *::-moz-scrollbar {
+[no-scroll]::-moz-scrollbar {
 	width: 0px;
 	display: none;
 }
 
 /* display  */
 
-[border-box],
-[child-border-box] > *,
-[all-border-box] * {
+[border-box] {
 	box-sizing: border-box;
 }
-[content-box],
-[child-content-box] > *,
-[all-content-box] * {
+[content-box] {
 	box-sizing: content-box;
 }
-[block],
-[child-block] > *,
-[all-block] * {
+[block] {
 	display: block;
 }
-[inline],
-[child-inline] > *,
-[all-inline] * {
+[inline] {
 	display: inline;
 }
-[inline-block],
-[child-inline-block] > *,
-[all-inline-block] * {
+[inline-block] {
 	display: inline-block;
 }
-[inline-flex],
-[child-inline-flex] > *,
-[all-inline-flex] * {
+[inline-flex] {
 	display: inline-flex;
 }
-[flex],
-[child-flex] > *,
-[all-flex] * {
+[flex] {
 	display: flex;
 }
-[relative],
-[child-relative] > *,
-[all-relative] * {
+[relative] {
 	position: relative;
 }
-[absolute],
-[child-absolute] > *,
-[all-absolute] * {
+[absolute] {
 	position: absolute;
 }
-[fixed],
-[child-fixed] > *,
-[all-fixed] * {
+[fixed] {
 	position: fixed;
 }
-[full],
-[child-full] > *,
-[all-full] * {
+[full] {
 	width: 100%;
 	height: 100%;
 	max-width: 100%;
 	max-height: 100%;
 	overflow: hidden;
 }
-[full-window],
-[child-full-window] > *,
-[all-full-window] * {
+[full-window] {
 	width: 100%;
 	height: 100%;
 	max-width: 100%;
@@ -300,93 +210,76 @@ nav[all-height] *,
 	left: 0;
 	overflow: hidden;
 }
-[overflow],
-[child-overflow] > *,
-[all-overflow] * {
+[overflow] {
 	overflow: hidden;
 }
 
-[layer],
-[child-layer] > *,
-[all-layer] * {
+[layer] {
 	transform: translatez(0);
 }
-[collapse],
-[child-collapse] > *,
-[all-collapse] * {
+[collapse] {
 	visibility: collapse;
 }
 
-[no-empty]::empty,
-[child-no-empty] > *::empty,
-[all-no-empty] *::empty {
+[no-empty]::empty {
 	display: none;
 }
 
 /* cursor  */
 
-[cursor-hand],
-[child-cursor-hand] > *,
-[all-cursor-hand] * {
+[cursor-hand] {
 	cursor: pointer;
 }
-[cursor-ignore],
-[child-cursor-ignore] > *,
-[all-cursor-ignore] * {
+[cursor-ignore] {
 	pointer-events: none;
 }
-[cursor-no-ignore],
-[child-cursor-no-ignore] > *,
-[all-cursor-no-ignore] * {
+[cursor-no-ignore] {
 	pointer-events: initial;
 }
 
 /* selection  */
 
-[selection-none],
-[child-selection-none] > *,
-[all-selection-none] * {
-	-moz-user-select: none;
+[selection-none] {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
 	user-select: none;
 }
-[selection-text],
-[child-selection-text] > *,
-[all-selection-text] * {
-	-moz-user-select: text;
+[selection-text] {
+	-webkit-touch-callout: text;
+	-webkit-user-select: text;
 	user-select: text;
 }
-[selection-all],
-[child-selection-all] > *,
-[all-selection-all] * {
-	-moz-user-select: all;
+[selection-all] {
+	-webkit-touch-callout: all;
+	-webkit-user-select: all;
 	user-select: all;
+}
+
+/* touch */
+[draggable='false'] {
+	touch-action: none;
+	-webkit-user-drag: none;
+}
+[draggable='true'] {
+	touch-action: initial;
+	-webkit-user-drag: initial;
 }
 
 /* text  */
 
-[text-multiline],
-[child-text-multiline] > *,
-[all-text-multiline] * {
+[text-multiline] {
 	line-height: 1.4;
 }
-[text-center],
-[child-text-center] > *,
-[all-text-center] * {
+[text-center] {
 	text-align: center;
 }
-[text-left],
-[child-text-left] > *,
-[all-text-left] * {
+[text-left] {
 	text-align: left;
 }
-[text-right],
-[child-text-right] > *,
-[all-text-right] * {
+[text-right] {
 	text-align: right;
 }
-[text-crop],
-[child-text-crop] > *,
-[all-text-crop] * {
+[text-crop] {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
@@ -394,151 +287,99 @@ nav[all-height] *,
 	min-height: 0;
 }
 
-[text-no-wrap],
-[child-text-no-wrap] > *,
-[all-text-no-wrap] * {
+[text-no-wrap] {
 	white-space: nowrap;
 }
-[text-wrap],
-[child-text-wrap] > *,
-[all-text-wrap] * {
+[text-wrap] {
 	word-break: break-word;
 	overflow-wrap: anywhere;
 	min-height: 0;
 	min-width: 0;
 }
-[text-pre],
-[child-text-pre] > *,
-[all-text-pre] * {
+[text-pre] {
 	white-space: pre-wrap;
 	word-break: break-word;
 	overflow-wrap: anywhere;
 	min-height: 0;
 	min-width: 0;
 }
-[text-bold],
-[child-text-bold] > *,
-[all-text-bold] * {
+[text-bold] {
 	font-weight: bold;
 }
-[text-regular],
-[child-text-regular] > *,
-[all-text-regular] * {
+[text-regular] {
 	font-weight: normal;
 }
-[text-capitalize],
-[child-text-capitalize] > *,
-[all-text-capitalize] * {
+[text-capitalize] {
 	text-transform: capitalize;
 }
-[text-uppercase],
-[child-text-uppercase] > *,
-[all-text-uppercase] * {
+[text-uppercase] {
 	text-transform: uppercase;
 }
-[text-underline],
-[child-text-underline] > *,
-[all-text-underline] * {
+[text-underline] {
 	text-decoration: underline;
 }
-[text-no-underline],
-[child-text-no-underline] > *,
-[all-text-no-underline] * {
+[text-no-underline] {
 	text-decoration: none;
 }
-[text-small],
-[child-text-small] > *,
-[all-text-small] * {
+[text-small] {
 	font-size: small;
 }
 
 /* alignment  */
 
-[left],
-[child-left] > *,
-[all-left] * {
+[left] {
 	display: flex;
 	left: 0;
 }
-[right],
-[child-right] > *,
-[all-right] * {
+[right] {
 	display: flex;
 	right: 0;
 }
-[horizontal],
-[child-horizontal] > *,
-[all-horizontal] * {
+[horizontal] {
 	display: flex;
 }
-[top],
-[child-top] > *,
-[all-top] * {
+[top] {
 	display: flex;
 	top: 0;
 }
-[bottom],
-[child-bottom] > *,
-[all-bottom] * {
+[bottom] {
 	display: flex;
 	bottom: 0;
 }
-[vertical],
-[child-vertical] > *,
-[all-vertical] * {
+[vertical] {
 	display: flex;
 }
-[center],
-[child-center] > *,
-[all-center] * {
+[center] {
 	display: flex;
 }
 
 /* spacing  */
 
-[space-around],
-[child-space-around] > *,
-[all-space-around] * {
+[space-around] {
 	display: flex;
 }
-[space-around-horizontal],
-[child-space-around-horizontal] > *,
-[all-space-around-horizontal] * {
+[space-around-horizontal] {
 	display: flex;
 }
-[space-around-vertical],
-[child-space-around-vertical] > *,
-[all-space-around-vertical] * {
+[space-around-vertical] {
 	display: flex;
 }
-[space-between],
-[child-space-between] > *,
-[all-space-between] * {
+[space-between] {
 	display: flex;
 }
-[space-between-horizontal],
-[child-space-between-horizontal] > *,
-[all-space-between-horizontal] * {
+[space-between-horizontal] {
 	display: flex;
 }
-[space-between-vertical],
-[child-space-between-vertical] > *,
-[all-space-between-vertical] * {
+[space-between-vertical] {
 	display: flex;
 }
-[space-evenly],
-[child-space-evenly] > *,
-[all-space-evenly] * {
+[space-evenly] {
 	display: flex;
 }
-[space-evenly-horizontal],
-[child-space-evenly-horizontal] > *,
-[all-space-evenly-horizontal] * {
+[space-evenly-horizontal] {
 	display: flex;
 }
-[space-evenly-vertical],
-[child-space-evenly-vertical] > *,
-[all-space-evenly-vertical] * {
+[space-evenly-vertical] {
 	display: flex;
 }
 
@@ -549,8 +390,6 @@ the properties depend of other classes
 
 /* left */
 [left],
-[child-left] > *,
-[all-left] *,
 [row][left] {
 	justify-content: flex-start;
 	justify-items: flex-start;
@@ -563,8 +402,6 @@ the properties depend of other classes
 
 /* right */
 [right],
-[child-right] > *,
-[all-right] *,
 [row][right] {
 	justify-content: flex-end;
 	justify-items: flex-end;
@@ -577,8 +414,6 @@ the properties depend of other classes
 
 /* top */
 [top],
-[child-top] > *,
-[all-top] *,
 [row][top] {
 	align-content: flex-start;
 	align-items: flex-start;
@@ -591,8 +426,6 @@ the properties depend of other classes
 
 /* bottom */
 [bottom],
-[child-bottom] > *,
-[all-bottom] *,
 [row][bottom] {
 	align-content: flex-end;
 	align-items: flex-end;
@@ -605,8 +438,6 @@ the properties depend of other classes
 
 /* horizontal */
 [horizontal],
-[child-horizontal] > *,
-[all-horizontal] *,
 [row][horizontal] {
 	justify-content: center;
 	justify-items: center;
@@ -624,8 +455,6 @@ the properties depend of other classes
 
 /* vertical */
 [vertical],
-[child-vertical] > *,
-[all-vertical] *,
 [row][vertical] {
 	align-content: center;
 	align-items: center;
@@ -639,8 +468,6 @@ the properties depend of other classes
 
 /* center */
 [center],
-[child-center] > *,
-[all-center] *,
 [row][center] {
 	justify-content: center;
 	align-content: center;
@@ -658,8 +485,6 @@ the properties depend of other classes
 /* space-around */
 [FLEXBOX-BUG],
 [space-around],
-[child-space-around] > *,
-[all-space-around] *,
 [row][space-around] {
 	justify-content: space-around;
 	align-content: initial; /*  this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
@@ -679,8 +504,6 @@ the properties depend of other classes
 
 /* space-around-horizontal */
 [space-around-horizontal],
-[child-space-around-horizontal] > *,
-[all-space-around-horizontal] *,
 [row][space-around-horizontal] {
 	justify-content: space-around;
 }
@@ -694,8 +517,6 @@ the properties depend of other classes
 
 /* space-around-vertical */
 [space-around-vertical],
-[child-space-around-vertical] > *,
-[all-space-around-vertical] *,
 [row][space-around-vertical] {
 	align-content: space-around;
 }
@@ -710,8 +531,6 @@ the properties depend of other classes
 /* space-between */
 [FLEXBOX-BUG],
 [space-between],
-[child-space-between] > *,
-[all-space-between] *,
 [row][space-between] {
 	justify-content: space-between;
 	align-content: initial; /* this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
@@ -729,8 +548,6 @@ the properties depend of other classes
 
 /* space-between-horizontal */
 [space-between-horizontal],
-[child-space-between-horizontal] > *,
-[all-space-between-horizontal] *,
 [row][space-between-horizontal] {
 	justify-content: space-between;
 }
@@ -744,8 +561,6 @@ the properties depend of other classes
 
 /* space-between-vertical */
 [space-between-vertical],
-[child-space-between-vertical] > *,
-[all-space-between-vertical] *,
 [row][space-between-vertical] {
 	align-content: space-between;
 }
@@ -761,8 +576,6 @@ the properties depend of other classes
 /* .space-evenly */
 [FLEXBOX-BUG],
 [space-evenly],
-[child-space-evenly] > *,
-[all-space-evenly] *,
 [row][space-evenly] {
 	justify-content: space-evenly;
 	align-content: initial; /*  this fix scroll when the item is bigger than the container, may need to be tested in colums and reverse it with justify-content*/
@@ -780,8 +593,6 @@ the properties depend of other classes
 
 /* .space-evenly-horizontal */
 [space-evenly-horizontal],
-[child-space-evenly-horizontal] > *,
-[all-space-evenly-horizontal] *,
 [row][space-evenly-horizontal] {
 	justify-content: space-evenly;
 }
@@ -795,8 +606,6 @@ the properties depend of other classes
 
 /* .space-evenly-vertical */
 [space-evenly-vertical],
-[child-space-evenly-vertical] > *,
-[all-space-evenly-vertical] *,
 [row][space-evenly-vertical] {
 	align-content: space-evenly;
 }
@@ -809,8 +618,8 @@ the properties depend of other classes
 }
 
 /*
-PROPERTIES WITH VALUES
-the values of the properties come via props
+	PROPERTIES WITH VALUES
+	the values of the properties come via props
 */
 
 [selection-color]::selection {
@@ -836,35 +645,23 @@ the values of the properties come via props
 
 /* useful */
 
-[visible],
-[child-visible] > *,
-[all-visible] * {
+[visible] {
 	overflow: visible;
 }
 
-[circle],
-[child-circle] > *,
-[all-circle] * {
+[circle] {
 	border-radius: 100%;
 }
 
 [z-index],
-[child-z-index] > *,
-[all-z-index] *,
-[z],
-[child-z] > *,
-[all-z] * {
+[z] {
 	z-index: 1;
 }
 
-[hidden],
-[child-hidden] > *,
-[all-hidden] * {
+[hidden] {
 	display: none;
 }
 
-[controls-none]::-webkit-media-controls-enclosure,
-[child-controls-none] > *::-webkit-media-controls-enclosure,
-[all-controls-none] *::-webkit-media-controls-enclosure {
+[controls-none]::-webkit-media-controls-enclosure {
 	display: none;
 }

@@ -1,35 +1,29 @@
 {
 	"name": "@titodp/styled",
-	"version": "3.0.31",
+	"version": "4.0.31",
 	"description": "Stylesheet to solve `html` layout in intuitive ways, `<div col grow center></div>`. That's it.",
-	"main": "index.js",
+	"main": "index.css",
+	"type": "module",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/titoBouzout/styled.git"
 	},
-	"keywords": [
-		"CSS",
-		"Style",
-		"Stylesheet",
-		"React",
-		"Styled"
-	],
+	"keywords": ["CSS", "Style", "Stylesheet", "React", "Styled"],
 	"author": "Tito Bouzout, Kilo Spade",
 	"bugs": {
 		"url": "https://github.com/titoBouzout/styled/issues"
 	},
 	"homepage": "https://github.com/titoBouzout/styled#readme",
 	"prettier": {
-		"printWidth": 100,
+		"printWidth": 70,
 		"useTabs": true,
 		"semi": false,
 		"singleQuote": true,
 		"jsxSingleQuote": false,
 		"trailingComma": "all",
 		"bracketSpacing": true,
-		"jsxBracketSameLine": false,
 		"arrowParens": "avoid",
 		"quoteProps": "preserve",
-		"proseWrap": "preserve"
+		"proseWrap": "never"
 	}
 }

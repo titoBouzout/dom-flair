@@ -4,7 +4,7 @@ The goal of this project is to solve any or most `html` layout issues in intuiti
 
 It could also help with trivial CSS, For example `<div text-capitalize></div>` to capitalize the `div` contents.
 
-## Installation
+## Installation & Usage
 
 ### ES module
 
@@ -14,7 +14,21 @@ Import it where you gonna use is
 
 `import '@titodp/styled'`
 
-The element you mount to should be `display:flex;flex:1;` for the attributes to work.
+Note: The element you mount to should be `display:flex;flex:1;` for the attributes to work.
+
+### Babel Plugin
+
+The style-sheet has around 800~ lines, you may want to include only what you use. There's a babel plugin that will look at the attributes of `jsx` elements and create a style-sheet with the output to the desired location.
+
+```json
+"babel": {
+	"plugins": [
+		[
+			"@titodp/styled/babel",
+			{ "path": "client/dist/styled.css" }
+		]
+	],
+```
 
 ## Examples
 
@@ -48,8 +62,6 @@ Has two sidebars, a toolbar, a footer, and grows in the middle content:
 
 ## Attributes supported
 
-NOTE: Most attributes support the prefix `child-` which will apply the styles to all immediate children, and `all-` which will apply the styles to every children of the whole tree.
-
 ### Direction
 
 Sets the direction of the children.
@@ -63,15 +75,15 @@ Sets the direction of the children.
 
 ### Size
 
-| attribute     | description                                                |
-| ------------- | ---------------------------------------------------------- |
-| `grow`        | grow `self` as much as it can without growing the children |
-| `full-width`  | sets the width to 100%                                     |
-| `min-width`   | sets the min-width to 100%                                 |
-| `max-width`   | sets the max-width to 100%                                 |
-| `full-height` | sets the height to 100%                                    |
-| `min-height`  | sets the min-height to 100%                                |
-| `max-height`  | sets the max-height to 100%                                |
+| attribute | description |
+| --- | --- |
+| `grow` | grow `self` as much as it can without growing the children |
+| `full-width` | sets the width to 100% |
+| `min-width` | sets the min-width to 100% |
+| `max-width` | sets the max-width to 100% |
+| `full-height` | sets the height to 100% |
+| `min-height` | sets the min-height to 100% |
+| `max-height` | sets the max-height to 100% |
 
 ### Children Alignment
 
@@ -133,14 +145,14 @@ Alignment of the children, NOT the alignment of the content of these children. E
 
 ### Scroll
 
-| attribute           | description                                                                                         |
-| ------------------- | --------------------------------------------------------------------------------------------------- |
-| `scroll`            | scrolls both vertically and horizontally when overflows                                             |
-| `scroll-x`          | scrolls horizontally when overflows                                                                 |
-| `scroll-y`          | scrolls vertically when overflows                                                                   |
-| `scroll-thin`       | to set the size of the scrollbar to thin                                                            |
-| `no-scroll`         | to set the size of the scrollbar to 0px and display none                                            |
-| `scroll-color`      | sets the color for the bar `<div scroll-color style="--scroll-color:black"></div>`                  |
+| attribute | description |
+| --- | --- |
+| `scroll` | scrolls both vertically and horizontally when overflows |
+| `scroll-x` | scrolls horizontally when overflows |
+| `scroll-y` | scrolls vertically when overflows |
+| `scroll-thin` | to set the size of the scrollbar to thin |
+| `no-scroll` | to set the size of the scrollbar to 0px and display none |
+| `scroll-color` | sets the color for the bar `<div scroll-color style="--scroll-color:black"></div>` |
 | `scroll-background` | sets the color for the background `<div scroll-background style="--scroll-background:black"></div>` |
 
 #### Bugs
@@ -149,13 +161,15 @@ Alignment of the children, NOT the alignment of the content of these children. E
 
 ### Selection
 
-| attribute              | description                                                                                        |
-| ---------------------- | -------------------------------------------------------------------------------------------------- |
-| `selection-none`       | prevent text selection                                                                             |
-| `selection-all`        | selects all text on focus                                                                          |
-| `selection-text`       | allows text selection                                                                              |
-| `selection-color`      | selection text color `<div selection-color style="--selection-color:black"></div>`                 |
+| attribute | description |
+| --- | --- |
+| `selection-none` | prevent text selection |
+| `selection-all` | selects all text on focus |
+| `selection-text` | allows text selection |
+| `selection-color` | selection text color `<div selection-color style="--selection-color:black"></div>` |
 | `selection-background` | selection background color `<div selection-background style="--selection-background:black"></div>` |
+| `draggable='false'` | sets `touch-action: none;` and `-webkit-user-drag: none;` |
+| `draggable='true'` | sets `touch-action: initial;` and `-webkit-user-drag: initial;` |
 
 ### Cursor
 
@@ -167,27 +181,27 @@ Alignment of the children, NOT the alignment of the content of these children. E
 
 ### Display
 
-| attribute       | description                                                   |
-| --------------- | ------------------------------------------------------------- |
-| `absolute`      | position absolute                                             |
-| `relative`      | position relative                                             |
-| `fixed`         | position fixed                                                |
-| `full`          | full width and height with overflow hidden                    |
-| `full-window`   | full width and height with overflow hidden and top and left 0 |
-| `block`         | display block                                                 |
-| `inline`        | display inline                                                |
-| `inline-block`  | display inline-block                                          |
-| `inline-flex`   | display inline-flex                                           |
-| `hidden`        | display none                                                  |
-| `collapse`      | sets the visibility to collapsed                              |
-| `layer`         | forces a layer using `transform:translateZ(0);`               |
-| `overflow`      | overflow hidden                                               |
-| `visible`       | overflow visible                                              |
-| `border-box`    | box-sizing property                                           |
-| `content-box`   | box-sizing property                                           |
-| `no-empty`      | hides the element if empty                                    |
-| `circle`        | set border-radius to 100%                                     |
-| `controls-none` | hide video/audio controls                                     |
+| attribute | description |
+| --- | --- |
+| `absolute` | position absolute |
+| `relative` | position relative |
+| `fixed` | position fixed |
+| `full` | full width and height with overflow hidden |
+| `full-window` | full width and height with overflow hidden and top and left 0 |
+| `block` | display block |
+| `inline` | display inline |
+| `inline-block` | display inline-block |
+| `inline-flex` | display inline-flex |
+| `hidden` | display none |
+| `collapse` | sets the visibility to collapsed |
+| `layer` | forces a layer using `transform:translateZ(0);` |
+| `overflow` | overflow hidden |
+| `visible` | overflow visible |
+| `border-box` | box-sizing property |
+| `content-box` | box-sizing property |
+| `no-empty` | hides the element if empty |
+| `circle` | set border-radius to 100% |
+| `controls-none` | hide video/audio controls |
 
 ## Features
 
