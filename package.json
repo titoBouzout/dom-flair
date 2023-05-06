@@ -1,6 +1,6 @@
 {
 	"name": "@titodp/styled",
-	"version": "4.0.34",
+	"version": "4.0.35",
 	"description": "Stylesheet to solve `html` layout in intuitive ways, `<div col grow center></div>`. That's it.",
 	"main": "index.css",
 	"type": "module",
