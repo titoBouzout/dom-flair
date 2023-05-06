@@ -88,16 +88,18 @@ export default function (api, options) {
 				path.traverse({
 					JSXOpeningElement(path, state) {
 						for (let node of path.node.attributes) {
-							const name = node.name.name
-							if (list.has(name)) {
-								const set = list.get(name)
-								set.add(filename)
-								if (!files2styles.has(filename)) {
-									files2styles.set(filename, new Set())
-								}
-								files2styles.get(filename).add(set)
+							if (node.name && node.name.name) {
+								const name = node.name.name
+								if (list.has(name)) {
+									const set = list.get(name)
+									set.add(filename)
+									if (!files2styles.has(filename)) {
+										files2styles.set(filename, new Set())
+									}
+									files2styles.get(filename).add(set)
 
-								write(options.path)
+									write(options.path)
+								}
 							}
 						}
 					},
