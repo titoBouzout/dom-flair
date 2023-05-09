@@ -6,16 +6,13 @@ import * as url from 'url'
 	- be more clever at the attributes parsing and including
 	- generate dinamically child-* and all-*
 */
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
 const list = new Map()
 const styles = makeListIndex()
-
+const reset = fs.readFileSync(__dirname + '/../css/reset.css', 'utf8')
 function makeListIndex() {
-	const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
-
-	const styles = fs
-		.readFileSync(__dirname + '/../index.css', 'utf8')
-		.split('}')
+	const styles = fs.readFileSync(__dirname + '/../css/index.css', 'utf8').split('}')
 
 	// remove last empty element
 	styles.pop()
@@ -51,10 +48,10 @@ function makeListIndex() {
 // write
 let previousContent = ''
 
-const write = function write(state, path) {
+const write = function write(state, options) {
 	clearTimeout(state.timeout)
 	state.timeout = setTimeout(() => {
-		let content = ''
+		let content = options.reset ? reset : ''
 		for (let k in styles) {
 			if (styles[k].matches.some(set => set.size)) {
 				content += styles[k].content
@@ -62,7 +59,7 @@ const write = function write(state, path) {
 		}
 		if (content != previousContent) {
 			previousContent = content
-			fs.writeFile(path, content, () => {})
+			fs.writeFile(options.path, content, () => {})
 		}
 	}, 100)
 }.bind(null, { timeout: 0 })
@@ -81,7 +78,7 @@ export default function (api, options) {
 						set.delete(filename)
 					})
 				}
-				write(options.path)
+				write(options)
 			},
 			JSXElement(path, state) {
 				const filename = state.filename
@@ -99,7 +96,7 @@ export default function (api, options) {
 								}
 								files2styles.get(filename).add(set)
 
-								write(options.path)
+								write(options)
 							}
 						}
 					},

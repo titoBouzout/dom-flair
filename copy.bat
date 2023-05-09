@@ -1,6 +1,4 @@
 
-xcopy /Y /s . S:\www\npm\styled
-
-cd /D S:\www\npm\styled
+robocopy . S:\www\npm\styled /S /XO /XF "package.json"
 
 exit

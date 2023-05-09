@@ -29,8 +29,8 @@
 	align-items: flex-start;
 
 	/* Flexbox introduces auto as the new initial value of min-height. It makes flex items grow as tall as their contents.*/
-	min-height: 0;
-	min-width: 0;
+	min-height: min-content;
+	min-width: min-content;
 }
 
 [wrap] {
@@ -64,8 +64,8 @@
 	max-height: 100%;
 
 	/* Flexbox introduces auto as the new initial value of min-height. It makes flex items grow as tall as their contents.*/
-	min-height: 0;
-	min-width: 0;
+	min-height: min-content;
+	min-width: min-content;
 }
 
 div[width],
@@ -262,7 +262,7 @@ nav[height],
 }
 [draggable='true'] {
 	touch-action: initial;
-	-webkit-user-drag: initial;
+	-webkit-user-drag: element;
 }
 
 /* text  */
@@ -664,4 +664,14 @@ the properties depend of other classes
 
 [controls-none]::-webkit-media-controls-enclosure {
 	display: none;
+}
+
+[text-shadow] {
+	text-shadow: 1px 1px 0 var(--text-shadow-color), -1px -1px 0 var(--text-shadow-color),
+		1px -1px 0 var(--text-shadow-color), -1px 1px 0 var(--text-shadow-color);
+}
+
+svg[text-shadow] {
+	text-shadow: unset;
+	filter: drop-shadow(0 0 2px var(--text-shadow-color));
 }
