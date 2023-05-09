@@ -138,24 +138,23 @@ Well, in here we only control the `div` itself and not the `div` content.
 
 ### Text
 
-| attribute           | description                                                                                                          |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `text-center`       | sets text-align to center                                                                                            |
-| `text-left`         | sets text-align to left                                                                                              |
-| `text-right`        | sets text-align to right                                                                                             |
-| `text-bold`         | bold font                                                                                                            |
-| `text-crop`         | crops the text                                                                                                       |
-| `text-multiline`    | sets line-height:1.4;                                                                                                |
-| `text-regular`      | no bold font                                                                                                         |
-| `text-small`        | font size small                                                                                                      |
-| `text-underline`    | underline                                                                                                            |
-| `text-no-underline` | do not underline                                                                                                     |
-| `text-capitalize`   | capitalize                                                                                                           |
-| `text-uppercase`    | uppercase                                                                                                            |
-| `text-no-wrap`      | nowrap the text if it overflows                                                                                      |
-| `text-wrap`         | wrap the text if it overflows                                                                                        |
-| `text-pre`          | use pre-wrap                                                                                                         |
-| `text-shadow`       | `<div text-shadow style="--text-shadow-color:black"></div>` can also be used on svg which use a drop-shadow instead. |
+| attribute           | description                     |
+| ------------------- | ------------------------------- |
+| `text-center`       | sets text-align to center       |
+| `text-left`         | sets text-align to left         |
+| `text-right`        | sets text-align to right        |
+| `text-bold`         | bold font                       |
+| `text-crop`         | crops the text                  |
+| `text-multiline`    | sets line-height:1.4;           |
+| `text-regular`      | no bold font                    |
+| `text-small`        | font size small                 |
+| `text-underline`    | underline                       |
+| `text-no-underline` | do not underline                |
+| `text-capitalize`   | capitalize                      |
+| `text-uppercase`    | uppercase                       |
+| `text-no-wrap`      | nowrap the text if it overflows |
+| `text-wrap`         | wrap the text if it overflows   |
+| `text-pre`          | use pre-wrap                    |
 
 #### Bugs
 
@@ -222,6 +221,19 @@ Well, in here we only control the `div` itself and not the `div` content.
 | `no-empty`      | hides the element if empty                                    |
 | `circle`        | set border-radius to 100%                                     |
 | `controls-none` | hide video/audio controls                                     |
+
+### Shadows
+
+| attribute     | description                                                                                                                                            |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `text-shadow` | `<div text-shadow style="--text-shadow-color:black"></div>` can also be used on `svg` which use a drop-shadow instead trying to match the text shadow. |
+| `box-shadow`  | similar to text-shadow but for boxes. `<div text-shadow style="--box-shadow-color:black"></div>`                                                       |
+
+### Backgrounds
+
+| attribute          | description                    |
+| ------------------ | ------------------------------ |
+| `chess-background` | applies a checkered background |
 
 ## Features
 

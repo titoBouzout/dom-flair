@@ -666,12 +666,24 @@ the properties depend of other classes
 	display: none;
 }
 
+/* shadows */
+
 [text-shadow] {
 	text-shadow: 1px 1px 0 var(--text-shadow-color), -1px -1px 0 var(--text-shadow-color),
 		1px -1px 0 var(--text-shadow-color), -1px 1px 0 var(--text-shadow-color);
 }
 
 svg[text-shadow] {
-	text-shadow: unset;
 	filter: drop-shadow(0 0 2px var(--text-shadow-color));
+}
+
+[box-shadow] {
+	filter: drop-shadow(0 0 2px var(--box-shadow-color));
+}
+
+/* backgrounds */
+
+[chess-background] {
+	background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill-opacity=".05"><rect width="50" height="50" /><rect x="50" y="50" width="50" height="50" /></svg>')
+		0 0 / 15px 15px #f8f8f8;
 }
