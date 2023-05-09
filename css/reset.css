@@ -65,8 +65,8 @@ video::-webkit-media-controls-enclosure {
 svg {
   fill: currentColor;
   vertical-align: middle;
-  max-width: 1em;
-  max-height: 1em;
+  width: 1em;
+  height: 1em;
 }
 
 /* TEXT */
