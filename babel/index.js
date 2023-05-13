@@ -23,25 +23,28 @@ function makeListIndex() {
 			content: styles[k] + '}',
 			matches: styles[k]
 				// composed attributes should be added only when the composed value is used
-				.replace(/\[row\]\[/gi, '[')
-				.replace(/\[col\]\[/gi, '[')
-				.replace(/\[column\]\[/gi, '[')
+				.replace(/\[flair~='row'\]\[/gi, '[')
+				.replace(/\[flair~='col'\]\[/gi, '[')
+				.replace(/\[flair~='column'\]\[/gi, '[')
 				// match the [attribute-name]
 				.match(/\[([^\]]+)]/gi),
 		}
 		for (let id in styles[k].matches) {
 			// clean the attributes
 			styles[k].matches[id] = styles[k].matches[id]
+				.replace(/flair~=/g, '')
 				.replace(/^\[/, '')
 				.replace(/].*/, '')
 				.replace(/=.*/, '')
-
+				.replace(/'/g, '')
+				.replace(/"/g, '')
 			if (!list.has(styles[k].matches[id])) {
 				list.set(styles[k].matches[id], new Set())
 			}
 			styles[k].matches[id] = list.get(styles[k].matches[id])
 		}
 	}
+
 	return styles
 }
 
@@ -87,16 +90,20 @@ export default function (api, options) {
 						for (let node of path.node.attributes) {
 							if (!node.name || !node.name.name) continue
 							const name = node.name.name
+							if (name === 'flair') {
+								const attributes = node.value.value.trim().split(/\s+/)
+								for (const name of attributes) {
+									if (list.has(name)) {
+										const set = list.get(name)
+										set.add(filename)
+										if (!files2styles.has(filename)) {
+											files2styles.set(filename, new Set())
+										}
+										files2styles.get(filename).add(set)
 
-							if (list.has(name)) {
-								const set = list.get(name)
-								set.add(filename)
-								if (!files2styles.has(filename)) {
-									files2styles.set(filename, new Set())
+										write(options)
+									}
 								}
-								files2styles.get(filename).add(set)
-
-								write(options)
 							}
 						}
 					},

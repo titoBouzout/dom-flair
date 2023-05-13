@@ -1,25 +1,20 @@
 {
-	"name": "@titodp/styled",
-	"version": "5.0.38",
-	"description": "Stylesheet to solve `html` layout in intuitive ways, `<div col grow center></div>`. That's it.",
-	"main": "index.css",
+	"name": "dom-flair",
+	"version": "6.0.38",
+	"description": "Stylesheet to solve `html` layout in intuitive ways, `<div flair='col grow center'></div>`. That's it.",
+	"main": "./css/index.css",
 	"type": "module",
+	"types": "./css/index.css.d.ts",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/titoBouzout/styled.git"
+		"url": "git+https://github.com/titoBouzout/dom-flair.git"
 	},
-	"keywords": [
-		"CSS",
-		"Style",
-		"Stylesheet",
-		"Styled",
-		"classes"
-	],
+	"keywords": ["CSS", "Style", "Stylesheet", "Styled", "classes", "flair"],
 	"author": "Tito Bouzout, Kilo Spade",
 	"bugs": {
-		"url": "https://github.com/titoBouzout/styled/issues"
+		"url": "https://github.com/titoBouzout/dom-flair/issues"
 	},
-	"homepage": "https://github.com/titoBouzout/styled#readme",
+	"homepage": "https://github.com/titoBouzout/dom-flair#readme",
 	"prettier": {
 		"printWidth": 90,
 		"useTabs": true,
@@ -32,7 +27,9 @@
 		"bracketSameLine": false,
 		"arrowParens": "avoid",
 		"proseWrap": "never",
-		"endOfLine": "lf",
-		"singleAttributePerLine": true
+		"endOfLine": "lf"
+	},
+	"dependencies": {
+		"solid-js": "^1.7.5"
 	}
 }

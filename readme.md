@@ -1,40 +1,40 @@
-# Styled
+# DOM Flair
 
 The goal of this project is to solve any or most `html` layout issues in intuitive ways
-via attributes without having to think much about CSS. For example `<div col grow></div>`.
-That's it.
+via the attribute `flair` without having to think much about CSS. For example
+`<div flair="col grow"></div>`. That's it.
 
-It could also help with trivial CSS, For example `<div text-capitalize></div>` to
+It could also help with trivial CSS, For example `<div flair="text-capitalize"></div>` to
 capitalize the `div` contents.
 
 ## Installation & Usage
 
 ### ES module
 
-`npm install @titodp/styled`
+`npm install dom-flair`
 
 Import it where you gonna use is
 
-`import '@titodp/styled'`
+`import 'dom-flair'`
 
-Note: The element you mount to, should be `display:flex;flex:1;` for the attributes to
+Note: The element you mount to, should be `display:flex;flex:1;` for the attribute to
 work.
 
 ### Babel Plugin
 
 The style-sheet has around 800~ lines, you may want to include only what you use. There's
-a babel plugin that will look at the attributes of `jsx` elements and create a style-sheet
-with the output to the desired location.
+a babel plugin that will look for the attribute in `jsx` elements and create a style-sheet
+with the minimal output to the desired location. Then import it as you wish.
 
 ```json
 {
 	"babel": {
 		"plugins": [
 			[
-				"@titodp/styled/babel",
+				"dom-flair/babel",
 				{
 					// where the stylesheet should be created
-					"path": "client/dist/styled.css",
+					"path": "client/dist/flair.css",
 					// to include a style reset
 					"reset": true
 				}
@@ -51,9 +51,9 @@ with the output to the desired location.
 Sticky footer
 
 ```html
-<div col grow>
+<div flair="col grow">
 	<div>header</div>
-	<div grow>content</div>
+	<div flair="grow">content</div>
 	<div>footer</div>
 </div>
 ```
@@ -63,24 +63,24 @@ Sticky footer
 Has two sidebars, a toolbar, a footer, and grows in the middle content:
 
 ```html
-<div grow>
-	<div col grow horizontal>left sidebar</div>
-	<div col grow>
-		<div row right>toolbar</div>
-		<div row grow center>content</div>
-		<div row left>footer</div>
+<div flair="grow">
+	<div flair="col grow horizontal">left sidebar</div>
+	<div flair="col grow">
+		<div flair="row right">toolbar</div>
+		<div flair="row grow center">content</div>
+		<div flair="row left">footer</div>
 	</div>
-	<div col grow center>right sidebar</div>
+	<div flair="col grow center">right sidebar</div>
 </div>
 ```
 
-## Attributes supported
+## Values supported
 
 ### Direction
 
 Sets the direction of the children.
 
-| attribute       | description                        |
+| value           | description                        |
 | --------------- | ---------------------------------- |
 | `row`           | children will display as a row     |
 | `col`, `column` | children will display as a column  |
@@ -89,7 +89,7 @@ Sets the direction of the children.
 
 ### Size
 
-| attribute     | description                                                |
+| value         | description                                                |
 | ------------- | ---------------------------------------------------------- |
 | `grow`        | grow `self` as much as it can without growing the children |
 | `full-width`  | sets the width to 100%                                     |
@@ -105,7 +105,7 @@ Alignment of the children, NOT the alignment of the content of these children. E
 You can display a `div` aligned to the left, but the text on it aligned to the `right`.
 Well, in here we only control the `div` itself and not the `div` content.
 
-| attribute    | description                                        |
+| value        | description                                        |
 | ------------ | -------------------------------------------------- |
 | `left`       | aligns to left, sets left to 0                     |
 | `top`        | aligns to top, sets top to 0                       |
@@ -117,7 +117,7 @@ Well, in here we only control the `div` itself and not the `div` content.
 
 ### Space Between Children Elements
 
-| attribute                  | description   |
+| value                      | description   |
 | -------------------------- | ------------- |
 | `space-around-horizontal`  | space-around  |
 | `space-around-vertical`    | space-around  |
@@ -138,7 +138,7 @@ Well, in here we only control the `div` itself and not the `div` content.
 
 ### Text
 
-| attribute           | description                     |
+| value               | description                     |
 | ------------------- | ------------------------------- |
 | `text-center`       | sets text-align to center       |
 | `text-left`         | sets text-align to left         |
@@ -160,19 +160,19 @@ Well, in here we only control the `div` itself and not the `div` content.
 
 - `text-crop` ellipsis will only be shown if the container in not `display:flex` (aka not
   `row/col/grow`), if you want to show ellipsis in a flex container then wrap it like
-  `<div row><div text-crop>The..</div></div>`
+  `<div flair="row"><div flair="text-crop">The..</div></div>`
 
 ### Scroll
 
-| attribute           | description                                                                                         |
-| ------------------- | --------------------------------------------------------------------------------------------------- |
-| `scroll`            | scrolls both vertically and horizontally when overflows                                             |
-| `scroll-x`          | scrolls horizontally when overflows                                                                 |
-| `scroll-y`          | scrolls vertically when overflows                                                                   |
-| `scroll-thin`       | to set the size of the scrollbar to thin                                                            |
-| `no-scroll`         | to set the size of the scrollbar to 0px and display none                                            |
-| `scroll-color`      | sets the color for the bar `<div scroll-color style="--scroll-color:black"></div>`                  |
-| `scroll-background` | sets the color for the background `<div scroll-background style="--scroll-background:black"></div>` |
+| value               | description                                                                                                 |
+| ------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `scroll`            | scrolls both vertically and horizontally when overflows                                                     |
+| `scroll-x`          | scrolls horizontally when overflows                                                                         |
+| `scroll-y`          | scrolls vertically when overflows                                                                           |
+| `scroll-thin`       | to set the size of the scrollbar to thin                                                                    |
+| `no-scroll`         | to set the size of the scrollbar to 0px and display none                                                    |
+| `scroll-color`      | sets the color for the bar `<div flair="scroll-color" style="--scroll-color:black"></div>`                  |
+| `scroll-background` | sets the color for the background `<div flair="scroll-background" style="--scroll-background:black"></div>` |
 
 #### Bugs
 
@@ -180,19 +180,19 @@ Well, in here we only control the `div` itself and not the `div` content.
 
 ### Selection
 
-| attribute              | description                                                                                        |
-| ---------------------- | -------------------------------------------------------------------------------------------------- |
-| `selection-none`       | prevent text selection                                                                             |
-| `selection-all`        | selects all text on focus                                                                          |
-| `selection-text`       | allows text selection                                                                              |
-| `selection-color`      | selection text color `<div selection-color style="--selection-color:black"></div>`                 |
-| `selection-background` | selection background color `<div selection-background style="--selection-background:black"></div>` |
-| `draggable='false'`    | sets `touch-action: none;` and `-webkit-user-drag: none;`                                          |
-| `draggable='true'`     | sets `touch-action: initial;` and `-webkit-user-drag: initial;`                                    |
+| value                  | description                                                                                                |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `selection-none`       | prevent text selection                                                                                     |
+| `selection-all`        | selects all text on focus                                                                                  |
+| `selection-text`       | allows text selection                                                                                      |
+| `selection-color`      | selection text color `<div flair="selection-color" style="--selection-color:black"></div>`                 |
+| `selection-background` | selection background color `<div flair="selection-background" style="--selection-background:black"></div>` |
+| `draggable='false'`    | sets `touch-action: none;` and `-webkit-user-drag: none;`                                                  |
+| `draggable='true'`     | sets `touch-action: initial;` and `-webkit-user-drag: initial;`                                            |
 
 ### Cursor
 
-| attribute          | description        |
+| value              | description        |
 | ------------------ | ------------------ |
 | `cursor-hand`      | cursor pointer     |
 | `cursor-ignore`    | ignore events      |
@@ -200,7 +200,7 @@ Well, in here we only control the `div` itself and not the `div` content.
 
 ### Display
 
-| attribute       | description                                                   |
+| value           | description                                                   |
 | --------------- | ------------------------------------------------------------- |
 | `absolute`      | position absolute                                             |
 | `relative`      | position relative                                             |
@@ -224,14 +224,14 @@ Well, in here we only control the `div` itself and not the `div` content.
 
 ### Shadows
 
-| attribute     | description                                                                                                                                            |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `text-shadow` | `<div text-shadow style="--text-shadow-color:black"></div>` can also be used on `svg` which use a drop-shadow instead trying to match the text shadow. |
-| `box-shadow`  | similar to text-shadow but for boxes. `<div text-shadow style="--box-shadow-color:black"></div>`                                                       |
+| value         | description                                                                                                                                                    |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `text-shadow` | `<div flair="text-shadow" style="--text-shadow-color:black"></div>` can also be used on `svg` which use a drop-shadow instead trying to match the text shadow. |
+| `box-shadow`  | similar to text-shadow but for boxes. `<div flair="text-shadow" style="--box-shadow-color:black"></div>`                                                       |
 
 ### Backgrounds
 
-| attribute          | description                    |
+| value              | description                    |
 | ------------------ | ------------------------------ |
 | `chess-background` | applies a checkered background |
 
@@ -247,4 +247,5 @@ Well, in here we only control the `div` itself and not the `div` content.
 - Tito Bouzout https://github.com/titoBouzout
 - Kilo https://github.com/boredofnames
 
-URL: https://github.com/titoBouzout/styled
+- URL: https://github.com/titoBouzout/dom-flair
+- URL: https://www.npmjs.com/package/dom-flair

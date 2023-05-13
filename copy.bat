@@ -1,4 +1,4 @@
 
-robocopy . S:\www\npm\styled /S /XO /XF "package.json"
+robocopy . S:\www\npm\dom-flair /S /XO /XF "package.json"
 
 exit
