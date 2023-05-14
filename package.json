@@ -1,6 +1,6 @@
 {
 	"name": "dom-flair",
-	"version": "6.0.40",
+	"version": "6.0.41",
 	"description": "Stylesheet to solve `html` layout in intuitive ways, `<div flair='col grow center'></div>`. That's it.",
 	"main": "./css/index.css",
 	"type": "module",
@@ -9,7 +9,14 @@
 		"type": "git",
 		"url": "git+https://github.com/titoBouzout/dom-flair.git"
 	},
-	"keywords": ["CSS", "Style", "Stylesheet", "Styled", "classes", "flair"],
+	"keywords": [
+		"CSS",
+		"Style",
+		"Stylesheet",
+		"Styled",
+		"classes",
+		"flair"
+	],
 	"author": "Tito Bouzout, Kilo Spade",
 	"bugs": {
 		"url": "https://github.com/titoBouzout/dom-flair/issues"
