@@ -9,14 +9,7 @@
 		"type": "git",
 		"url": "git+https://github.com/titoBouzout/dom-flair.git"
 	},
-	"keywords": [
-		"CSS",
-		"Style",
-		"Stylesheet",
-		"Styled",
-		"classes",
-		"flair"
-	],
+	"keywords": ["CSS", "Style", "Stylesheet", "Styled", "classes", "flair"],
 	"author": "Tito Bouzout, Kilo Spade",
 	"bugs": {
 		"url": "https://github.com/titoBouzout/dom-flair/issues"
@@ -35,8 +28,5 @@
 		"arrowParens": "avoid",
 		"proseWrap": "never",
 		"endOfLine": "lf"
-	},
-	"devDependencies": {
-		"solid-js": "^1.7.5"
 	}
 }
