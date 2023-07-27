@@ -91,6 +91,9 @@ export default function (api, options) {
 							if (!node.name || !node.name.name) continue
 							const name = node.name.name
 							if (name === 'flair') {
+								// <div flair/> // no value for attribute
+								if (!node.value) continue
+
 								const attributes = node.value.value.trim().split(/\s+/)
 								for (const name of attributes) {
 									if (list.has(name)) {

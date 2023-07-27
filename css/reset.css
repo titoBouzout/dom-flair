@@ -37,6 +37,9 @@ html {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+  display: flex;
+}
 /* MEDIA */
 
 /* For images to not be able to exceed their container */
@@ -69,6 +72,24 @@ svg {
   height: 1em;
 }
 
+article,
+header,
+section,
+nav,
+ul,
+footer,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+pre,
+code {
+  display: block;
+  width: 100%;
+}
+
 /* TEXT */
 
 b,
@@ -76,15 +97,24 @@ b * {
   font-weight: bold;
 }
 
+em {
+  font-style: italic;
+}
+
 mark {
   padding-left: 2px;
   padding-right: 2px;
+  padding-bottom: 2px;
   border-radius: 2px;
 }
 
 /* preformatted text - use only for this feature */
 :where(pre) {
   all: revert;
+}
+
+pre {
+  margin: 0;
 }
 
 /* INPUT */
@@ -135,6 +165,7 @@ table {
 a,
 button {
   cursor: revert;
+  outline: revert;
 }
 
 /* Remove list styles (bullets/numbers) */
