@@ -109,7 +109,7 @@ mark {
 }
 
 /* preformatted text - use only for this feature */
-:where(pre) {
+:where(pre, progress) {
   all: revert;
 }
 
