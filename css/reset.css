@@ -108,6 +108,10 @@ mark {
   border-radius: 2px;
 }
 
+s {
+  text-decoration: revert;
+}
+
 /* preformatted text - use only for this feature */
 :where(pre, progress) {
   all: revert;
