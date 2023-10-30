@@ -1,12 +1,9 @@
-import fs from 'fs'
-import * as url from 'url'
-
 /*
 	TODO
 	- be more clever at the attributes parsing and including
-	- generate dinamically child-* and all-*
+	- generate dynamically child-* and all-*
 */
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
+const fs = require('fs')
 
 const list = new Map()
 const styles = makeListIndex()
@@ -67,7 +64,7 @@ const write = function write(state, options) {
 	}, 100)
 }.bind(null, { timeout: 0 })
 
-export default function (api, options) {
+module.exports = function (api, options) {
 	const files2styles = new Map()
 
 	return {
