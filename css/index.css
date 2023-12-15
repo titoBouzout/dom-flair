@@ -621,18 +621,8 @@ the properties depend of other classes
 	background-color: var(--selection-background);
 }
 
-[flair~='scroll-color']::-webkit-scrollbar-thumb {
-	background-color: var(--scroll-color);
-}
 [flair~='scroll-color'] {
-	scrollbar-color: var(--scroll-color) inherit;
-}
-
-[flair~='scroll-background']::-webkit-scrollbar-track {
-	background-color: var(--scroll-background);
-}
-[flair~='scroll-background'] {
-	scrollbar-color: inherit var(--scroll-background);
+	scrollbar-color: var(--scroll-color) var(--scroll-background);
 }
 
 /* useful */
@@ -661,8 +651,11 @@ the properties depend of other classes
 /* shadows */
 
 [flair~='text-shadow'] {
-	text-shadow: 1px 1px 0 var(--text-shadow-color), -1px -1px 0 var(--text-shadow-color),
-		1px -1px 0 var(--text-shadow-color), -1px 1px 0 var(--text-shadow-color);
+	text-shadow:
+		1px 1px 0 var(--text-shadow-color),
+		-1px -1px 0 var(--text-shadow-color),
+		1px -1px 0 var(--text-shadow-color),
+		-1px 1px 0 var(--text-shadow-color);
 }
 
 svg[flair~='text-shadow'] {
