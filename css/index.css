@@ -665,6 +665,10 @@ the properties depend of other classes
 		-1px 1px 0 var(--text-shadow-color);
 }
 
+[flair~='text-shadow'] svg {
+	filter: drop-shadow(0 0 2px var(--text-shadow-color));
+}
+
 svg[flair~='text-shadow'] {
 	filter: drop-shadow(0 0 2px var(--text-shadow-color));
 }
