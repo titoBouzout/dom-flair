@@ -193,6 +193,7 @@
 	max-height: 100%;
 	overflow: hidden;
 }
+
 [flair~='full-window'] {
 	width: 100%;
 	height: 100%;
@@ -201,6 +202,12 @@
 	top: 0;
 	left: 0;
 	overflow: hidden;
+}
+[flair~='absolute-center'] {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 [flair~='overflow'] {
 	overflow: hidden;

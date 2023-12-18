@@ -164,15 +164,14 @@ Well, in here we only control the `div` itself and not the `div` content.
 
 ### Scroll
 
-| value               | description                                                                                                 |
-| ------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `scroll`            | scrolls both vertically and horizontally when overflows                                                     |
-| `scroll-x`          | scrolls horizontally when overflows                                                                         |
-| `scroll-y`          | scrolls vertically when overflows                                                                           |
-| `scroll-thin`       | to set the size of the scrollbar to thin                                                                    |
-| `no-scroll`         | to set the size of the scrollbar to 0px and display none                                                    |
-| `scroll-color`      | sets the color for the bar `<div flair="scroll-color" style="--scroll-color:black"></div>`                  |
-| `scroll-background` | sets the color for the background `<div flair="scroll-background" style="--scroll-background:black"></div>` |
+| value          | description                                                                                                          |
+| -------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `scroll`       | scrolls both vertically and horizontally when overflows                                                              |
+| `scroll-x`     | scrolls horizontally when overflows                                                                                  |
+| `scroll-y`     | scrolls vertically when overflows                                                                                    |
+| `scroll-thin`  | to set the size of the scrollbar to thin                                                                             |
+| `no-scroll`    | to set the size of the scrollbar to 0px and display none                                                             |
+| `scroll-color` | sets the color for scroll `<div flair="scroll-color" style="--scroll-color:black;--scroll-background:black "></div>` |
 
 #### Bugs
 
@@ -200,27 +199,28 @@ Well, in here we only control the `div` itself and not the `div` content.
 
 ### Display
 
-| value           | description                                                   |
-| --------------- | ------------------------------------------------------------- |
-| `absolute`      | position absolute                                             |
-| `relative`      | position relative                                             |
-| `fixed`         | position fixed                                                |
-| `full`          | full width and height with overflow hidden                    |
-| `full-window`   | full width and height with overflow hidden and top and left 0 |
-| `block`         | display block                                                 |
-| `inline`        | display inline                                                |
-| `inline-block`  | display inline-block                                          |
-| `inline-flex`   | display inline-flex                                           |
-| `hidden`        | display none                                                  |
-| `collapse`      | sets the visibility to collapsed                              |
-| `layer`         | forces a layer using `transform:translateZ(0);`               |
-| `overflow`      | overflow hidden                                               |
-| `visible`       | overflow visible                                              |
-| `border-box`    | box-sizing property                                           |
-| `content-box`   | box-sizing property                                           |
-| `no-empty`      | hides the element if empty                                    |
-| `circle`        | set border-radius to 100%                                     |
-| `controls-none` | hide video/audio controls                                     |
+| value             | description                                                   |
+| ----------------- | ------------------------------------------------------------- |
+| `absolute`        | position absolute                                             |
+| `relative`        | position relative                                             |
+| `fixed`           | position fixed                                                |
+| `full`            | full width and height with overflow hidden                    |
+| `full-window`     | full width and height with overflow hidden and top and left 0 |
+| `block`           | display block                                                 |
+| `inline`          | display inline                                                |
+| `inline-block`    | display inline-block                                          |
+| `inline-flex`     | display inline-flex                                           |
+| `hidden`          | display none                                                  |
+| `collapse`        | sets the visibility to collapsed                              |
+| `layer`           | forces a layer using `transform:translateZ(0);`               |
+| `overflow`        | overflow hidden                                               |
+| `visible`         | overflow visible                                              |
+| `border-box`      | box-sizing property                                           |
+| `content-box`     | box-sizing property                                           |
+| `no-empty`        | hides the element if empty                                    |
+| `circle`          | set border-radius to 100%                                     |
+| `controls-none`   | hide video/audio controls                                     |
+| `absolute-center` | position absolute - top, left: 50% - translate top left -50%  |
 
 ### Shadows
 
