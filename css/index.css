@@ -658,23 +658,7 @@ the properties depend of other classes
 /* shadows */
 
 [flair~='text-shadow'] {
-	text-shadow:
-		1px 1px 0 var(--text-shadow-color),
-		-1px -1px 0 var(--text-shadow-color),
-		1px -1px 0 var(--text-shadow-color),
-		-1px 1px 0 var(--text-shadow-color);
-}
-
-[flair~='text-shadow'] svg {
-	filter: drop-shadow(0 0 2px var(--text-shadow-color));
-}
-
-svg[flair~='text-shadow'] {
-	filter: drop-shadow(0 0 2px var(--text-shadow-color));
-}
-
-[flair~='box-shadow'] {
-	filter: drop-shadow(0 0 2px var(--box-shadow-color));
+	filter: drop-shadow(0px 0px 1px black) drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.5));
 }
 
 /* backgrounds */
