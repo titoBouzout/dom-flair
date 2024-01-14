@@ -1,6 +1,6 @@
 {
 	"name": "dom-flair",
-	"version": "6.0.55",
+	"version": "6.0.56",
 	"description": "Stylesheet to solve `html` layout in intuitive ways, `<div flair='col grow center'></div>`. That's it.",
 	"author": "Tito Bouzout, Kilo Spade",
 	"main": "./css/index.css",
