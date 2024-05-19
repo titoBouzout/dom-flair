@@ -51,7 +51,7 @@ module.exports = function (api, options) {
 	// write
 	let previousContent = ''
 
-	const write = function write(state, options) {
+	const write = function write(state) {
 		clearTimeout(state.timeout)
 		state.timeout = setTimeout(() => {
 			let content = options.reset ? reset : ''
