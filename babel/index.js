@@ -45,27 +45,27 @@ function makeListIndex() {
 	return styles
 }
 
-// write
-let previousContent = ''
-
-const write = function write(state, options) {
-	clearTimeout(state.timeout)
-	state.timeout = setTimeout(() => {
-		let content = options.reset ? reset : ''
-		for (let k in styles) {
-			if (styles[k].matches.some(set => set.size)) {
-				content += styles[k].content
-			}
-		}
-		if (content != previousContent) {
-			previousContent = content
-			fs.writeFile(options.path, content, () => {})
-		}
-	}, 100)
-}.bind(null, { timeout: 0 })
-
 module.exports = function (api, options) {
 	const files2styles = new Map()
+
+	// write
+	let previousContent = ''
+
+	const write = function write(state, options) {
+		clearTimeout(state.timeout)
+		state.timeout = setTimeout(() => {
+			let content = options.reset ? reset : ''
+			for (let k in styles) {
+				if (styles[k].matches.some(set => set.size)) {
+					content += styles[k].content
+				}
+			}
+			if (content != previousContent) {
+				previousContent = content
+				fs.writeFile(options.path, content, () => {})
+			}
+		}, 100)
+	}.bind(null, { timeout: 0 })
 
 	return {
 		visitor: {
@@ -78,7 +78,7 @@ module.exports = function (api, options) {
 						set.delete(filename)
 					})
 				}
-				write(options)
+				write()
 			},
 			JSXElement(path, state) {
 				const filename = state.filename
@@ -102,7 +102,7 @@ module.exports = function (api, options) {
 											}
 											files2styles.get(filename).add(set)
 
-											write(options)
+											write()
 										}
 									}
 								}
