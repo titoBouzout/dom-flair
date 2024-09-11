@@ -15,7 +15,7 @@
 
 	/* Flexbox introduces auto as the new initial value of min-height. It makes flex items grow as tall as their contents.*/
 	min-height: min-content;
-	min-width: min-content;
+	min-width: auto;
 }
 
 [flair~='col'],
@@ -30,7 +30,7 @@
 
 	/* Flexbox introduces auto as the new initial value of min-height. It makes flex items grow as tall as their contents.*/
 	min-height: min-content;
-	min-width: min-content;
+	min-width: auto;
 }
 
 [flair~='wrap'] {
@@ -65,7 +65,7 @@
 
 	/* Flexbox introduces auto as the new initial value of min-height. It makes flex items grow as tall as their contents.*/
 	min-height: min-content;
-	min-width: min-content;
+	min-width: auto;
 }
 
 [flair~='width'],
@@ -200,6 +200,7 @@
 	transform: translatez(0);
 
 	overflow: auto;
+	overscroll-behavior: contain;
 
 	min-height: 0;
 	min-width: 0;
@@ -210,6 +211,7 @@
 
 	overflow-x: auto;
 	overflow-y: hidden;
+	overscroll-behavior: contain;
 
 	min-width: 0;
 }
@@ -220,6 +222,7 @@
 
 	overflow-y: auto;
 	overflow-x: hidden;
+	overscroll-behavior: contain;
 
 	min-height: 0;
 }
@@ -282,7 +285,7 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
-	min-width: min-content;
+	min-width: auto;
 	min-height: min-content;
 }
 
