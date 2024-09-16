@@ -86,13 +86,19 @@ module.exports = function (api, options) {
 					{
 						JSXOpeningElement(path, state) {
 							for (let node of path.node.attributes) {
-								if (!node.name || !node.name.name) continue
+								if (!node.name || !node.name.name) {
+									continue
+								}
+
 								const name = node.name.name
 								if (name === 'flair') {
 									// <div flair/> // no value for attribute
-									if (!node.value) continue
+									// <div flair={some ? true : false}
+									if (!node.value || !node.value.value) {
+										continue
+									}
 
-									const attributes = node.value.value.trim().split(/\s+/)
+									const attributes = String(node.value.value).trim().split(/\s+/)
 									for (const name of attributes) {
 										if (list.has(name)) {
 											const set = list.get(name)

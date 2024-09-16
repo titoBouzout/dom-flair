@@ -6,7 +6,10 @@
 	"main": "./css/index.css",
 	"types": "./types.d.ts",
 	"exports": {
-		".": "./css/index.css",
+		".": {
+			"types": "./types.d.ts",
+			"default": "./css/index.css"
+		},
 		"./babel": "./babel/index.js",
 		"./*": "./*"
 	},
@@ -14,14 +17,7 @@
 		"type": "git",
 		"url": "git+https://github.com/titoBouzout/dom-flair.git"
 	},
-	"keywords": [
-		"CSS",
-		"Style",
-		"Stylesheet",
-		"Styled",
-		"classes",
-		"flair"
-	],
+	"keywords": ["CSS", "Style", "Stylesheet", "Styled", "classes", "flair"],
 	"bugs": {
 		"url": "https://github.com/titoBouzout/dom-flair/issues"
 	},
