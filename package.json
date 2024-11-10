@@ -4,10 +4,10 @@
 	"description": "Stylesheet to solve `html` layout in intuitive ways, `<div flair='col grow center'></div>`. That's it.",
 	"author": "Tito Bouzout, Kilo Spade",
 	"main": "./css/index.css",
-	"types": "./types.d.ts",
+	"type": "module",
 	"exports": {
 		".": {
-			"types": "./types.d.ts",
+			"types": "./dom-flair.d.ts",
 			"default": "./css/index.css"
 		},
 		"./babel": "./babel/index.js",
@@ -42,5 +42,9 @@
 		"arrowParens": "avoid",
 		"proseWrap": "never",
 		"endOfLine": "lf"
+	},
+	"devDependencies": {
+		"pota": "file:../pota",
+		"solid-js": "^1.9.3"
 	}
 }
