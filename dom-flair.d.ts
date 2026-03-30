@@ -1,4 +1,5 @@
 import type {} from 'solid-js'
+import type {} from 'pota'
 
 declare module 'solid-js' {
   namespace JSX {
@@ -18,40 +19,10 @@ declare module 'solid-js' {
   }
 }
 
-import type {} from 'pota/jsx-runtime'
-
-declare module 'pota/jsx-runtime' {
+declare module 'pota' {
   namespace JSX {
     // HTML
-    interface IntrinsicHTMLAttributes {
-      /**
-       * Similar to `class` for DOM Flair values.
-       *
-       * ```html
-       * <div flair="col grow center" />
-       * ```
-       *
-       * @link https://github.com/titoBouzout/dom-flair#values-supported
-       */
-      flair?: string
-    }
-
-    // SVG
-    interface IntrinsicSVGAttributes {
-      /**
-       * Similar to `class` for DOM Flair values.
-       *
-       * ```html
-       * <div flair="col grow center" />
-       * ```
-       *
-       * @link https://github.com/titoBouzout/dom-flair#values-supported
-       */
-      flair?: string
-    }
-
-    // MathML
-    interface IntrinsicMathMLAttributes {
+    interface ElementAttributes<Element> {
       /**
        * Similar to `class` for DOM Flair values.
        *
